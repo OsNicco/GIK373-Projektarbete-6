@@ -13,7 +13,7 @@ nav {
     display: flex;
     width: 100%;
     gap: 1rem;
-    padding: 2rem;
+    padding: 1rem;
     align-items: center;
     position: absolute;
     justify-content: space-between;
@@ -56,30 +56,30 @@ nav a:hover {
 }
 
 .bottom-bar {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  transition: transform 0.3s ease;
-  width: 15%;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem;
-  background: rgba(120, 161, 255, 0.055);
-  backdrop-filter: blur(8px);
-  box-sizing: border-box;
-  border-radius: 20px;
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    transition: transform 0.3s ease;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    background: rgba(120, 161, 255, 0.055);
+    backdrop-filter: blur(8px);
+    box-sizing: border-box;
+    border-radius: 20px;
 }
 
 .bottom-bar a {
-  color: rgb(37, 35, 83);
-  text-decoration: none;
-  padding: 0.7rem;
+    color: rgb(37, 35, 83);
+    text-decoration: none;
+    padding: 0.7rem;
 }
 
 .bottom-bar a:hover {
-  background: rgba(44, 255, 153, 0.645);
-  backdrop-filter: blur(8px);
-  border-radius: 6px;
+    background: rgba(44, 255, 153, 0.645);
+    backdrop-filter: blur(8px);
+    border-radius: 6px;
 }
