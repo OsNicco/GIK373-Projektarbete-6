@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  position: absolute;
+  width: 100%;
+  color: white;
+  z-index: 10;
+}
+
+
+
+
+.header nav a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* HERO */
+.hero {
+  height: 70vh;
+  background: url("https://images.pexels.com/photos/17877099/pexels-photo-17877099.jpeg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding-left: 60px;
+  color: white;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+.hero-text {
+  position: relative;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.hero button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #0a7a5a;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+/* SECTIONS */
+.section {
+  display: flex;
+  gap: 40px;
+  padding: 60px;
+  align-items: center;
+}
+
+.section.reverse {
+  flex-direction: row-reverse;
+}
+
+.box.image {
+  width: 50%;
+  height: 300px;
+  background: #ddd;
+  border-radius: 10px;
+}
+
+.box.text {
+  width: 50%;
+}
+
+/* sista bild (riktig bild) */
+.img-real {
+  background: url("kids.jpg") center/cover no-repeat;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 30px;
+  background: #111;
+  color: white;
+}
