@@ -5,7 +5,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-
+/*============================================================================================================================*/
 
 /* HEADER */
 .header {
@@ -37,18 +37,25 @@
     border-radius: 6px;    
 }
 
+/*SELECTED PAGE*/
+.data {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 6px;
+}
 
+/*============================================================================================================================*/
 
 /* HERO BG BILD*/
 .hero {
   height: 150px;
-  background: url("https://images.pexels.com/photos/17877099/pexels-photo-17877099.jpeg") center/cover no-repeat;
+  background: url(images/skog.jpg) center/cover no-repeat;
   display: flex;
   overflow: hidden;
   background-position: top center;
-  
-}
 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) ;
+}
 
 .hero-text {
   position: relative;
@@ -70,19 +77,23 @@
   align-items: center;
 }
 
-.data {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  padding: 5px 10px;
-  border-radius: 6px;
+/*============================================================================================================================*/
+
+/* BODY */
+
+
+.test {
+  display: flex;
+  height: 1500px;
+  width: 100px;
+  background: red;
 }
 
-.section.reverse {
-  flex-direction: row-reverse;
-}
 
 
 
+
+/*============================================================================================================================*/
 
 /* BOTTOM BAR */
 
@@ -104,7 +115,7 @@
 }
 
 .bottom-bar a {
-    color: rgb(37, 35, 83);
+    color: #007353;
     text-decoration: none;
     padding: 0.7rem;
 }
@@ -114,6 +125,8 @@
     backdrop-filter: blur(8px);
     border-radius: 6px;
 }
+
+/*============================================================================================================================*/
 
 /* FOOTER */
 footer {
