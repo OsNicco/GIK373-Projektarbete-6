@@ -10,6 +10,14 @@
   height: auto;
 }
 
+.oss {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  padding: 5px 10px;
+  border-radius: 6px;
+  
+}
+
 /* HEADER */
 .header {
   display: flex;
@@ -30,7 +38,7 @@
   padding: 0.7rem;
 }
 
-nav a:hover {
+.hem:hover, .data:hover{
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
     border-radius: 6px;    
@@ -75,6 +83,11 @@ nav a:hover {
   align-items: center;
 }
 
+.green-clean {
+  color: #007353;
+  font-weight: bold;
+}
+
 #sek1 h1 {
   width: 100%;
   margin-bottom: 20px;
@@ -87,7 +100,7 @@ nav a:hover {
   flex-wrap: wrap;
   gap: 2rem;
   align-items: flex-start;
-  padding: 60px;
+  padding: 20px;
 }
 
 #sek1 .sektion1 {
@@ -104,16 +117,53 @@ nav a:hover {
 .section.reverse {
   flex-direction: row-reverse;
 }
-
-.box.image {
-  width: 50%;
-  height: 300px;
-  background: #ddd;
-  border-radius: 10px;
+#sek2-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+.sektion2,
+.sektion3 {
+  background-color: #007353;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  max-width: 350px;
+}
+.sektion2 {
+  margin: 3rem 2rem 1rem 2rem;
+}
+.sektion3 {
+  margin: 3rem 2rem 1rem 2rem;
+}
+.sektion2 ul {
+  list-style-position: inside;
+  margin-bottom: 0.5rem;
+}
+.sektion2 li {
+  margin-bottom: 0.5rem;
+  word-break: break-word;
 }
 
-.box.text {
-  width: 50px;
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 10px auto;
+  width: 80%;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px solid #131138;
+}
+
+.divider span {
+  padding: 0 15px;
+  font-weight: bold;
+  color: #007353;
 }
 
 /* FOOTER */
