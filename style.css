@@ -65,12 +65,11 @@ nav a:hover {
   margin-bottom: 10px;
 }
 
-/* SECTIONS */
+
 .section {
-  display: flex;
-  gap: 40px;
-  padding: 60px;
-  align-items: center;
+  display: block;
+  padding: 4rem;
+  padding-bottom: 14rem; 
 }
 
 .hem {
@@ -81,22 +80,79 @@ nav a:hover {
   
 }
 
-.section.reverse {
-  flex-direction: row-reverse;
+
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
 }
 
-.box.image {
-  width: 50%;
-  height: 300px;
-  background: #ddd;
-  border-radius: 10px;
+.section-title {
+  font-size: 1.8rem;
+  color: #131138;
+  font-weight: 400;
 }
 
-.box.text {
-  width: 50%;
+.dots {
+  display: flex;
+  gap: 1rem;
+}
+
+.dots span {
+  width: 1rem;
+  height: 1rem;
+  background: #131138;
+  border-radius: 50%;
+  display: block;
+}
+
+.cards {
+  display: flex;
+  gap: 2rem;
+}
+
+.card {
+  flex: 1;
+  background: #e8e8e8;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 30rem;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.card-image {
+  width: 100%;
+  flex: 1;
+  background: #131138;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.visa-mer-btn {
+  background: #007353;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 1.25rem;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
 }
 
 
+
+
+.section-line {
+  height: 0.19rem;
+  background: #007353;
+  margin-top: 1.8rem;
+  border-radius: 0.125rem;
+}
 
 /* BOTTOM BAR */
 
