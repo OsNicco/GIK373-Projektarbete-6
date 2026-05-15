@@ -40,7 +40,7 @@ nav a:hover {
 
 /* HERO BG BILD*/
 .hero {
-  height: 65rem;
+  height: 55rem;
   background: url("https://images.pexels.com/photos/17877099/pexels-photo-17877099.jpeg") center/cover no-repeat;
   display: flex;
   align-items: center;
