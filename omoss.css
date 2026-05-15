@@ -29,21 +29,24 @@
   z-index: 10;
 }
 
-
-.header nav a {
-  margin-left: 20px;
-  color:#131138;
-  font-size: 18px;
-  text-decoration: none;
-  padding: 0.7rem;
+.header .logo {
+  width: 10rem;
+  height: auto;
 }
 
-.hem:hover, .data:hover{
+.header nav a {
+  color:#131138;
+  font-size: 1.3rem;
+  text-decoration: none;
+  padding: 0.7rem;
+  margin-right: 2rem;
+}
+
+.hem:hover, .oss:hover {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
     border-radius: 6px;    
 }
-
 
 
 /* HERO BG BILD*/
