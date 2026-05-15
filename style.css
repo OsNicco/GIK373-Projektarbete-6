@@ -28,6 +28,7 @@
   font-size: 1.3rem;
   text-decoration: none;
   padding: 0.7rem;
+  margin-right: 2rem;
 }
 
 nav a:hover {
@@ -37,15 +38,12 @@ nav a:hover {
 }
 
 
-nav a {
-  margin-right: 2rem;
-}
-
 
 /* HERO BG BILD*/
 .hero {
   height: 55rem;
   background: url("https://images.pexels.com/photos/17877099/pexels-photo-17877099.jpeg") center/cover no-repeat;
+  background-position: top center;
   display: flex;
   padding-left: 60px;
   color: white;
@@ -57,13 +55,13 @@ nav a {
 
 .hero-text {
   position: relative;
-  max-width: 500px;
+  max-width: 700px;
   z-index: 2;
   margin-bottom: 5rem;
 }
 
 .hero h1 {
-  font-size: 48px;
+  font-size: 4.5rem;
   margin-bottom: 10px;
 }
 
@@ -98,9 +96,37 @@ nav a {
   width: 50%;
 }
 
-/* sista bild (riktig bild) */
-.img-real {
-  background: url("kids.jpg") center/cover no-repeat;
+
+
+/* BOTTOM BAR */
+
+.bottom-bar {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    transition: transform 0.3s ease;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    background: rgba(120, 161, 255, 0.055);
+    backdrop-filter: blur(8px);
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.bottom-bar a {
+    color: rgb(37, 35, 83);
+    text-decoration: none;
+    padding: 0.7rem;
+}
+
+.bottom-bar a:hover {
+    background: rgba(44, 255, 153, 0.645);
+    backdrop-filter: blur(8px);
+    border-radius: 6px;
 }
 
 /* FOOTER */
