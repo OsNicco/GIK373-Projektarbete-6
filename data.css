@@ -7,7 +7,7 @@
 
 
 
-/* HEADER */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -39,14 +39,14 @@
 
 
 
-/* HERO BG BILD*/
+
 .hero {
   height: 150px;
   background: url("https://images.pexels.com/photos/17877099/pexels-photo-17877099.jpeg") center/cover no-repeat;
   display: flex;
   overflow: hidden;
   background-position: top center;
-  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) ;
 }
 
 
@@ -62,7 +62,7 @@
   margin-bottom: 10px;
 }
 
-/* SECTIONS */
+
 .section {
   display: flex;
   gap: 40px;
@@ -84,7 +84,7 @@
 
 
 
-/* BOTTOM BAR */
+
 
 .bottom-bar {
     position: fixed;
@@ -115,7 +115,7 @@
     border-radius: 6px;
 }
 
-/* FOOTER */
+
 footer {
   text-align: center;
   padding: 30px;
