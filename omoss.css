@@ -18,7 +18,7 @@
   
 }
 
-
+/* HEADER */
 .header {
   display: flex;
   justify-content: space-between;
@@ -29,10 +29,6 @@
   z-index: 10;
 }
 
-.header .logo {
-  width: 10rem;
-  height: auto;
-}
 
 .header nav a {
   color:#131138;
@@ -42,7 +38,7 @@
   margin-right: 2rem;
 }
 
-.hem:hover, .oss:hover {
+.hem:hover, .data:hover{
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
     border-radius: 6px;    
@@ -50,13 +46,14 @@
 
 
 
+/* HERO BG BILD*/
 .hero {
   height: 150px;
   background: url("https://images.pexels.com/photos/17877099/pexels-photo-17877099.jpeg") center/cover no-repeat;
   display: flex;
   overflow: hidden;
   background-position: top center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) ;
+  
 }
 
 .hero::after {
@@ -68,21 +65,21 @@
 
 .hero-text {
   position: relative;
-  max-width: 500px;
+  max-width: 700px;
   z-index: 2;
-  padding-top: 30rem;
+  margin-bottom: 5rem;
 }
 
 .hero h1 {
-  font-size: 48px;
+  font-size: 4.5rem;
   margin-bottom: 10px;
 }
 
-
+/* SECTIONS */
 .section {
   display: flex;
   gap: 40px;
-  padding: 60px;
+  padding: 30px;
   align-items: center;
 }
 
@@ -98,23 +95,27 @@
 }
 
 
+
 #sek1 {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  gap: 2rem;
+  padding: 30px;
 }
 
 #sek1 .sektion1 {
-  max-width: 600px;
+  max-width: 500px;
 }
 
 .sektion1-img {
-  width: auto;
-  height: 400px;
   background: #ddd;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
   border-radius: 10px;
+  margin-top: 1rem;
 }
 
 .section.reverse {
@@ -123,37 +124,35 @@
 #sek2-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  justify-content: center;
   gap: 2rem;
-  padding: 2rem;
+  padding: 6rem;
+  padding-top: 1rem;
+  margin: 0 auto;
+  
 }
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
 .sektion2,
 .sektion3 {
   background-color: #007353;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
   border-radius: 1rem;
-  max-width: 350px;
+  padding: 1rem;
+  color: white;
+  
 }
-.sektion2 {
-  margin: 3rem 2rem 1rem 2rem;
-}
-.sektion3 {
-  margin: 3rem 2rem 1rem 2rem;
-}
-.sektion2 ul {
-  list-style-position: inside;
-  margin-bottom: 0.5rem;
-}
-.sektion2 li {
-  margin-bottom: 0.5rem;
-  word-break: break-word;
-}
+
 
 .divider {
   display: flex;
   align-items: center;
   text-align: center;
   margin: 10px auto;
-  width: 80%;
+  width: 85%;
 }
 
 .divider::before,
@@ -169,7 +168,7 @@
   color: #007353;
 }
 
-
+/* FOOTER */
 footer {
   text-align: center;
   padding: 30px;
