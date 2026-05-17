@@ -31,7 +31,7 @@
   margin-right: 2rem;
 }
 
-nav a:hover {
+.data:hover, .oss:hover {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
     border-radius: 6px;    
@@ -42,7 +42,7 @@ nav a:hover {
 /* HERO BG BILD*/
 .hero {
   height: 55rem;
-  background: url("https://images.pexels.com/photos/17877099/pexels-photo-17877099.jpeg") center/cover no-repeat;
+  background: url(images/skog.jpg) center/cover no-repeat;
   background-position: top center;
   display: flex;
   padding-left: 60px;
@@ -185,9 +185,12 @@ nav a:hover {
 }
 
 
+/*============================================================================================================================*/
+
+/* FOOTER */
 footer {
   text-align: center;
-  padding: 30px;
+  padding: 60px 60px 100px;
   background: #111;
   color: white;
 }
