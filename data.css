@@ -103,14 +103,13 @@
     left: 50%;
     transform: translateX(-50%) translateY(100px);
     transition: transform 0.3s ease;
-    width: 15%;
     display: flex;
     justify-content: center;
     gap: 2rem;
     padding: 1rem;
     background: rgba(120, 161, 255, 0.055);
     backdrop-filter: blur(8px);
-    box-sizing: border-box;
+    
     border-radius: 20px;
 }
 
@@ -131,7 +130,7 @@
 /* FOOTER */
 footer {
   text-align: center;
-  padding: 30px;
+  padding: 60px 60px 100px;
   background: #111;
   color: white;
 }
