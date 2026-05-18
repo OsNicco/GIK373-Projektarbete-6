@@ -48,6 +48,7 @@
 
 /* HERO BG BILD*/
 .hero {
+  position: relative;
   height: 150px;
   background: url(images/skog.jpg) center/cover no-repeat;
   display: flex;
@@ -56,6 +57,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) ;
   
 }
+
 
 .hero::after {
   content: "";
@@ -130,7 +132,7 @@
   padding: 6rem;
   padding-top: 1rem;
   margin: 0 auto;
-  
+  align-items: start;
 }
 ul {
   list-style: none;
