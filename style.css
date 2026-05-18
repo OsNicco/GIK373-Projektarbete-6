@@ -147,32 +147,32 @@
   border-radius: 0.125rem;
 }
 
+/* BOTTOM BAR */
+
 .bottom-bar {
   position: fixed;
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
   transition: transform 0.3s ease;
-  width: 15%;
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding: 1rem;
-  background: rgba(120, 161, 255, 0.055);
+  background: rgba(var(--color-secondary), 0.3);
   backdrop-filter: blur(8px);
-  box-sizing: border-box;
+
   border-radius: 20px;
 }
 
 .bottom-bar a {
-  color: rgb(37, 35, 83);
+  color: white;
   text-decoration: none;
   padding: 0.7rem;
 }
 
 .bottom-bar a:hover {
-  background: rgba(44, 255, 153, 0.645);
-  backdrop-filter: blur(8px);
+  background: rgba(var(--color-white), 0.3);
   border-radius: 6px;
 }
 
@@ -182,8 +182,10 @@
 footer {
   text-align: center;
   padding: 60px 60px 100px;
-  background: #111;
-  color: white;
+  overflow: hidden;
+  background: url(images/skog.jpg) center/cover no-repeat;
+  background-position: bottom center;
+  color: rgba(var(--color-white));
 }
 
 @media (max-width: 768px) {
