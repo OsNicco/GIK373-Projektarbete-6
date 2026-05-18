@@ -29,11 +29,11 @@
 }
 
 .header nav a {
-  color: #131138;
   font-size: 1.3rem;
   text-decoration: none;
   padding: 0.7rem;
   margin-right: 2rem;
+  color: rgba(var(--color-secondary));
 }
 
 .data:hover,
@@ -90,7 +90,7 @@
 
 .section-title {
   font-size: 1.8rem;
-  color: #131138;
+  color: rgba(var(--color-secondary));
   font-weight: 400;
 }
 
@@ -130,7 +130,7 @@
 }
 
 .visa-mer-btn {
-  background: #007353;
+  background: rgba(var(--color-primary), 1);
   color: white;
   border: none;
   padding: 0.5rem 1.1rem;
@@ -142,7 +142,7 @@
 
 .section-line {
   height: 0.19rem;
-  background: #007353;
+  background: rgba(var(--color-primary), 1);
   margin-top: 1.8rem;
   border-radius: 0.125rem;
 }
