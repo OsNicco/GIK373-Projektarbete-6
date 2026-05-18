@@ -94,19 +94,6 @@
   font-weight: 400;
 }
 
-.dots {
-  display: flex;
-  gap: 1rem;
-}
-
-.dots span {
-  width: 1rem;
-  height: 1rem;
-  background: #131138;
-  border-radius: 50%;
-  display: block;
-}
-
 .cards {
   display: flex;
   gap: 2rem;
