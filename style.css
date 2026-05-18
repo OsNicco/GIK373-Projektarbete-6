@@ -108,7 +108,7 @@
   flex-direction: column;
   min-height: 30rem;
   justify-content: flex-end;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .card-image {
