@@ -126,7 +126,15 @@
 
 .card-image {
   width: 100%;
-  background: #131138;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex: none;
+  object-fit: cover;
+  height: 30rem;
+}
+
+.sektion1-img {
+  width: 100%;
   border-radius: 0.5rem;
   margin-bottom: 0.75rem;
   flex: none;
