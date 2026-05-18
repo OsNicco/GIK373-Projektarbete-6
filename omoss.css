@@ -133,6 +133,7 @@
   padding-top: 1rem;
   margin: 0 auto;
   align-items: start;
+  
 }
 ul {
   list-style: none;
@@ -147,6 +148,13 @@ ul {
   padding: 1rem;
   color: white;
   
+}
+
+.sektion2 summary:hover,
+.sektion3 summary:hover{
+  text-decoration: underline;
+  cursor: pointer;
+  color: white
 }
 
 
