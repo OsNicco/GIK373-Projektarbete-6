@@ -116,7 +116,7 @@
 }
 
 .bottom-bar a {
-  color: white;
+  color: rgba(var(--color-white));
   text-decoration: none;
   padding: 0.7rem;
 }
