@@ -5,6 +5,14 @@
   font-family: Poppins, sans-serif;
 }
 
+:root {
+  --color-primary: #007353;
+  --color-secondary: #131138;
+  --color-background: #ffffff;
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
+
 .logo {
   width: 10rem;
   height: auto;
@@ -48,6 +56,7 @@
 
 /* HERO BG BILD*/
 .hero {
+  position: relative;
   height: 150px;
   background: url(images/skog.jpg) center/cover no-repeat;
   display: flex;
@@ -56,6 +65,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) ;
   
 }
+
 
 .hero::after {
   content: "";
@@ -85,7 +95,7 @@
 }
 
 .green-clean {
-  color: #007353;
+  color: var(--color-primary);
   font-weight: bold;
 }
 
@@ -103,7 +113,7 @@
   justify-content: center;
   align-items: flex-start;
   gap: 2rem;
-  padding: 30px;
+  padding-top: 4rem;
 }
 
 #sek1 .sektion1 {
@@ -111,7 +121,7 @@
 }
 
 .sektion1-img {
-  background: #ddd;
+  background: #ddd; /* Placeholder color for the image */
   width: 100%;
   max-width: 500px;
   height: auto;
@@ -130,6 +140,7 @@
   padding: 6rem;
   padding-top: 1rem;
   margin: 0 auto;
+  align-items: start;
   
 }
 ul {
@@ -139,12 +150,19 @@ ul {
 
 .sektion2,
 .sektion3 {
-  background-color: #007353;
+  background-color: var(--color-primary);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
   border-radius: 1rem;
   padding: 1rem;
-  color: white;
+  color: var(--color-white);
   
+}
+
+.sektion2 summary:hover,
+.sektion3 summary:hover{
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--color-white)
 }
 
 
@@ -160,21 +178,18 @@ ul {
 .divider::after {
   content: "";
   flex: 1;
-  border-bottom: 2px solid #131138;
+  border-bottom: 2px solid var(--color-secondary);
 }
 
 .divider span {
   padding: 0 15px;
   font-weight: bold;
-  color: #007353;
+  color: var(--color-primary);
 }
 
-/*============================================================================================================================*/
-
-/* FOOTER */
 footer {
   text-align: center;
   padding: 60px 60px 100px;
-  background: #111;
-  color: white;
+  background: var(--color-black);
+  color: var(--color-white);
 }
