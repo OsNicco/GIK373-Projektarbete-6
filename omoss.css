@@ -6,11 +6,11 @@
 }
 
 :root {
-  --color-primary: #007353;
-  --color-secondary: #131138;
-  --color-background: #ffffff;
-  --color-white: #ffffff;
-  --color-black: #000000;
+  --color-primary: 0, 115, 83;
+  --color-secondary: 19, 17, 56;
+  --color-background: 255, 255, 255;
+  --color-white: 255, 255, 255;
+  --color-black: 0, 0, 0;
 }
 
 .logo {
@@ -95,14 +95,15 @@
 }
 
 .green-clean {
-  color: var(--color-primary);
+  color: rgba(var(--color-primary), 1);
   font-weight: bold;
 }
 
 #sek1 h1 {
   width: 100%;
-  margin-bottom: 20px;
-  font-size: 40px;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: rgba(var(--color-secondary), 1);
 }
 
 
@@ -150,11 +151,11 @@ ul {
 
 .sektion2,
 .sektion3 {
-  background-color: var(--color-primary);
+  background-color: rgba(var(--color-primary));
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
   border-radius: 1rem;
   padding: 1rem;
-  color: var(--color-white);
+  color: rgba(var(--color-white));
   
 }
 
@@ -162,7 +163,18 @@ ul {
 .sektion3 summary:hover{
   text-decoration: underline;
   cursor: pointer;
-  color: var(--color-white)
+  color: rgba(var(--color-white));
+}
+
+.sektion2 a,
+.sektion3 a {
+  color: rgba(var(--color-secondary));
+  text-decoration: none;
+}
+
+.sektion2 a:hover,
+.sektion3 a:hover {
+  text-decoration: underline;
 }
 
 
@@ -178,18 +190,18 @@ ul {
 .divider::after {
   content: "";
   flex: 1;
-  border-bottom: 2px solid var(--color-secondary);
+  border-bottom: 2px solid rgba(var(--color-secondary));
 }
 
 .divider span {
   padding: 0 15px;
   font-weight: bold;
-  color: var(--color-primary);
+  color: rgba(var(--color-primary));
 }
 
 footer {
   text-align: center;
   padding: 60px 60px 100px;
-  background: var(--color-black);
-  color: var(--color-white);
+  background: rgba(var(--color-black));
+  color: rgba(var(--color-white));
 }
