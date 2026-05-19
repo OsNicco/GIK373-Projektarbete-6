@@ -12,9 +12,3 @@ window.addEventListener("scroll", () => {
 });
 
 // ============================================================================================================================= //
-
-const RecyUrl =
-  "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/env_waspacr$defaultview/1.0?references=descendants&detail=referencepartial";
-
-const test = await fetch(RecyUrl).then((response) => response.json());
-console.log(test);
