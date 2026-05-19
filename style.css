@@ -45,7 +45,7 @@
 
 /* HERO BG BILD*/
 .hero {
-  height: 55rem;
+  height: 1100px;
   background: url(images/skog.jpg) center/cover no-repeat;
   background-position: top center;
   display: flex;
