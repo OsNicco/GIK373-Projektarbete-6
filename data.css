@@ -61,7 +61,6 @@
   display: flex;
   overflow: hidden;
   background-position: top center;
-
   box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
 }
 
