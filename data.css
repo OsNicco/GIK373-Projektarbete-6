@@ -121,7 +121,6 @@ body {
 }
 
 .data-container {
-  height: 1000px; /*TEEEEEEEEEEEEEEEEEEEEESSSSSSSTTTTTTTTTTTTTT*/
   margin: 1rem;
   padding: 5rem 8rem;
 }
@@ -176,6 +175,191 @@ body {
 .card p {
   color: rgba(var(--color-secondary), 0.8);
 }
+/*============================================================================================================================*/
+
+/* CHART */
+
+/* ── Diagram-sektion ── */
+.chart-section {
+  margin: 9rem;
+}
+ 
+.chart-section-header {
+  margin-bottom: 1.5rem;
+}
+ 
+.chart-section-header h2 {
+  font-size: 1.8rem;
+  color: rgba(var(--color-secondary));
+  margin-bottom: 0.4rem;
+}
+ 
+.chart-section-header p {
+  font-size: 0.8rem;
+  color: rgba(var(--color-secondary), 0.55);
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.03em;
+}
+ 
+/* Knappar */
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+ 
+.chart-controls span {
+  font-size: 0.8rem;
+  color: rgba(var(--color-secondary), 0.6);
+  margin-right: 0.25rem;
+}
+ 
+.chart-btn {
+  padding: 0.7rem 1.1rem;
+  border: 1.5px solid rgba(var(--color-secondary), 0.2);
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: rgba(var(--color-secondary));
+}
+ 
+.chart-btn:hover {
+  background: rgba(var(--color-secondary), 1);
+  color: rgba(var(--color-white));
+  border-color: rgba(var(--color-secondary));
+}
+ 
+.chart-btn.active {
+  background: rgba(var(--color-primary));
+  color: rgba(var(--color-white));
+  border-color: rgba(var(--color-primary));
+}
+ 
+/* ── Nyckeltalskort ── */
+.chart-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+ 
+.chart-stat-card {
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(3px);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.07);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+ 
+.chart-stat-card:hover {
+  transform: translateY(-3px);
+}
+ 
+.chart-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--card-accent, rgba(var(--color-primary)));
+  border-radius: 4px 0 0 4px;
+}
+ 
+.chart-stat-card .cs-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(var(--color-secondary), 0.5);
+  margin-bottom: 0.35rem;
+}
+ 
+.chart-stat-card .cs-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(var(--color-secondary));
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+ 
+.chart-stat-card .cs-sub {
+  font-size: 0.7rem;
+  color: rgba(var(--color-secondary), 0.5);
+}
+ 
+/* Diagramgrid */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1.5rem;
+}
+ 
+.chart-card {
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(3px);
+  border-radius: 20px;
+  padding: 1.5rem 1.8rem;
+  box-shadow: 0 8px 20px rgba(var(--color-secondary), 0.08);
+}
+ 
+.chart-card.full {
+  grid-column: 1 / -1;
+}
+ 
+.chart-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(var(--color-secondary));
+  margin-bottom: 0.2rem;
+}
+ 
+.chart-card-sub {
+  font-size: 0.72rem;
+  color: rgba(var(--color-secondary), 0.45);
+  margin-bottom: 1.2rem;
+}
+ 
+.chart-wrap {
+  position: relative;
+  height: 260px;
+}
+ 
+/* Laddning / fel */
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  font-size: 0.85rem;
+  color: rgba(var(--color-secondary), 0.4);
+  letter-spacing: 0.04em;
+}
+ 
+.chart-loading span {
+  animation: chartPulse 1.4s ease-in-out infinite;
+}
+ 
+@keyframes chartPulse {
+  0%, 100% { opacity: 0.25; }
+  50%       { opacity: 1; }
+}
+ 
+.chart-error {
+  background: rgba(220, 50, 50, 0.05);
+  border: 1px solid rgba(220, 50, 50, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+  font-size: 0.85rem;
+  color: #c0392b;
+  margin: 1rem 0;
+}
+
 
 /*============================================================================================================================*/
 

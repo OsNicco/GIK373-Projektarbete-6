@@ -12,6 +12,9 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
   </head>
   <body>
     <!-- NAV -->
@@ -37,7 +40,7 @@
       <div class="intro">
         <h1>MILJÖDATA</h1>
         <p>
-          Aktuell statistik och analyser kring återvinning och hållbar
+          Statistik och analyser kring återvinning och hållbar
           utveckling.
         </p>
       </div>
@@ -69,6 +72,28 @@
       </div>
     </section>
 
+<!--Chart-->
+
+  <div class="chart-section">
+ 
+        <div class="chart-section-header">
+          <h2>Förpackningsåtervinning i Sverige</h2>
+          <p>Källa: Naturvårdsverket via SCB (2020-2024)</p>
+        </div>
+ 
+        <div class="chart-controls">
+          <button class="chart-btn active" onclick="setView('ton', event)">Mängd (ton)</button>
+          <button class="chart-btn" onclick="setView('procent', event)">Återvinningsgrad (%)</button>
+          <button class="chart-btn" onclick="setView('bada', event)">Båda</button>
+        </div>
+ 
+        <div id="chart-main">
+          <div class="chart-loading"><span>Hämtar data från SCB…</span></div>
+        </div>
+ 
+      </div>
+
+    
     <!--Bottom-bar-->
     <div class="bottom-bar">
       <div class="bottom-navbar">
