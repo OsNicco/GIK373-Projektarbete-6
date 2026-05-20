@@ -13,6 +13,14 @@
   --color-black: 0, 0, 0;
 }
 
+.focus {
+  color: rgba(var(--color-primary))
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 /*============================================================================================================================*/
 
 /* HEADER */
@@ -116,10 +124,11 @@
 /* BODY */
 
 body {
-  background: #eeeef4;
+  background: rgba(var(--color-background));
 }
 
 .data-container {
+  text-align: center;
   margin: 1rem;
   padding: 5rem 8rem;
 }
@@ -138,21 +147,27 @@ body {
   max-width: 700px;
   line-height: 1.8;
   color: rgba(var(--color-secondary), 0.8);
+
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* STATS GRID */
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
 }
 
-.card {
+
+.card-btn {
+  display: block;
+  text-decoration: none;
   padding: 2.5rem;
   border-radius: 20px;
 
-  background: rgba(var(--color-white), 0.6);
+  background: rgba(var(--color-secondary), 0.1);
   backdrop-filter: blur(3px);
 
   box-shadow: 0 8px 20px rgba(var(--color-secondary), 0.1);
@@ -160,18 +175,19 @@ body {
   transition: transform 0.3s ease;
 }
 
-.card:hover {
+.card-btn:hover {
   transform: translateY(-5px);
-  background: rgba(var(--color-primary), 0.1);
+  background: rgba(var(--color-primary), 0.3);
+  backdrop-filter: blur(3px);
 }
 
-.card h2 {
+.card-btn h2 {
   font-size: 2rem;
   color: rgba(var(--color-primary));
   margin-bottom: 1rem;
 }
 
-.card p {
+.card-btn p {
   color: rgba(var(--color-secondary), 0.8);
 }
 /*============================================================================================================================*/
