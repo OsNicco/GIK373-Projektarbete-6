@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -19,6 +20,18 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+.test {
+  background: rgba(var(--color-secondary), 0.1);
+  display: flex;
+  text-decoration: none;
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: 100rem;
+  height: 50rem;
+  justify-self: center;
+
 }
 
 /*============================================================================================================================*/
@@ -127,11 +140,15 @@ body {
   background: rgba(var(--color-background));
 }
 
-.data-container {
+/*============================================================================================================================*/
+
+.intro-container {
   text-align: center;
   margin: 1rem;
   padding: 5rem 8rem;
 }
+
+/*--------------------------------------------------------------------------*/
 
 .intro {
   margin-bottom: 4rem;
@@ -154,12 +171,11 @@ body {
 
 /* STATS GRID */
 
-.stats-grid {
+.stats-grid-nav {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
 }
-
 
 .card-btn {
   display: block;
@@ -177,8 +193,7 @@ body {
 
 .card-btn:hover {
   transform: translateY(-5px);
-  background: rgba(var(--color-primary), 0.3);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(8px);
 }
 
 .card-btn h2 {
