@@ -68,11 +68,6 @@
   margin-bottom: 10px;
 }
 
-.section {
-  display: block;
-  padding: 4rem;
-  padding-bottom: 14rem;
-}
 
 .hem {
   background: rgba(var(--color-white), 0.9);
@@ -85,6 +80,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
+  padding: 3rem;
 }
 
 .section-title {
@@ -93,57 +89,81 @@
   font-weight: 400;
 }
 
-.cards {
-  display: flex;
-  gap: 2rem;
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 40px;
 }
 
-.card {
-  flex: 1;
-  background: rgba(var(--color-secondary), 0.1);
-  border-radius: 1rem;
-  padding: 1rem;
+/* själva “kortet” */
+.tile {
+  background: #131138;
+  border-radius: 24px; /* viktigt för känslan */
+  padding: 24px;
+  color: white;
   display: flex;
   flex-direction: column;
-  min-height: 30rem;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  min-height: 180px;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card-image {
-  width: 100%;
-  border-radius: 0.5rem;
-  margin-bottom: 0.75rem;
-  flex: none;
-  object-fit: cover;
-  height: 30rem;
+/* lite “modern UI hover” som Gapminder/modern sites */
+.tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  background: #007353;
 }
 
-.sektion1-img {
-  width: 100%;
-  border-radius: 0.5rem;
-  margin-bottom: 0.75rem;
-  flex: none;
-  object-fit: cover;
-  height: 30rem;
+/* inputs */
+.tile input {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
 }
 
-.visa-mer-btn {
-  background: rgba(var(--color-primary), 1);
-  color: rgba(var(--color-white));
-  border: none;
-  padding: 0.5rem 1.1rem;
-  border-radius: 0.8rem;
-  cursor: pointer;
-  font-family: "Poppins", sans-serif;
-  font-size: 0.85rem;
+/* 📱 responsivitet (viktigt!) */
+@media (max-width: 1000px) {
+  .tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.section-line {
-  height: 0.19rem;
-  background: rgba(var(--color-primary), 1);
-  margin-top: 1.8rem;
-  border-radius: 0.125rem;
+@media (max-width: 600px) {
+  .tiles {
+    grid-template-columns: 1fr;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 10px auto;
+  width: 85%;
+  margin-top: 3rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px solid rgba(var(--color-secondary));
+}
+
+.divider span {
+  padding: 0 15px;
+  font-weight: bold;
+  color: rgba(var(--color-primary));
 }
 
 /* BOTTOM BAR */
