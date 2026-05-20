@@ -43,7 +43,7 @@
   border-radius: 6px;
 }
 
-/* HERO BG BILD*/
+
 .hero {
   height: 1100px;
   background: url(images/skog.jpg) center/cover no-repeat;
@@ -96,7 +96,7 @@
   padding: 40px;
 }
 
-/* själva “kortet” */
+/* rutor */
 .tile {
   background: #131138;
   border-radius: 24px; /* viktigt för känslan */
@@ -117,32 +117,21 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* lite “modern UI hover” som Gapminder/modern sites */
+
 .tile:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(0,0,0,0.12);
   background: #007353;
 }
 
-/* inputs */
+
 .tile input {
   padding: 10px;
   border-radius: 12px;
   border: 1px solid #ddd;
 }
 
-/* 📱 responsivitet (viktigt!) */
-@media (max-width: 1000px) {
-  .tiles {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
-@media (max-width: 600px) {
-  .tiles {
-    grid-template-columns: 1fr;
-  }
-}
 
 .divider {
   display: flex;
@@ -195,7 +184,6 @@
   border-radius: 6px;
 }
 
-/*============================================================================================================================*/
 
 /* FOOTER */
 footer {
@@ -207,9 +195,15 @@ footer {
   color: rgba(var(--color-white));
 }
 
-@media (max-width: 1440px) {
-  .cards {
-    flex-direction: column;
-    gap: 2rem;
+
+@media (max-width: 1000px) {
+  .tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .tiles {
+    grid-template-columns: 1fr;
   }
 }
