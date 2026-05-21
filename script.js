@@ -24,9 +24,14 @@ window.addEventListener("scroll", () => {
   if (statsBottom < 0) {
     sideBar.style.transform = "translateY(-50%) translateX(0)";
   } else {
-    sideBar.style.transform = "translateY(-50%) translateX(-120px)";
+    sideBar.style.transform = "translateY(-50%) translateX(120px)";
   }
 });
+
+// ============================================================================================================================= //
+
+//HÄR EBBA!!!!!!!!!!!!!!!!!!
+
 
 // ============================================================================================================================= //
 
