@@ -169,7 +169,7 @@
   justify-content: center;
   gap: 2rem;
   padding: 1rem;
-  background: rgba(var(--color-secondary), 0.3);
+  background: rgba(var(--color-primary), 0.3);
   backdrop-filter: blur(8px);
 
   border-radius: 20px;
