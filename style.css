@@ -220,13 +220,25 @@ footer {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%);
+  background: 
+  linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%);
 }
 
 
 
-.hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.1; }
-.hero p { font-size: 0.9rem; line-height: 1.6; opacity: 0.92; margin-bottom: 1.5rem; }
+.hero h1 { 
+  font-size: 3.5rem; 
+  font-weight: 700; 
+  margin-bottom: 0.75rem; 
+  line-height: 1.1; 
+}
+
+.hero p { 
+  font-size: 0.9rem; 
+  line-height: 1.6; 
+  opacity: 0.92; 
+  margin-bottom: 1.5rem; 
+}
 
 .hero-btn {
   display: inline-block;
@@ -240,9 +252,15 @@ footer {
   transition: background 0.2s;
 }
 
-.hero-btn:hover { background: rgba(0, 90, 65); }
+.hero-btn:hover { 
+  background: rgba(0, 90, 65); 
+}
 
-.recycling-section { padding: 3.5rem 2rem 2rem; text-align: center; background: white; }
+.recycling-section { 
+  padding: 3.5rem 2rem 2rem; 
+  text-align: center; 
+  background: white; 
+}
 
 .recycling-title {
   font-size: 1.5rem;
@@ -261,7 +279,9 @@ footer {
   overflow: hidden;
 }
 
-.carousel-track-container { overflow: hidden; flex: 1; }
+.carousel-track-container { 
+  overflow: hidden; flex: 1; 
+}
 
 .carousel-track {
   display: flex;
@@ -285,11 +305,36 @@ footer {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tile h1 { font-size: 2.4rem; font-weight: 700; line-height: 1; }
-.tile h3 { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; margin-top: 0.3rem; opacity: 0.85; }
-.tile-sub { font-size: 0.75rem; line-height: 1.4; margin-top: 0.4rem; opacity: 0.85; }
-.tile--highlight { background: rgba(var(--color-primary)); }
-.tile:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+.tile h1 { 
+  font-size: 2.4rem; 
+  font-weight: 700; 
+  line-height: 1; 
+}
+
+.tile h3 {
+   font-size: 0.75rem; 
+   font-weight: 500; 
+   letter-spacing: 0.08em; 
+   margin-top: 0.3rem; 
+   opacity: 0.85; 
+  }
+
+.tile-sub {
+   font-size: 0.75rem; 
+   line-height: 1.4; 
+   margin-top: 0.4rem; 
+   opacity: 0.85; 
+  }
+
+.tile--highlight {
+   background: rgba(var(--color-primary)); 
+  }
+
+.tile:hover {
+   transform: translateY(-4px); 
+   box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+  }
+
 
 .carousel-btn {
   background: none;
@@ -376,8 +421,8 @@ footer {
     align-items: flex-end; 
   }
 
-  .explore-card__text--right p 
-{ text-align: right; 
+  .explore-card__text--right p {
+    text-align: right; 
 }
 
 .explore-btn {
