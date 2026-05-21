@@ -34,6 +34,7 @@
   padding: 0.7rem;
   margin-right: 2rem;
   color: rgba(var(--color-secondary));
+  font-weight: 500;
 }
 
 .data:hover,
@@ -207,3 +208,216 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+
+
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%);
+}
+
+
+
+.hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.1; }
+.hero p { font-size: 0.9rem; line-height: 1.6; opacity: 0.92; margin-bottom: 1.5rem; }
+
+.hero-btn {
+  display: inline-block;
+  background: rgba(var(--color-primary));
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.hero-btn:hover { background: rgba(0, 90, 65); }
+
+.recycling-section { padding: 3.5rem 2rem 2rem; text-align: center; background: white; }
+
+.recycling-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(var(--color-secondary));
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+}
+
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel-track-container { overflow: hidden; flex: 1; }
+
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.4s ease;
+}
+
+.tile {
+  background: rgba(var(--color-secondary));
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 140px;
+  min-width: calc(25% - 12px);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tile h1 { font-size: 2.4rem; font-weight: 700; line-height: 1; }
+.tile h3 { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; margin-top: 0.3rem; opacity: 0.85; }
+.tile-sub { font-size: 0.75rem; line-height: 1.4; margin-top: 0.4rem; opacity: 0.85; }
+.tile--highlight { background: rgba(var(--color-primary)); }
+.tile:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+
+.carousel-btn {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  color: rgba(var(--color-secondary));
+  cursor: pointer;
+  padding: 0.2rem 0.6rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.carousel-btn:hover { opacity: 1; }
+
+.carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 1.2rem; }
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(var(--color-secondary), 0.2);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dot--active { background: rgba(var(--color-primary)); }
+
+.explore-section { 
+  padding: 3rem 2rem 4rem; 
+  max-width: 1400px; 
+  margin: 0 auto; 
+}
+
+.explore-title { font-size: 1.5rem; font-weight: 700; color: rgba(var(--color-secondary)); text-align: center; margin-bottom: 0.4rem; }
+.explore-sub { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 2rem; }
+
+.explore-card {
+  display: flex;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  min-height: 400px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  position: relative;
+}
+
+.explore-card--light { background: white; border: 1px solid #eee; }
+.explore-card--image { background: #222; }
+
+.explore-card__text {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 2;
+}
+
+.explore-card__text h3 { 
+  font-size: 1rem; 
+  font-weight: 700; 
+  color: rgba(var(--color-primary)); letter-spacing: 0.05em; 
+}
+
+.explore-card__text p {
+   font-size: 0.82rem; 
+   color: #555; 
+   line-height: 1.5; 
+   max-width: 340px; 
+  }
+
+  .explore-card--image .explore-card__text p {
+   color: rgba(255,255,255,0.85); 
+  }
+
+  .explore-card--image .explore-card__text h3 {
+   color: white; 
+  }
+
+  .explore-card__text--right {
+   text-align: right;
+    align-items: flex-end; 
+  }
+
+  .explore-card__text--right p 
+{ text-align: right; 
+}
+
+.explore-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.55rem 2rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s;
+  width: fit-content;
+  margin-top: 0.4rem;
+}
+
+.explore-btn--dark { 
+  background: rgba(var(--color-secondary));
+   color: white; 
+  }
+.explore-btn--green { background: rgba(var(--color-primary)); color: white; }
+.explore-btn:hover { opacity: 0.85; }
+
+.explore-card__bg { width: 45%; flex-shrink: 0; position: relative; }
+
+
+
+
+.explore-card__bg--topography {
+  background-color: #db0000;
+
+}
+
+.explore-card__bg--forest {
+  background: url(images/skog.jpg) center/cover no-repeat;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+
+
+
+
+
