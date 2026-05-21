@@ -32,6 +32,53 @@ window.addEventListener("scroll", () => {
 
 //HÄR EBBA!!!!!!!!!!!!!!!!!!
 
+const track = document.querySelector('.track');
+const tiles = document.querySelectorAll('.tile');
+
+const right = document.querySelector('.right');
+const left = document.querySelector('.left');
+
+const tileWidth = tiles[0].offsetWidth + 16; // 16 = gap
+
+let isAnimating = false;
+
+right.addEventListener('click', () => {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    track.style.transition = 'transform 0.4s ease';
+    track.style.transform = `translateX(-${tileWidth}px)`;
+
+    track.addEventListener('transitionend', () => {
+        track.appendChild(track.firstElementChild);
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(0)';
+        isAnimating = false;
+    }, { once: true });
+});
+
+left.addEventListener('click', () => {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    // flytta sista till början direkt (utan animation)
+    track.insertBefore(track.lastElementChild, track.firstElementChild);
+
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-${tileWidth}px)`;
+
+    // tvinga reflow så browser “fattar” läget
+    track.offsetHeight;
+
+    // animera tillbaka till 0
+    track.style.transition = 'transform 0.4s ease';
+    track.style.transform = 'translateX(0)';
+
+    track.addEventListener('transitionend', () => {
+        isAnimating = false;
+    }, { once: true });
+});
+
 
 // ============================================================================================================================= //
 
