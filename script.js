@@ -1,3 +1,5 @@
+//Bottom bar
+
 const bottomBar = document.querySelector(".bottom-bar");
 const nav = document.querySelector("nav");
 
@@ -8,6 +10,21 @@ window.addEventListener("scroll", () => {
     bottomBar.style.transform = "translateX(-50%) translateY(0)";
   } else {
     bottomBar.style.transform = "translateX(-50%) translateY(100px)";
+  }
+});
+
+//Side bar
+
+const sideBar = document.querySelector(".side-bar");
+const statsGridNav = document.querySelector(".stats-grid-nav");
+
+window.addEventListener("scroll", () => {
+  const statsBottom = statsGridNav.getBoundingClientRect().bottom;
+
+  if (statsBottom < 0) {
+    sideBar.style.transform = "translateY(-50%) translateX(0)";
+  } else {
+    sideBar.style.transform = "translateY(-50%) translateX(-120px)";
   }
 });
 

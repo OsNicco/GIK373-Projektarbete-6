@@ -188,7 +188,7 @@ body {
   padding: 2.5rem;
   border-radius: 20px;
 
-  background: rgba(var(--color-secondary), 0.1);
+  background: rgba(var(--color-primary), 0.1);
   backdrop-filter: blur(3px);
 
   box-shadow: 0 8px 20px rgba(var(--color-secondary), 0.1);
@@ -397,6 +397,37 @@ body {
 
 
 /*============================================================================================================================*/
+
+/* SIDE BAR */
+
+
+.side-bar {
+  position: fixed;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%) translateX(-120px);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(var(--color-primary), 0.3);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+}
+
+.side-bar-btn {
+  color: rgba(var(--color-white));
+  text-decoration: none;
+  padding: 0.7rem;
+}
+
+.side-bar-btn:hover {
+  background: rgba(var(--color-white), 0.3);
+  border-radius: 6px;
+}
+
+
 
 /* BOTTOM BAR */
 
