@@ -224,6 +224,14 @@ function getBäst(data) {
 
 // -------------------------------------------------------
 // Linjediagramkort
+
+
+
+
+
+
+
+
 // -------------------------------------------------------
 function makeLineCard(data, innehållKod, title, sub, unit, full) {
   const card = document.createElement("div");
