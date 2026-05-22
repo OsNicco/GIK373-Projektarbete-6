@@ -405,7 +405,7 @@ body {
   position: fixed;
   top: 50%;
   right: 1rem;
-  transform: translateY(-50%) translateX(-120px);
+  transform: translateY(-50%) translateX(120px);
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
