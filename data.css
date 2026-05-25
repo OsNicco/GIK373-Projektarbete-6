@@ -485,6 +485,7 @@ body {
 
 /* FOOTER */
 footer {
+  margin-top: 5rem;
   text-align: center;
   padding: 60px 60px 100px;
   overflow: hidden;
