@@ -185,7 +185,8 @@ a.focus:hover {
   text-decoration: underline;
 }
 
-/* NAVIGERIGSKORT - FÖR ATT FLYTTA SIG PÅ SIDAN*/
+/*=================================== NAVIGERIGSKORT - FÖR ATT FLYTTA SIG PÅ SIDAN ==========================================*/
+
 
 .stats-grid-nav {
   display: grid;
@@ -222,33 +223,32 @@ a.focus:hover {
 .card-btn p {
   color: rgba(var(--color-secondary), 0.8);
 }
+
+/*================================================= ALLA SEKTIONER ====================================================*/
+
+
+/*====================================================== SEKTION 1 ====================================================*/
+
+/* Diagram-sektion */
+.chart-section {
+  padding: 10rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10rem;
+}
+.s1-grid {
+  background: rgba(var(--color-primary), 0.6);
+}
+
+.s2-grid {
+  background: rgba(var(--color-secondary), 0.6);
+}
+
+
 /*============================================================================================================================*/
 
-/* CHART */
-
-/* ── Diagram-sektion ── */
-.chart-section {
-  margin: 9rem;
-}
- 
-.chart-section-header {
-  margin-bottom: 1.5rem;
-}
- 
-.chart-section-header h2 {
-  font-size: 1.8rem;
-  color: rgba(var(--color-secondary));
-  margin-bottom: 0.4rem;
-}
- 
-.chart-section-header p {
-  font-size: 0.8rem;
-  color: rgba(var(--color-secondary), 0.55);
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 0.03em;
-}
- 
 /* Knappar */
+
 .chart-controls {
   display: flex;
   align-items: center;
@@ -287,7 +287,10 @@ a.focus:hover {
   border-color: rgba(var(--color-primary));
 }
  
-/* ── Nyckeltalskort ── */
+/* ============================================================================================================================ */
+
+/* Nyckeltalskort */
+
 .chart-summary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
