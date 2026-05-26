@@ -36,7 +36,7 @@ html {
   justify-self: center;
 
   background-color: var(--bg-color);
-  background-image: var(--bg-waves);
+ 
 }
 
 /*============================================================================================================================*/
@@ -366,25 +366,7 @@ body {
   height: 260px;
 }
  
-/* Laddning / fel */
-.chart-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  font-size: 0.85rem;
-  color: rgba(var(--color-secondary), 0.4);
-  letter-spacing: 0.04em;
-}
- 
-.chart-loading span {
-  animation: chartPulse 1.4s ease-in-out infinite;
-}
- 
-@keyframes chartPulse {
-  0%, 100% { opacity: 0.25; }
-  50%       { opacity: 1; }
-}
+
  
 .chart-error {
   background: rgba(220, 50, 50, 0.05);
