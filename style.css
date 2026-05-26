@@ -417,8 +417,20 @@ footer {
   margin: 0 auto; 
 }
 
-.explore-title { font-size: 1.5rem; font-weight: 700; color: rgba(var(--color-secondary)); text-align: center; margin-bottom: 0.4rem; }
-.explore-sub { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 2rem; }
+.explore-title { font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(var(--color-secondary)); 
+  text-align: center; 
+  margin-bottom: 0.4rem; 
+}
+
+
+.explore-sub { 
+  text-align: center; 
+  color: #888; 
+  font-size: 0.85rem; 
+  margin-bottom: 2rem; 
+}
 
 .explore-card {
   display: flex;
@@ -430,12 +442,19 @@ footer {
   position: relative;
 }
 
-.explore-card--light { background: white; border: 1px solid #eee; }
-.explore-card--image { background: #222; }
+.explore-card--light { 
+  background: white; 
+  border: 1px solid #eee; 
+}
+
+
+.explore-card--image { 
+  background: #222; 
+}
 
 .explore-card__text {
   flex: 1;
-  padding: 2rem;
+  padding: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -445,13 +464,13 @@ footer {
 }
 
 .explore-card__text h3 { 
-  font-size: 1rem; 
+  font-size: 1.25rem; 
   font-weight: 700; 
   color: rgba(var(--color-primary)); letter-spacing: 0.05em; 
 }
 
 .explore-card__text p {
-   font-size: 0.82rem; 
+   font-size: 1rem; 
    color: #555; 
    line-height: 1.5; 
    max-width: 340px; 
@@ -477,9 +496,9 @@ footer {
 .explore-btn {
   display: inline-block;
   text-decoration: none;
-  padding: 0.55rem 2rem;
+  padding: 1rem 2.2rem;
   border-radius: 8px;
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   transition: opacity 0.2s;
@@ -491,8 +510,15 @@ footer {
   background: rgba(var(--color-secondary));
    color: white; 
   }
-.explore-btn--green { background: rgba(var(--color-primary)); color: white; }
-.explore-btn:hover { opacity: 0.85; }
+  
+.explore-btn--green { 
+  background: rgba(var(--color-primary)); 
+  color: white; 
+}
+
+.explore-btn:hover { 
+  opacity: 0.85; 
+}
 
 .explore-card__bg { width: 45%; flex-shrink: 0; position: relative; }
 
