@@ -93,38 +93,49 @@
       </div>
     </section>
 
+
+<!--Sektion 1-->
+
     <section>
       <div class="divider" id="data-sektion-1">
         <span>data-sektion-1</span>
       </div>
 
-      <!--Chart-->
-
       <div class="chart-section">
-        <div class="chart-section-header">
+        <div class="s1-grid">
           <h2>Förpackningsåtervinning i Sverige</h2>
           <p>Källa: Naturvårdsverket via SCB (2012-2024)</p>
+          <h1>Tillförd mängd och materialåtervinning per förpackningsslag (Sverige)</h1>
+          <p>Linjediagrammen visar både den totala mängden förpackningar som sätts på marknaden och hur stor andel som återvinns för respektive materialslag i Sverige. Tillsammans ger de en tydligare bild av hur materialflödena fungerar genom hela systemet från konsumtion till återvinning.
+          Resultaten visar att material som papper och glas har mycket höga återvinningsgrader i relation till den tillförda mängden, vilket indikerar ett effektivt insamlings- och återvinningssystem för dessa material. Plastförpackningar däremot uppvisar en större obalans mellan tillförd mängd och faktisk materialåtervinning, vilket innebär att en betydande del av plastflödet inte återförs till kretsloppet.
+          Forskning visar att skillnader i återvinningsgrad ofta beror på en kombination av tekniska begränsningar i återvinningsprocesser och systemnivåfaktorer såsom ekonomiska styrmedel och insamlingsinfrastruktur. Särskilt plastförpackningar påverkas av dessa faktorer, eftersom mer komplexa materialflöden generellt är svårare att återföra till effektiva kretslopp (Letters in Spatial and Resource Sciences, 2017). Detta illustrerar att en hög tillförd mängd inte automatiskt leder till hög materialåtervinning, utan att systemets utformning är avgörande. 
+          </p>
         </div>
 
-        <div class="chart-controls">
-          <button class="chart-btn active" onclick="setView('ton', event)">
-            Mängd (ton)
-          </button>
-          <button class="chart-btn" onclick="setView('procent', event)">
-            Återvinningsgrad (%)
-          </button>
-          <button class="chart-btn" onclick="setView('bada', event)">
-            Båda
-          </button>
+          <div class="s2-grid">
+            <div class="chart-controls">
+              <button class="chart-btn active" onclick="setView('ton', event)">
+                Mängd (ton)
+              </button>
+              <button class="chart-btn" onclick="setView('procent', event)">
+                Återvinningsgrad (%)
+              </button>
+              <button class="chart-btn" onclick="setView('bada', event)">
+                Båda
+              </button>
+            </div>
+          <div id="chart-main"></div> <!--GRAFER FÖR SEKTION 1. BÖR FIXAS LITE KNASIGA-->
         </div>
-        <h1>Tillförd mängd och materialåtervinning per förpackningsslag (Sverige)</h1>
-        <p>Linjediagrammen visar både den totala mängden förpackningar som sätts på marknaden och hur stor andel som återvinns för respektive materialslag i Sverige. Tillsammans ger de en tydligare bild av hur materialflödena fungerar genom hela systemet från konsumtion till återvinning.
-Resultaten visar att material som papper och glas har mycket höga återvinningsgrader i relation till den tillförda mängden, vilket indikerar ett effektivt insamlings- och återvinningssystem för dessa material. Plastförpackningar däremot uppvisar en större obalans mellan tillförd mängd och faktisk materialåtervinning, vilket innebär att en betydande del av plastflödet inte återförs till kretsloppet.
-Forskning visar att skillnader i återvinningsgrad ofta beror på en kombination av tekniska begränsningar i återvinningsprocesser och systemnivåfaktorer såsom ekonomiska styrmedel och insamlingsinfrastruktur. Särskilt plastförpackningar påverkas av dessa faktorer, eftersom mer komplexa materialflöden generellt är svårare att återföra till effektiva kretslopp (Letters in Spatial and Resource Sciences, 2017). Detta illustrerar att en hög tillförd mängd inte automatiskt leder till hög materialåtervinning, utan att systemets utformning är avgörande. 
-</p>
-        <div id="chart-main"></div>
       </div>
     </section>
+
+
+
+
+
+
+
+
 
     <section>
       <div class="divider" id="data-sektion-2">

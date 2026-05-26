@@ -39,6 +39,9 @@ html {
  
 }
 
+
+
+
 /*============================================================================================================================*/
 
 /* HEADER */
@@ -182,7 +185,7 @@ a.focus:hover {
   text-decoration: underline;
 }
 
-/* STATS GRID */
+/* NAVIGERIGSKORT - FÖR ATT FLYTTA SIG PÅ SIDAN*/
 
 .stats-grid-nav {
   display: grid;
@@ -374,7 +377,6 @@ a.focus:hover {
   height: 260px;
 }
  
-
  
 .chart-error {
   background: rgba(220, 50, 50, 0.05);
