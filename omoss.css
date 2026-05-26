@@ -56,46 +56,20 @@
 
 /* HERO BG BILD*/
 .hero {
-  position: relative;
   height: 150px;
   background: url(images/skog.jpg) center/cover no-repeat;
   display: flex;
   overflow: hidden;
   background-position: top center;
-  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
-  
+  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
 }
 
 
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
 
-.hero-text {
-  position: relative;
-  max-width: 700px;
-  z-index: 2;
-  margin-bottom: 5rem;
-}
 
-.hero h1 {
-  font-size: 4.5rem;
-  margin-bottom: 10px;
-}
-
-/* SECTIONS */
-.section {
-  display: flex;
-  gap: 40px;
-  padding: 30px;
-  align-items: center;
-}
 
 .green-clean {
-  color: rgba(var(--color-primary));
+  color: rgba(var(--color-primary),1);
   font-weight: bold;
 }
 
@@ -103,7 +77,7 @@
   width: 100%;
   margin-bottom: 1rem;
   font-size: 2.5rem;
-  color: rgba(var(--color-secondary));
+  color: rgba(var(--color-secondary),1);
 }
 
 
@@ -128,20 +102,19 @@
   height: auto;
   border-radius: 10px;
   margin-top: 1rem;
+  order: 2;
 }
 
-.section.reverse {
-  flex-direction: row-reverse;
-}
+
 #sek2-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   justify-content: center;
   gap: 2rem;
-  padding: 6rem;
-  padding-top: 1rem;
+  padding: 1rem 6rem 6rem;
   margin: 0 auto;
   align-items: start;  
+  word-break: break-all;
 }
 
 ul {
@@ -151,7 +124,7 @@ ul {
 
 .sektion2,
 .sektion3 {
-  background-color: rgba(var(--color-primary));
+  background-color: rgba(var(--color-primary),1);
   box-shadow: 0 0 8px rgba(var(--color-black), 0.15);
   border-radius: 1rem;
   padding: 1rem;
@@ -160,16 +133,18 @@ ul {
   
 }
 
+
+
 .sektion2 summary:hover,
 .sektion3 summary:hover{
   text-decoration: underline;
   cursor: pointer;
-  color: rgba(var(--color-white));
+  color: rgba(var(--color-white),1);
 }
 
 .sektion2 a,
 .sektion3 a {
-  color: rgba(var(--color-secondary));
+  color: rgba(var(--color-secondary),1);
   text-decoration: none;
 }
 
@@ -192,13 +167,13 @@ ul {
 .divider::after {
   content: "";
   flex: 1;
-  border-bottom: 2px solid rgba(var(--color-secondary));
+  border-bottom: 2px solid rgba(var(--color-secondary),1);
 }
 
 .divider span {
   padding: 0 15px;
   font-weight: bold;
-  color: rgba(var(--color-primary));
+  color: rgba(var(--color-primary),1);
 }
 
 .bottom-bar {
@@ -218,7 +193,7 @@ ul {
 }
 
 .bottom-bar a {
-  color: rgba(var(--color-white));
+  color: rgba(var(--color-white),1);
   text-decoration: none;
   padding: 0.7rem;
 }
@@ -228,18 +203,112 @@ ul {
   border-radius: 6px;
 }
 
-footer {
-  text-align: center;
-  padding: 60px 60px 100px;
-  background: rgba(var(--color-black));
-  color: rgba(var(--color-white));
-}
 
 footer {
+  margin-top: 5rem;
   text-align: center;
   padding: 60px 60px 100px;
   overflow: hidden;
   background: url(images/skog.jpg) center/cover no-repeat;
   background-position: bottom center;
-  color: rgba(var(--color-white));
+  color: rgba(var(--color-white),1);
+}
+
+/* MOBIL ~600px */
+@media (max-width: 600px) {
+
+
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .logo {
+    width: 6rem; 
+  }
+
+  .header nav {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+  }
+
+  .header nav a {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    margin-right: 0; 
+  }
+
+
+  .hero {
+    height: 220px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  #sek1 {
+    padding: 2rem 1rem;
+    display: flex;
+  
+  }
+
+
+  #sek1 h1 {
+    font-size: 1.8rem;
+  }
+
+  #sek2-3 {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .bottom-bar {
+    width: 90%;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* DESKTOP >1440px */
+@media (min-width: 1440px) {
+
+  body {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .header {
+    padding: 3rem 5rem;
+  }
+
+
+  .hero h1 {
+    font-size: 6rem;
+  }
+
+  #sek1 {
+    gap: 4rem;
+    padding: 6rem;
+  }
+
+  #sek1 h1 {
+    font-size: 3.5rem;
+  }
+
+  #sek2-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    padding: 4rem 8rem;
+  }
+
+  .sektion2,
+  .sektion3 {
+    padding: 2rem;
+    font-size: 1.1rem;
+  }
 }

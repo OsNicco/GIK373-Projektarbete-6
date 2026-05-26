@@ -411,13 +411,13 @@ footer {
 
 .dot--active { background: rgba(var(--color-primary)); }
 
-.explore-section { 
+.cards { 
   padding: 3rem 2rem 4rem; 
   max-width: 1400px; 
   margin: 0 auto; 
 }
 
-.explore-title { font-size: 1.5rem;
+.card-title { font-size: 1.5rem;
   font-weight: 700;
   color: rgba(var(--color-secondary)); 
   text-align: center; 
@@ -425,14 +425,14 @@ footer {
 }
 
 
-.explore-sub { 
+.card-sub { 
   text-align: center; 
   color: #888; 
   font-size: 0.85rem; 
   margin-bottom: 2rem; 
 }
 
-.explore-card {
+.card{
   display: flex;
   border-radius: 16px;
   overflow: hidden;
@@ -442,17 +442,17 @@ footer {
   position: relative;
 }
 
-.explore-card--light { 
+.card-light { 
   background: white; 
   border: 1px solid #eee; 
 }
 
 
-.explore-card--image { 
+.card-image { 
   background: #222; 
 }
 
-.explore-card__text {
+.card-text {
   flex: 1;
   padding: 5rem;
   display: flex;
@@ -463,37 +463,37 @@ footer {
   z-index: 2;
 }
 
-.explore-card__text h3 { 
+.card-text h3 { 
   font-size: 1.25rem; 
   font-weight: 700; 
   color: rgba(var(--color-primary)); letter-spacing: 0.05em; 
 }
 
-.explore-card__text p {
+.card-text p {
    font-size: 1rem; 
    color: #555; 
    line-height: 1.5; 
    max-width: 340px; 
   }
 
-  .explore-card--image .explore-card__text p {
+  .card-image .card-text p {
    color: rgba(255,255,255,0.85); 
   }
 
-  .explore-card--image .explore-card__text h3 {
+  .card-image .card-text h3 {
    color: white; 
   }
 
-  .explore-card__text--right {
+  .card-text-right {
    text-align: right;
     align-items: flex-end; 
   }
 
-  .explore-card__text--right p {
+  .card-text-right p {
     text-align: right; 
 }
 
-.explore-btn {
+.btn {
   display: inline-block;
   text-decoration: none;
   padding: 1rem 2.2rem;
@@ -506,31 +506,31 @@ footer {
   margin-top: 0.4rem;
 }
 
-.explore-btn--dark { 
+.btn-dark { 
   background: rgba(var(--color-secondary));
    color: white; 
   }
   
-.explore-btn--green { 
+.btn-green { 
   background: rgba(var(--color-primary)); 
   color: white; 
 }
 
-.explore-btn:hover { 
+.btn:hover { 
   opacity: 0.85; 
 }
 
-.explore-card__bg { width: 45%; flex-shrink: 0; position: relative; }
+.card-bg { width: 45%; flex-shrink: 0; position: relative; }
 
 
 
 
-.explore-card__bg--topography {
+.card-bg-topo {
   background-color: #db0000;
 
 }
 
-.explore-card__bg--forest {
+.forest {
   background: url(images/skog.jpg) center/cover no-repeat;
   position: absolute;
   inset: 0;
