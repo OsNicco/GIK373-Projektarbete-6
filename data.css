@@ -9,7 +9,7 @@
 :root {
   --color-primary: 0, 115, 83;
   --color-secondary: 19, 17, 56;
-  --color-background: 255, 255, 255;
+  --color-background: 246, 245, 255;
   --color-white: 255, 255, 255;
   --color-black: 0, 0, 0;
 
@@ -83,14 +83,16 @@ html {
 
 /*============================================================================================================================*/
 
-/* HERO BG BILD*/
 .hero {
   height: 150px;
   background: url(images/skog.jpg) center/cover no-repeat;
-  display: flex;
-  overflow: hidden;
   background-position: top center;
-  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
+  display: flex;
+  padding-left: 3.75rem;
+  color: rgba(var(--color-white));
+  position: relative;
+  align-items: flex-end;
+  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
 }
 
 .hero-text {
@@ -229,120 +231,95 @@ a.focus:hover {
 
 /*====================================================== SEKTION 1 ====================================================*/
 
-/* Diagram-sektion */
 .chart-section {
-  padding: 10rem;
+  margin: 0 auto;
+  padding: 5rem;
+  max-width: 1600px;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10rem;
-}
-.s1-grid {
-  background: rgba(var(--color-primary), 0.6);
+  gap: 5rem;
+
+  background: rgba(var(--color-white), 0.6);
+
 }
 
-.s2-grid {
-  background: rgba(var(--color-secondary), 0.6);
+/* Vänster kolumn */
+.s1-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
+
+/* Intro */
+.intro h2 {
+  margin-bottom: 0.8rem;
+  line-height: 1.1;
+}
+
+
+/* Brödtext */
+.text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.text-block p,
+.info-card p {
+  line-height: 1.8;
+  max-width: 70ch;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  background: rgba(var(--color-white), 0.7);
+  backdrop-filter: blur(4px);
+
+  border-radius: 20px;
+  padding: 2rem;
+
+  box-shadow:
+    0 8px 20px rgba(var(--color-secondary), 0.08);
+
+  min-height: 140px;
+
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Info-card */
+.info-card {
+  padding: 2rem;
+  border-left: 4px solid rgba(var(--color-primary), 0.5);
+
+  background: rgba(var(--color-primary), 0.05);
+
+}
+
+/* Grafkolumn */
+.s2-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 
 /*============================================================================================================================*/
 
-/* Knappar */
-
-.chart-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-}
- 
-.chart-controls span {
-  font-size: 0.8rem;
-  color: rgba(var(--color-secondary), 0.6);
-  margin-right: 0.25rem;
-}
- 
-.chart-btn {
-  padding: 0.7rem 1.1rem;
-  border: 1.5px solid rgba(var(--color-secondary), 0.2);
-  background: rgba(var(--color-white), 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  color: rgba(var(--color-secondary));
-}
- 
-.chart-btn:hover {
-  background: rgba(var(--color-secondary), 1);
-  color: rgba(var(--color-white));
-  border-color: rgba(var(--color-secondary));
-}
- 
-.chart-btn.active {
-  background: rgba(var(--color-primary));
-  color: rgba(var(--color-white));
-  border-color: rgba(var(--color-primary));
-}
- 
 /* ============================================================================================================================ */
 
-/* Nyckeltalskort */
-
-.chart-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.2rem;
-  margin-bottom: 2rem;
-}
- 
-.chart-stat-card {
-  background: rgba(var(--color-white), 0.6);
-  backdrop-filter: blur(3px);
-  border-radius: 16px;
-  padding: 1.2rem 1.5rem;
-  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.07);
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s ease;
-}
- 
-.chart-stat-card:hover {
-  transform: translateY(-3px);
-}
- 
-.chart-stat-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 4px; height: 100%;
-  background: var(--card-accent, rgba(var(--color-primary)));
-  border-radius: 4px 0 0 4px;
-}
- 
-.chart-stat-card .cs-label {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: rgba(var(--color-secondary), 0.5);
-  margin-bottom: 0.35rem;
-}
- 
-.chart-stat-card .cs-value {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: rgba(var(--color-secondary));
-  line-height: 1;
-  margin-bottom: 0.2rem;
-}
- 
-.chart-stat-card .cs-sub {
-  font-size: 0.7rem;
-  color: rgba(var(--color-secondary), 0.5);
-}
- 
 /* Diagramgrid */
 .chart-grid {
   display: grid;
@@ -356,10 +333,6 @@ a.focus:hover {
   border-radius: 20px;
   padding: 1.5rem 1.8rem;
   box-shadow: 0 8px 20px rgba(var(--color-secondary), 0.08);
-}
- 
-.chart-card.full {
-  grid-column: 1 / -1;
 }
  
 .chart-card-title {
