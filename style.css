@@ -14,7 +14,9 @@
 }
 
 
-
+.focus {
+  color: rgba(var(--color-primary))
+}
 
 .header {
   display: flex;
