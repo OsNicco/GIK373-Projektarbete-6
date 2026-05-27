@@ -306,15 +306,20 @@ a.focus:hover {
 
 }
 
-/* Grafkolumn */
 .s2-grid {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 
 
 
+.s2-grid canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
 /*============================================================================================================================*/
 

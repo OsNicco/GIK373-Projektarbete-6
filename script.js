@@ -75,6 +75,9 @@ if (track) {
 
 
 
+
+
+
 // ============================================================================================================================= //
 
 // ============================================================
@@ -180,7 +183,6 @@ if (scbCanvas) {
 
 
 // ============================================================================================================================= //
-
 // TAB5564 = 2020–2023
 const URL_GAMLA = "https://statistikdatabasen.scb.se/api/v2/tables/TAB5564/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=0000047A,00000479,00000478&valueCodes[Tid]=2020,2021,2022,2023";
 
@@ -198,7 +200,6 @@ const KATEGORIER = [
   { kod: "45", namn: "Järnbaserad metall (stål)",     color: "#8b8b8b" },
   { kod: "55", namn: "Aluminium (ink. pantburkar)",   color: "#c084fc" },
   { kod: "65", namn: "Pantburkar aluminium",          color: "#e9c46a" },
-  { kod: "70", namn: "Trä",                           color: "#a0785a" },
 ];
 
 const ALLA_AR = ["2020", "2021", "2022", "2023", "2024"];
@@ -208,13 +209,11 @@ async function fetchSCB(url) {
   return res.json();
 }
 
-// SCB returnerar ".." för saknade värden — konvertera till null
 function toNumber(val) {
   if (val === ".." || val === null || val === undefined) return null;
   return val;
 }
 
-// Returnerar { kod: { år: värde | null, ... }, ... }
 function parseData(json, contentsCode) {
   const dims   = json.dimension;
   const values = json.value;
@@ -241,6 +240,12 @@ function parseData(json, contentsCode) {
 }
 
 function buildChart(canvasId, gamla, nya) {
+  const canvas = document.getElementById(canvasId);
+
+  // Canvasen fyller sin föräldra-div — styr storleken via CSS på diven
+  canvas.style.width  = "100%";
+  canvas.style.height = "100%";
+
   const datasets = KATEGORIER.map(({ kod, namn, color }) => {
     const data = ALLA_AR.map(ar => {
       if (ar === "2024") return nya[kod]?.[ar] ?? null;
@@ -254,17 +259,18 @@ function buildChart(canvasId, gamla, nya) {
       backgroundColor: color + "22",
       tension: 0.3,
       pointRadius: 4,
-      spanGaps: true,   // rita över glapp om SCB saknar data för ett år
+      spanGaps: true,
     };
   });
 
-  const ctx = document.getElementById(canvasId).getContext("2d");
+  const ctx = canvas.getContext("2d");
 
   new Chart(ctx, {
     type: "line",
     data: { labels: ALLA_AR, datasets },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { position: "bottom" },
         title: {
@@ -274,7 +280,7 @@ function buildChart(canvasId, gamla, nya) {
       },
       scales: {
         y: {
-          beginAtZero: false,
+          type: "logarithmic",
           title: { display: true, text: "Ton" },
         },
         x: {
@@ -297,32 +303,7 @@ async function init(canvasId) {
   buildChart(canvasId, gamla, nya);
 }
 
-// Byt ut "myChart" mot id:t på din canvas
 init("myChart");
-
-
-async function init(canvasId) {
-  const [gamlaJson, nyaJson] = await Promise.all([
-    fetchSCB(URL_GAMLA),
-    fetchSCB(URL_NYA),
-  ]);
-
-  // DEBUG — ta bort när problemet är löst
-  console.log("Gamla values:", gamlaJson.value);
-  console.log("Gamla Forpackning index:", gamlaJson.dimension.Forpackning.category.index);
-  console.log("Gamla ContentsCode index:", gamlaJson.dimension.ContentsCode.category.index);
-  console.log("Gamla Tid index:", gamlaJson.dimension.Tid.category.index);
-
-  const gamla = parseData(gamlaJson, CONTENTS_GAMLA);
-  const nya   = parseData(nyaJson,   CONTENTS_NYA);
-
-  console.log("Parsad gamla:", gamla);
-  console.log("Parsad nya:", nya);
-
-  buildChart(canvasId, gamla, nya);
-}
-
-
 //=================================================korrelationChart===============================================================//
 
 // ============================================================
@@ -330,224 +311,6 @@ async function init(canvasId) {
 // Återvinning: URL_GAMLA (TAB5564 2020–2023) + URL_NYA (TAB6768 2024)
 // Ekonomi:     TAB1492 – disponibel inkomst, snitt 18–64 år
 // ============================================================
-
-async function initKorrelation() {
-  const korrelCanvas = document.getElementById("korrelation");
-  if (!korrelCanvas) return;
-
-  const URL_INKOMST =
-    "https://statistikdatabasen.scb.se/api/v2/tables/TAB1492/data?lang=sv" +
-    "&valueCodes[Region]=00" +
-    "&valueCodes[Hushallstyp]=E90" +
-    "&valueCodes[Alder]=18-29,30-49,50-64" +
-    "&valueCodes[ContentsCode]=000006SW" +
-    "&valueCodes[Tid]=2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024" +
-    "&codelist[Region]=vs_RegionRiket99";
-
-  try {
-    const [resGamla, resNya, resInkomst] = await Promise.all([
-      fetch(URL_GAMLA),
-      fetch(URL_NYA),
-      fetch(URL_INKOMST),
-    ]);
-
-    if (!resGamla.ok)   throw new Error(`TAB5564: HTTP ${resGamla.status}`);
-    if (!resNya.ok)     throw new Error(`TAB6768: HTTP ${resNya.status}`);
-    if (!resInkomst.ok) throw new Error(`TAB1492: HTTP ${resInkomst.status}`);
-
-    const [jGamla, jNya, jInkomst] = await Promise.all([
-      resGamla.json(), resNya.json(), resInkomst.json(),
-    ]);
-
-    // Återanvänd befintliga parsers och merge
-    const åvData = merge(parseGamla(jGamla), parseNya(jNya));
-
-    // Huvudförpackningar (exkl. delmängder 35 och 65)
-    const huvud = FÖRPACKNINGAR
-      .filter(f => !DELMÄNGDER.includes(f.kod))
-      .map(f => f.kod);
-
-    // Total återvinning i ton per år (2020–2024)
-    const ÅR_ÅV = ["2020", "2021", "2022", "2023", "2024"];
-    const totTon = {};
-    ÅR_ÅV.forEach(år => {
-      totTon[år] = huvud.reduce((s, k) => {
-        const v = åvData[k]?.[KOD_TON]?.[år] ?? null;
-        return v !== null ? s + v : s;
-      }, 0);
-    });
-
-    // --- Tolka TAB1492 (PxWebApi 2.0) ---
-    // Dimensionsordning: Ålder (3) × Tid (13)
-    const ÅR_IK  = ["2012","2013","2014","2015","2016","2017","2018","2019",
-                     "2020","2021","2022","2023","2024"];
-    const nAlder = 3;   // 18-29, 30-49, 50-64
-    const nTid   = ÅR_IK.length;
-
-    const ikVärden = Array.isArray(jInkomst.value)
-      ? jInkomst.value
-      : Object.values(jInkomst.value);
-
-    // Snitt disponibel inkomst per år över de tre åldersgrupperna
-    const inkomstPerÅr = {};
-    ÅR_IK.forEach((år, ti) => {
-      let sum = 0, count = 0;
-      for (let ai = 0; ai < nAlder; ai++) {
-        const v = ikVärden[ai * nTid + ti];
-        if (v !== null && v !== undefined) { sum += v; count++; }
-      }
-      inkomstPerÅr[år] = count > 0 ? sum / count : null;
-    });
-
-    // --- Bygg punkter: bara år där båda värdena finns (överlapp 2020–2024) ---
-    const punkter = [];
-    ÅR_ÅV.forEach(år => {
-      const ton = totTon[år];
-      const ink = inkomstPerÅr[år] ?? null;
-      if (ton > 0 && ink !== null) {
-        punkter.push({ x: ton / 1000, y: ink, år });
-      }
-    });
-
-    if (punkter.length < 2) {
-      korrelCanvas.insertAdjacentHTML("afterend",
-        `<p class="chart-error">⚠ För få datapunkter för korrelation.</p>`);
-      return;
-    }
-
-    // --- Linjär regression & Pearson r ---
-    const n  = punkter.length;
-    const mx = punkter.reduce((s, p) => s + p.x, 0) / n;
-    const my = punkter.reduce((s, p) => s + p.y, 0) / n;
-    const täljare  = punkter.reduce((s, p) => s + (p.x - mx) * (p.y - my), 0);
-    const nämnareX = punkter.reduce((s, p) => s + (p.x - mx) ** 2, 0);
-    const nämnareY = punkter.reduce((s, p) => s + (p.y - my) ** 2, 0);
-    const k = täljare / nämnareX;
-    const m = my - k * mx;
-    const r = täljare / Math.sqrt(nämnareX * nämnareY);
-
-    const xMin = Math.min(...punkter.map(p => p.x));
-    const xMax = Math.max(...punkter.map(p => p.x));
-    const trendlinje = [
-      { x: xMin, y: k * xMin + m },
-      { x: xMax, y: k * xMax + m },
-    ];
-
-    // --- Rita Chart.js – dubbel linje med år på x-axeln ---
-    const labels = punkter.map(p => p.år);
-
-    new Chart(korrelCanvas, {
-      type: "line",
-      data: {
-        labels,
-        datasets: [
-          {
-            label: "Total materialåtervinning (kt)",
-            data: punkter.map(p => p.x),
-            yAxisID: "yÅv",
-            borderColor: "#4e9af1",
-            backgroundColor: "#4e9af122",
-            borderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            tension: 0.3,
-          },
-          {
-            label: "Disponibel inkomst (tkr, snitt 18–64 år)",
-            data: punkter.map(p => p.y),
-            yAxisID: "yInk",
-            borderColor: "#c084fc",
-            backgroundColor: "#c084fc22",
-            borderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            tension: 0.3,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: "index", intersect: false },
-        plugins: {
-          legend: {
-            labels: {
-              font:     { family: "'Poppins', sans-serif", size: 11 },
-              color:    "rgba(19,17,56,0.8)",
-              boxWidth: 12,
-            },
-          },
-          tooltip: {
-            backgroundColor: "rgba(19,17,56,0.95)",
-            titleFont: { family: "'Poppins', sans-serif", size: 11 },
-            bodyFont:  { family: "'Poppins', sans-serif", size: 12 },
-            padding: 10,
-            callbacks: {
-              label: ctx => {
-                if (ctx.datasetIndex === 0)
-                  return ` Återvinning: ${ctx.parsed.y.toFixed(1)} kt`;
-                return ` Inkomst: ${Math.round(ctx.parsed.y).toLocaleString("sv")} tkr`;
-              },
-              afterBody: () => [`Pearson r = ${r.toFixed(2)}`],
-            },
-          },
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text:    "År",
-              font:    { family: "'Poppins', sans-serif", size: 11 },
-              color:   "rgba(19,17,56,0.5)",
-            },
-            grid:  { color: "rgba(19,17,56,0.07)" },
-            ticks: {
-              font:  { family: "'Poppins', sans-serif", size: 11 },
-              color: "rgba(19,17,56,0.5)",
-            },
-          },
-          yÅv: {
-            position: "left",
-            title: {
-              display: true,
-              text:    "Återvinning (kt)",
-              font:    { family: "'Poppins', sans-serif", size: 11 },
-              color:   "#4e9af1",
-            },
-            grid:  { color: "rgba(19,17,56,0.07)" },
-            ticks: {
-              font:     { family: "'Poppins', sans-serif", size: 10 },
-              color:    "#4e9af1",
-              callback: v => v + " kt",
-            },
-          },
-          yInk: {
-            position: "right",
-            title: {
-              display: true,
-              text:    "Inkomst (tkr)",
-              font:    { family: "'Poppins', sans-serif", size: 11 },
-              color:   "#c084fc",
-            },
-            grid:  { drawOnChartArea: false },
-            ticks: {
-              font:     { family: "'Poppins', sans-serif", size: 10 },
-              color:    "#c084fc",
-              callback: v => v.toLocaleString("sv"),
-            },
-          },
-        },
-      },
-    });
-
-  } catch (err) {
-    korrelCanvas.insertAdjacentHTML("afterend",
-      `<div class="chart-error">⚠ Korrelationsgrafen: ${err.message}</div>`);
-    console.error("Korrelationsfel:", err);
-  }
-}
-
-initKorrelation();
 
 //================================================================================================================================//
 
