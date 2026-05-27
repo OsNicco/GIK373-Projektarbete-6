@@ -14,7 +14,9 @@
 }
 
 
-
+.focus {
+  color: rgba(var(--color-primary))
+}
 
 .header {
   display: flex;
@@ -227,7 +229,6 @@
   padding: 1rem;
   background: rgba(var(--color-primary), 0.3);
   backdrop-filter: blur(8px);
-
   border-radius: 20px;
 }
 
@@ -311,7 +312,7 @@ footer {
 .recycling-section { 
   padding: 3.5rem 2rem 2rem; 
   text-align: center; 
-  background: white; 
+  background: rgba(var(--color-white), 0.1); 
 }
 
 .recycling-title {
@@ -418,6 +419,7 @@ footer {
   padding: 3rem 2rem 4rem; 
   max-width: 1400px; 
   margin: 0 auto; 
+  
 }
 
 .card-title { font-size: 1.5rem;
@@ -446,7 +448,7 @@ footer {
 }
 
 .card-light { 
-  background: white; 
+  background: rgba(var(--color-white), 0.9); 
   border: 1px solid #eee; 
 }
 
@@ -457,19 +459,24 @@ footer {
 
 .card-text {
   flex: 1;
-  padding: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.6rem;
   position: relative;
   z-index: 2;
+  text-align: center;
+  align-items: center;
+  text-align: center;
 }
+
+
 
 .card-text h3 { 
   font-size: 1.25rem; 
   font-weight: 700; 
   color: rgba(var(--color-primary)); letter-spacing: 0.05em; 
+  text-align: center;
 }
 
 .card-text p {
@@ -477,24 +484,45 @@ footer {
    color: #555; 
    line-height: 1.5; 
    max-width: 340px; 
-  }
+  } 
 
   .card-image .card-text p {
-   color: rgba(255,255,255,0.85); 
+   color: rgba(var(--color-white), 0.9); 
   }
 
   .card-image .card-text h3 {
    color: white; 
   }
 
-  .card-text-right {
-   text-align: right;
-    align-items: flex-end; 
-  }
 
-  .card-text-right p {
-    text-align: right; 
+.card-text-right { 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  align-items: center;
+  text-align: center;
 }
+
+
+
+.card-text-right h3 { 
+  font-size: 1.25rem; 
+  font-weight: 700; 
+  color: rgba(var(--color-primary)); letter-spacing: 0.05em; 
+  text-align: center;
+}
+
+.card-text-right p {
+   font-size: 1rem; 
+   color: #555; 
+   line-height: 1.5; 
+   max-width: 340px; 
+  } 
 
 .btn {
   display: inline-block;
@@ -537,6 +565,8 @@ footer {
 
 .card-bg-topo {
   background-color: #db0000;
+  margin: 30px;
+  border-radius: 16px;
 
 }
 
@@ -594,7 +624,7 @@ footer {
 }
 
 .card-bg {
-  width: 100%;
+  width: auto;
   min-height: 220px;
   height: auto;
   flex-shrink: 0;
@@ -639,6 +669,10 @@ footer {
   color: rgba(var(--color-secondary));
   font-weight: 400;
 }
+
+  .card-bg-topo {
+    margin: 30px;
+  }
   
 }
 
