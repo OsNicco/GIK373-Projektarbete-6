@@ -221,16 +221,6 @@ let parsedData = null;
 let activeView = "ton";
 let charts     = [];
 
-// -------------------------------------------------------
-// Byt vy (ton / procent / båda)
-// -------------------------------------------------------
-function setView(v, event) {
-  activeView = v;
-  document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-
-  if (parsedData) renderAll(parsedData);
-}
 
 // -------------------------------------------------------
 // Hämta och tolka data från SCB (två tabeller)
@@ -375,8 +365,6 @@ function renderAll(data) {
 
   main.innerHTML = '';
 
-  // Nyckeltal
-  main.appendChild(makeSummaryGrid(data));
 
   // Diagramgrid
   const grid = document.createElement('div');
@@ -426,111 +414,7 @@ function renderAll(data) {
   }
 }
 
-// -------------------------------------------------------
-// Nyckeltalskort
-// -------------------------------------------------------
-function makeSummaryGrid(data) {
 
-  const el = document.createElement('div');
-  el.className = 'chart-summary-grid';
-
-  // Exkluderar delmängder från totalsummor
-  const huvud = FÖRPACKNINGAR
-    .filter(f => !DELMÄNGDER.includes(f.kod))
-    .map(f => f.kod);
-
-  const tot2024 = summa(data, huvud, KOD_TON, "2024");
-  const tot2023 = summa(data, huvud, KOD_TON, "2023");
-
-  const diff = tot2024 - tot2023;
-  const sign = diff >= 0 ? "+" : "";
-
-  // Snitt återvinningsgrad
-  const antalPct = huvud.filter(
-    k => data[k][KOD_PCT]["2024"] !== null
-  ).length;
-
-  const snittPct = huvud.reduce((s, k) => {
-    const v = data[k][KOD_PCT]["2024"];
-    return v !== null ? s + v : s;
-  }, 0) / antalPct;
-
-  const stats = [
-    {
-      label: "Total återvunnet 2024",
-      value: (tot2024 / 1000).toFixed(0) + " kt",
-      sub: "kiloton materialåtervinning",
-      color: "#2d6a4f"
-    },
-
-    {
-      label: "Förändring vs 2023",
-      value: sign + (diff / 1000).toFixed(1) + " kt",
-      sub: diff < 0 ? "minskning" : "ökning",
-      color: diff < 0 ? "#e76f51" : "#2d6a4f"
-    },
-
-    {
-      label: "Snitt återvinningsgrad",
-      value: snittPct.toFixed(0) + "%",
-      sub: "2024 (6 huvudslag)",
-      color: "#4e9af1"
-    },
-
-    {
-      label: "Bäst 2024",
-      value: getBäst(data),
-      sub: "högst återvinningsgrad",
-      color: "#c084fc"
-    },
-  ];
-
-  stats.forEach(s => {
-    el.innerHTML += `
-      <div class="chart-stat-card" style="--card-accent:${s.color}">
-        <div class="cs-label">${s.label}</div>
-        <div class="cs-value">${s.value}</div>
-        <div class="cs-sub">${s.sub}</div>
-      </div>`;
-  });
-
-  return el;
-}
-
-// -------------------------------------------------------
-// Summerar värden för valda förpackningar
-// -------------------------------------------------------
-function summa(data, koder, innehållKod, år) {
-  return koder.reduce((s, k) => {
-
-    const v = data[k][innehållKod][år];
-
-    return v !== null ? s + v : s;
-
-  }, 0);
-}
-
-// -------------------------------------------------------
-// Hämtar förpackningsslag med högst
-// återvinningsgrad för 2024
-// -------------------------------------------------------
-function getBäst(data) {
-
-  let bäst = "";
-  let bVal = -1;
-
-  FÖRPACKNINGAR.forEach(f => {
-
-    const v = data[f.kod][KOD_PCT]["2024"];
-
-    if (v !== null && v > bVal) {
-      bVal = v;
-      bäst = f.namn.split(" ")[0];
-    }
-  });
-
-  return bäst;
-}
 
 // -------------------------------------------------------
 // Linjediagramkort
