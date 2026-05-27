@@ -183,14 +183,19 @@ if (scbCanvas) {
 
 
 // ============================================================================================================================= //
-// TAB5564 = 2020–2023
+
+// ============================================================
+// SCB-URLS
+// ============================================================
 const URL_GAMLA = "https://statistikdatabasen.scb.se/api/v2/tables/TAB5564/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=0000047A,00000479,00000478&valueCodes[Tid]=2020,2021,2022,2023";
+const URL_NYA   = "https://statistikdatabasen.scb.se/api/v2/tables/TAB6768/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=000008G6,000008G5,00000881&valueCodes[Tid]=2024";
 
-// TAB6768 = 2024
-const URL_NYA = "https://statistikdatabasen.scb.se/api/v2/tables/TAB6768/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=000008G6,000008G5,00000881&valueCodes[Tid]=2024";
+const CONTENTS_TON_GAMLA   = "0000047A"; // Återvunnen mängd (ton)
+const CONTENTS_TON_NYA     = "000008G6";
+const CONTENTS_GRAD_GAMLA  = "00000478"; // Återvinningsgrad (%)
+const CONTENTS_GRAD_NYA    = "00000881";
 
-const CONTENTS_GAMLA = "0000047A";
-const CONTENTS_NYA   = "000008G6";
+const ALLA_AR = ["2020", "2021", "2022", "2023", "2024"];
 
 const KATEGORIER = [
   { kod: "10", namn: "Glas",                         color: "#4e9af1" },
@@ -198,12 +203,15 @@ const KATEGORIER = [
   { kod: "35", namn: "PET-flaskor m. pant",           color: "#f4a261" },
   { kod: "40", namn: "Papper/papp/kartong",           color: "#2d6a4f" },
   { kod: "45", namn: "Järnbaserad metall (stål)",     color: "#8b8b8b" },
-  { kod: "55", namn: "Aluminium (ink. pantburkar)",   color: "#c084fc" },
+  { kod: "55", naam: "Aluminium (ink. pantburkar)",   color: "#c084fc" },
   { kod: "65", namn: "Pantburkar aluminium",          color: "#e9c46a" },
 ];
+// fixa stavfel
+KATEGORIER[5].namn = "Aluminium (ink. pantburkar)";
 
-const ALLA_AR = ["2020", "2021", "2022", "2023", "2024"];
-
+// ============================================================
+// FETCH & PARSE
+// ============================================================
 async function fetchSCB(url) {
   const res = await fetch(url);
   return res.json();
@@ -227,7 +235,6 @@ function parseData(json, contentsCode) {
   const ciIdx     = contentsKoder.indexOf(contentsCode);
 
   const result = {};
-
   forpackningKoder.forEach((kod, fi) => {
     result[kod] = {};
     tider.forEach((ar, ti) => {
@@ -235,37 +242,104 @@ function parseData(json, contentsCode) {
       result[kod][ar] = toNumber(values[idx]);
     });
   });
-
   return result;
 }
 
-function buildChart(canvasId, gamla, nya) {
-  const canvas = document.getElementById(canvasId);
+// ============================================================
+// KORTEN — top återvunnet, procent, trend
+// ============================================================
+function buildCards(tonGamla, tonNya, gradGamla, gradNya) {
 
-  // Canvasen fyller sin föräldra-div — styr storleken via CSS på diven
-  canvas.style.width  = "100%";
-  canvas.style.height = "100%";
+  // Totalt återvunnet 2024 (alla kategorier summerade)
+  const totalt2024 = KATEGORIER.reduce((sum, { kod }) => {
+    const v = tonNya[kod]?.["2024"];
+    return sum + (v ?? 0);
+  }, 0);
 
-  const datasets = KATEGORIER.map(({ kod, namn, color }) => {
-    const data = ALLA_AR.map(ar => {
-      if (ar === "2024") return nya[kod]?.[ar] ?? null;
-      return gamla[kod]?.[ar] ?? null;
-    });
-
-    return {
-      label: namn,
-      data,
-      borderColor: color,
-      backgroundColor: color + "22",
-      tension: 0.3,
-      pointRadius: 4,
-      spanGaps: true,
-    };
+  // Kategori med högst återvinningsgrad 2024
+  let toppKat = null, toppGrad = -Infinity;
+  KATEGORIER.forEach(({ kod, namn }) => {
+    const g = gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"];
+    if (g !== null && g > toppGrad) { toppGrad = g; toppKat = namn; }
   });
 
-  const ctx = canvas.getContext("2d");
+  // Kategori med störst absolut ökning 2020→2024
+  let bästaKat = null, bästaÖkning = -Infinity;
+  KATEGORIER.forEach(({ kod, namn }) => {
+    const start = tonGamla[kod]?.["2020"];
+    const slut  = tonNya[kod]?.["2024"] ?? tonGamla[kod]?.["2023"];
+    if (start && slut) {
+      const ökning = slut - start;
+      if (ökning > bästaÖkning) { bästaÖkning = ökning; bästaKat = namn; }
+    }
+  });
 
-  new Chart(ctx, {
+  // Snitt återvinningsgrad 2024 (alla kategorier)
+  const grader = KATEGORIER
+    .map(({ kod }) => gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"])
+    .filter(v => v !== null);
+  const snittGrad = grader.length
+    ? (grader.reduce((a, b) => a + b, 0) / grader.length).toFixed(1)
+    : "–";
+
+  const kortData = [
+    {
+      ikon:  "bi-trophy",
+      label: "Högst återvinningsgrad",
+      värde: toppKat ?? "–",
+      sub:   toppGrad > 0 ? `${toppGrad.toFixed(1)} %` : "",
+    },
+    {
+      ikon:  "bi-recycle",
+      label: "Totalt återvunnet 2024",
+      värde: Math.round(totalt2024).toLocaleString("sv-SE") + " ton",
+      sub:   "alla förpackningsslag",
+    },
+    {
+      ikon:  "bi-graph-up-arrow",
+      label: "Störst ökning 2020–2024",
+      värde: bästaKat ?? "–",
+      sub:   bästaÖkning > 0 ? `+${Math.round(bästaÖkning).toLocaleString("sv-SE")} ton` : "",
+    },
+    {
+      ikon:  "bi-percent",
+      label: "Snitt återvinningsgrad",
+      värde: snittGrad + " %",
+      sub:   "genomsnitt alla material",
+    },
+  ];
+
+  const kortContainer = document.querySelector(".stat-cards");
+  if (!kortContainer) return;
+
+  kortContainer.innerHTML = kortData.map(({ ikon, label, värde, sub }) => `
+    <div class="card">
+      <i class="bi ${ikon} card-icon"></i>
+      <p class="card-label">${label}</p>
+      <p class="card-value">${värde}</p>
+      ${sub ? `<p class="card-sub">${sub}</p>` : ""}
+    </div>
+  `).join("");
+}
+
+// ============================================================
+// GRAF
+// ============================================================
+function buildChart(canvasId, gamla, nya) {
+  const canvas = document.getElementById(canvasId);
+  const datasets = KATEGORIER.map(({ kod, namn, color }) => ({
+    label: namn,
+    data: ALLA_AR.map(ar =>
+      ar === "2024" ? (nya[kod]?.[ar] ?? null) : (gamla[kod]?.[ar] ?? null)
+    ),
+    borderColor: color,
+    backgroundColor: color + "22",
+    tension: 0.3,
+    pointRadius: 4,
+    spanGaps: true,
+  }));
+
+  new Chart(canvas.getContext("2d"), {
     type: "line",
     data: { labels: ALLA_AR, datasets },
     options: {
@@ -282,25 +356,35 @@ function buildChart(canvasId, gamla, nya) {
         y: {
           type: "logarithmic",
           title: { display: true, text: "Ton" },
+          ticks: {
+            callback(value) {
+              const steg = [10000, 20000, 30000, 50000, 100000, 200000, 300000, 500000, 700000];
+              return steg.includes(value) ? value.toLocaleString("sv-SE") : null;
+            },
+          },
         },
-        x: {
-          title: { display: true, text: "År" },
-        },
+        x: { title: { display: true, text: "År" } },
       },
     },
   });
 }
 
+// ============================================================
+// INIT
+// ============================================================
 async function init(canvasId) {
   const [gamlaJson, nyaJson] = await Promise.all([
     fetchSCB(URL_GAMLA),
     fetchSCB(URL_NYA),
   ]);
 
-  const gamla = parseData(gamlaJson, CONTENTS_GAMLA);
-  const nya   = parseData(nyaJson,   CONTENTS_NYA);
+  const tonGamla  = parseData(gamlaJson, CONTENTS_TON_GAMLA);
+  const tonNya    = parseData(nyaJson,   CONTENTS_TON_NYA);
+  const gradGamla = parseData(gamlaJson, CONTENTS_GRAD_GAMLA);
+  const gradNya   = parseData(nyaJson,   CONTENTS_GRAD_NYA);
 
-  buildChart(canvasId, gamla, nya);
+  buildCards(tonGamla, tonNya, gradGamla, gradNya);
+  buildChart(canvasId, tonGamla, tonNya);
 }
 
 init("myChart");
