@@ -181,395 +181,146 @@ if (scbCanvas) {
 
 // ============================================================================================================================= //
 
-
-// CHART FÖR DATA SIDAN
-
 // TAB5564 = 2020–2023
 const URL_GAMLA = "https://statistikdatabasen.scb.se/api/v2/tables/TAB5564/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=0000047A,00000479,00000478&valueCodes[Tid]=2020,2021,2022,2023";
 
-// TAB6768 = 2024 (nya ContentsCodes, plus förpackning 99 = Totalt)
-const URL_NYA   = "https://statistikdatabasen.scb.se/api/v2/tables/TAB6768/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70,99&valueCodes[ContentsCode]=000008G6,000008G5,00000881&valueCodes[Tid]=2024";
+// TAB6768 = 2024
+const URL_NYA = "https://statistikdatabasen.scb.se/api/v2/tables/TAB6768/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=000008G6,000008G5,00000881&valueCodes[Tid]=2024";
 
-const ÅR = ["2020", "2021", "2022", "2023", "2024"];
+const CONTENTS_GAMLA = "0000047A";
+const CONTENTS_NYA   = "000008G6";
 
-// Innehållskoder för 2020–2023 (TAB5564)
-const INNEHÅLL_GAMLA = [
-  { kod: "0000047A", roll: "tillford" },
-  { kod: "00000479", roll: "atervinning_ton" },
-  { kod: "00000478", roll: "atervinning_pct" },
+const KATEGORIER = [
+  { kod: "10", namn: "Glas",                         color: "#4e9af1" },
+  { kod: "25", namn: "Plast (ink. PET-pant)",         color: "#e76f51" },
+  { kod: "35", namn: "PET-flaskor m. pant",           color: "#f4a261" },
+  { kod: "40", namn: "Papper/papp/kartong",           color: "#2d6a4f" },
+  { kod: "45", namn: "Järnbaserad metall (stål)",     color: "#8b8b8b" },
+  { kod: "55", namn: "Aluminium (ink. pantburkar)",   color: "#c084fc" },
+  { kod: "65", namn: "Pantburkar aluminium",          color: "#e9c46a" },
+  { kod: "70", namn: "Trä",                           color: "#a0785a" },
 ];
 
-// Innehållskoder för 2024 (TAB6768) – mappar till samma roller
-const INNEHÅLL_NYA = [
-  { kod: "000008G6", roll: "tillford" },
-  { kod: "000008G5", roll: "atervinning_ton" },
-  { kod: "00000881", roll: "atervinning_pct" },
-];
+const ALLA_AR = ["2020", "2021", "2022", "2023", "2024"];
 
-// Gemensamma interna koder som används i resten av koden
-const KOD_TILLFORD = "tillford";
-const KOD_TON      = "atervinning_ton";
-const KOD_PCT      = "atervinning_pct";
-
-// Förpackningsslag som är delmängder – exkluderas ur totalsummor
-const DELMÄNGDER   = ["35", "65"];
-
-// -------------------------------------------------------
-// State
-// -------------------------------------------------------
-let parsedData = null;
-let activeView = "ton";
-let charts     = [];
-
-
-// -------------------------------------------------------
-// Hämta och tolka data från SCB (två tabeller)
-// -------------------------------------------------------
-async function init() {
-  try {
-    const [resGamla, resNya] = await Promise.all([
-      fetch(URL_GAMLA),
-      fetch(URL_NYA),
-    ]);
-
-    if (!resGamla.ok) throw new Error(`TAB5564: HTTP ${resGamla.status}`);
-    if (!resNya.ok)   throw new Error(`TAB6768: HTTP ${resNya.status}`);
-
-    const [jsonGamla, jsonNya] = await Promise.all([
-      resGamla.json(),
-      resNya.json(),
-    ]);
-
-    const gamla = parseGamla(jsonGamla); // 2020–2023
-    const nya   = parseNya(jsonNya);     // 2024
-
-    parsedData  = merge(gamla, nya);
-
-    renderAll(parsedData);
-
-  } catch (e) {
-    const el = document.getElementById('chart-main');
-
-    if (el) {
-      el.innerHTML =
-        `<div class="chart-error">⚠ Kunde inte hämta data: ${e.message}</div>`;
-    }
-  }
+async function fetchSCB(url) {
+  const res = await fetch(url);
+  return res.json();
 }
 
-// -------------------------------------------------------
-// Tolkar TAB5564 (2020–2023)
-// Struktur: förpackning[8] × innehåll[3] × år[4]
-// -------------------------------------------------------
-function parseGamla(json) {
-  const ÅR_GAMLA = ["2020", "2021", "2022", "2023"];
-  const nC = 3, nT = 4;
+// SCB returnerar ".." för saknade värden — konvertera till null
+function toNumber(val) {
+  if (val === ".." || val === null || val === undefined) return null;
+  return val;
+}
 
-  const data = {};
+// Returnerar { kod: { år: värde | null, ... }, ... }
+function parseData(json, contentsCode) {
+  const dims   = json.dimension;
+  const values = json.value;
 
-  FÖRPACKNINGAR.forEach((f, fi) => {
-    data[f.kod] = {
-      tillford: {},
-      atervinning_ton: {},
-      atervinning_pct: {},
-    };
+  const forpackningKoder = Object.keys(dims["Forpackning"].category.index);
+  const contentsKoder    = Object.keys(dims["ContentsCode"].category.index);
+  const tider            = Object.keys(dims["Tid"].category.index);
 
-    INNEHÅLL_GAMLA.forEach((c, ci) => {
-      ÅR_GAMLA.forEach((t, ti) => {
+  const nContents = contentsKoder.length;
+  const nTid      = tider.length;
+  const ciIdx     = contentsKoder.indexOf(contentsCode);
 
-        const idx    = fi * (nC * nT) + ci * nT + ti;
-        const raw    = json.value[idx];
-        const saknas = json.status?.[String(idx)] === "..";
+  const result = {};
 
-        data[f.kod][c.roll][t] =
-          saknas ? null : (raw ?? null);
-      });
+  forpackningKoder.forEach((kod, fi) => {
+    result[kod] = {};
+    tider.forEach((ar, ti) => {
+      const idx = fi * (nContents * nTid) + ciIdx * nTid + ti;
+      result[kod][ar] = toNumber(values[idx]);
     });
   });
 
-  return data;
+  return result;
 }
 
-// -------------------------------------------------------
-// Tolkar TAB6768 (2024)
-// Struktur: förpackning[9 ink. 99] × innehåll[3] × år[1]
-// -------------------------------------------------------
-function parseNya(json) {
-  const FPACK_NYA = ["10","25","35","40","45","55","65","70","99"];
-  const nC = 3, nT = 1;
-
-  const data = {};
-
-  FPACK_NYA.forEach((kod, fi) => {
-    data[kod] = {
-      tillford: {},
-      atervinning_ton: {},
-      atervinning_pct: {},
-    };
-
-    INNEHÅLL_NYA.forEach((c, ci) => {
-
-      const idx    = fi * (nC * nT) + ci * nT + 0;
-      const raw    = json.value[idx];
-      const saknas = json.status?.[String(idx)] === "..";
-
-      data[kod][c.roll]["2024"] =
-        saknas ? null : (raw ?? null);
+function buildChart(canvasId, gamla, nya) {
+  const datasets = KATEGORIER.map(({ kod, namn, color }) => {
+    const data = ALLA_AR.map(ar => {
+      if (ar === "2024") return nya[kod]?.[ar] ?? null;
+      return gamla[kod]?.[ar] ?? null;
     });
-  });
 
-  return data;
-}
-
-// -------------------------------------------------------
-// Slår ihop gamla (2020–2023)
-// och nya (2024) till ett objekt
-// -------------------------------------------------------
-function merge(gamla, nya) {
-  const merged = {};
-
-  FÖRPACKNINGAR.forEach(f => {
-    merged[f.kod] = {
-      tillford: {
-        ...gamla[f.kod].tillford,
-        ...(nya[f.kod]?.tillford ?? {})
-      },
-
-      atervinning_ton: {
-        ...gamla[f.kod].atervinning_ton,
-        ...(nya[f.kod]?.atervinning_ton ?? {})
-      },
-
-      atervinning_pct: {
-        ...gamla[f.kod].atervinning_pct,
-        ...(nya[f.kod]?.atervinning_pct ?? {})
-      },
+    return {
+      label: namn,
+      data,
+      borderColor: color,
+      backgroundColor: color + "22",
+      tension: 0.3,
+      pointRadius: 4,
+      spanGaps: true,   // rita över glapp om SCB saknar data för ett år
     };
   });
 
-  return merged;
-}
+  const ctx = document.getElementById(canvasId).getContext("2d");
 
-// -------------------------------------------------------
-// Rendera hela dashboarden
-// -------------------------------------------------------
-function renderAll(data) {
-
-  // Förstör gamla diagram
-  charts.forEach(c => c.destroy());
-  charts = [];
-
-  const main = document.getElementById('chart-main');
-
-  if (!main) return;
-
-  main.innerHTML = '';
-
-
-  // Diagramgrid
-  const grid = document.createElement('div');
-  grid.className = 'chart-grid';
-
-  main.appendChild(grid);
-
-  // Ton-vyer
-  if (activeView === 'ton' || activeView === 'bada') {
-
-    grid.appendChild(
-      makeLineCard(
-        data,
-        KOD_TON,
-        "Materialåtervinning per förpackningsslag",
-        "ton · 2020–2024",
-        "ton",
-        true
-      )
-    );
-
-    grid.appendChild(
-      makeLineCard(
-        data,
-        KOD_TILLFORD,
-        "Tillförd mängd per förpackningsslag",
-        "ton · 2020–2024",
-        "ton",
-        false
-      )
-    );
-  }
-
-  // Procent-vy
-  if (activeView === 'procent' || activeView === 'bada') {
-
-    grid.appendChild(
-      makeLineCard(
-        data,
-        KOD_PCT,
-        "Återvinningsgrad per förpackningsslag",
-        "procent · 2020–2024",
-        "%",
-        true
-      )
-    );
-  }
-}
-
-
-
-// -------------------------------------------------------
-// Linjediagramkort
-// -------------------------------------------------------
-function makeLineCard(data, innehållKod, title, sub, unit, full) {
-
-  const card = document.createElement('div');
-
-  card.className =
-    full ? 'chart-card full' : 'chart-card';
-
-  card.innerHTML = `
-    <div class="chart-card-title">${title}</div>
-    <div class="chart-card-sub">${sub}</div>
-    <div class="chart-wrap"><canvas></canvas></div>`;
-
-  // Dataset för varje förpackningsslag
-  const datasets = FÖRPACKNINGAR.map(f => ({
-    label:            f.namn,
-    data:             ÅR.map(t => data[f.kod][innehållKod][t]),
-    borderColor:      f.color,
-    backgroundColor:  f.color + "22",
-    borderWidth:      2,
-    pointRadius:      4,
-    pointHoverRadius: 6,
-    tension:          0.3,
-    spanGaps:         false,
-  }));
-
-  // Skapa Chart.js-diagram
-  const chart = new Chart(card.querySelector('canvas'), {
-    type: 'line',
-
-    data: {
-      labels: ÅR,
-      datasets
-    },
-
+  new Chart(ctx, {
+    type: "line",
+    data: { labels: ALLA_AR, datasets },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
-
-      interaction: {
-        mode: 'index',
-        intersect: false
-      },
-
       plugins: {
-
-        legend: {
-          position: 'bottom',
-
-          labels: {
-            font: {
-              family: "'Poppins', sans-serif",
-              size: 11
-            },
-
-            boxWidth: 12,
-            boxHeight: 12,
-            padding: 12,
-
-            color: 'rgba(19,17,56,0.8)',
-          },
-        },
-
-        tooltip: {
-          backgroundColor: 'rgba(19,17,56,0.95)',
-
-          titleFont: {
-            family: "'Poppins', sans-serif",
-            size: 11
-          },
-
-          bodyFont: {
-            family: "'Poppins', sans-serif",
-            size: 12
-          },
-
-          padding: 12,
-
-          callbacks: {
-            label: ctx => {
-
-              const v = ctx.parsed.y;
-
-              if (v === null) {
-                return ` ${ctx.dataset.label}: –`;
-              }
-
-              return unit === 'ton'
-                ? ` ${ctx.dataset.label}: ${v.toLocaleString('sv')} ton`
-                : ` ${ctx.dataset.label}: ${v}%`;
-            },
-          },
+        legend: { position: "bottom" },
+        title: {
+          display: true,
+          text: "Materialåtervinning per förpackningsslag (ton)",
         },
       },
-
       scales: {
-
-        x: {
-          grid: {
-            color: 'rgba(19,17,56,0.07)'
-          },
-
-          ticks: {
-            font: {
-              family: "'Poppins', sans-serif",
-              size: 11
-            },
-
-            color: 'rgba(19,17,56,0.5)'
-          },
-        },
-
         y: {
-          grid: {
-            color: 'rgba(19,17,56,0.07)'
-          },
-
-          ticks: {
-            font: {
-              family: "'Poppins', sans-serif",
-              size: 11
-            },
-
-            color: 'rgba(19,17,56,0.5)',
-
-            callback: v =>
-              unit === 'ton'
-                ? v.toLocaleString('sv')
-                : v + '%',
-          },
+          beginAtZero: false,
+          title: { display: true, text: "Ton" },
+        },
+        x: {
+          title: { display: true, text: "År" },
         },
       },
     },
   });
-
-  charts.push(chart);
-
-  return card;
 }
 
-// -------------------------------------------------------
-// Sidfot & start
-// -------------------------------------------------------
-const footerEl = document.getElementById('footer');
+async function init(canvasId) {
+  const [gamlaJson, nyaJson] = await Promise.all([
+    fetchSCB(URL_GAMLA),
+    fetchSCB(URL_NYA),
+  ]);
 
-if (footerEl) {
-  footerEl.querySelector('p:last-child').textContent =
-    "Data: Naturvårdsverket via SCB · TAB5564 (2020–2023) + TAB6768 (2024) · PxWebApi 2.0";
+  const gamla = parseData(gamlaJson, CONTENTS_GAMLA);
+  const nya   = parseData(nyaJson,   CONTENTS_NYA);
+
+  buildChart(canvasId, gamla, nya);
 }
 
-// Startar applikationen
-init();
+// Byt ut "myChart" mot id:t på din canvas
+init("myChart");
+
+
+async function init(canvasId) {
+  const [gamlaJson, nyaJson] = await Promise.all([
+    fetchSCB(URL_GAMLA),
+    fetchSCB(URL_NYA),
+  ]);
+
+  // DEBUG — ta bort när problemet är löst
+  console.log("Gamla values:", gamlaJson.value);
+  console.log("Gamla Forpackning index:", gamlaJson.dimension.Forpackning.category.index);
+  console.log("Gamla ContentsCode index:", gamlaJson.dimension.ContentsCode.category.index);
+  console.log("Gamla Tid index:", gamlaJson.dimension.Tid.category.index);
+
+  const gamla = parseData(gamlaJson, CONTENTS_GAMLA);
+  const nya   = parseData(nyaJson,   CONTENTS_NYA);
+
+  console.log("Parsad gamla:", gamla);
+  console.log("Parsad nya:", nya);
+
+  buildChart(canvasId, gamla, nya);
+}
 
 
 //=================================================korrelationChart===============================================================//
