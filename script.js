@@ -194,6 +194,8 @@ const CONTENTS_TON_GAMLA   = "0000047A"; // Återvunnen mängd (ton)
 const CONTENTS_TON_NYA     = "000008G6";
 const CONTENTS_GRAD_GAMLA  = "00000478"; // Återvinningsgrad (%)
 const CONTENTS_GRAD_NYA    = "00000881";
+const CONTENTS_MARK_GAMLA = "00000479"; // Mängd på marknaden (ton), gamla tabellen
+const CONTENTS_MARK_NYA   = "000008G5"; // Mängd på marknaden (ton), nya tabellen
 
 const ALLA_AR = ["2020", "2021", "2022", "2023", "2024"];
 
@@ -245,6 +247,25 @@ function parseData(json, contentsCode) {
   return result;
 }
 
+async function init(canvasId) {
+  const [gamlaJson, nyaJson] = await Promise.all([
+    fetchSCB(URL_GAMLA),
+    fetchSCB(URL_NYA),
+  ]);
+
+  const tonGamla  = parseData(gamlaJson, CONTENTS_TON_GAMLA);
+  const tonNya    = parseData(nyaJson,   CONTENTS_TON_NYA);
+  const gradGamla = parseData(gamlaJson, CONTENTS_GRAD_GAMLA);
+  const gradNya   = parseData(nyaJson,   CONTENTS_GRAD_NYA);
+
+  // ← nytt
+  const markGamla = parseData(gamlaJson, CONTENTS_MARK_GAMLA);
+  const markNya   = parseData(nyaJson,   CONTENTS_MARK_NYA);
+
+  buildCards(tonGamla, tonNya, gradGamla, gradNya);
+  buildChart(canvasId, tonGamla, tonNya);
+  buildMarketChart("marketChart", markGamla, markNya); // ← nytt
+}
 // ============================================================
 // KORTEN — top återvunnet, procent, trend
 // ============================================================
@@ -369,6 +390,51 @@ function buildChart(canvasId, gamla, nya) {
   });
 }
 
+function buildMarketChart(canvasId, gamla, nya) {
+  const canvas = document.getElementById(canvasId);
+  const datasets = KATEGORIER.map(({ kod, namn, color }) => ({
+    label: namn,
+    data: ALLA_AR.map(ar =>
+      ar === "2024" ? (nya[kod]?.[ar] ?? null) : (gamla[kod]?.[ar] ?? null)
+    ),
+    borderColor: color,
+    backgroundColor: color + "22",
+    tension: 0.3,
+    pointRadius: 4,
+    spanGaps: true,
+  }));
+
+  new Chart(canvas.getContext("2d"), {
+    type: "line",
+    data: { labels: ALLA_AR, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "bottom" },
+        title: {
+          display: true,
+          text: "Förpackningar på marknaden per förpackningsslag (ton)",
+        },
+      },
+      scales: {
+        y: {
+          type: "logarithmic",
+          title: { display: true, text: "Ton" },
+          ticks: {
+            callback(value) {
+              const steg = [10000, 20000, 50000, 100000, 200000, 500000, 1000000];
+              return steg.includes(value) ? value.toLocaleString("sv-SE") : null;
+            },
+          },
+        },
+        x: { title: { display: true, text: "År" } },
+      },
+    },
+  });
+}
+
+
 // ============================================================
 // INIT
 // ============================================================
@@ -382,12 +448,17 @@ async function init(canvasId) {
   const tonNya    = parseData(nyaJson,   CONTENTS_TON_NYA);
   const gradGamla = parseData(gamlaJson, CONTENTS_GRAD_GAMLA);
   const gradNya   = parseData(nyaJson,   CONTENTS_GRAD_NYA);
+  const markGamla = parseData(gamlaJson, CONTENTS_MARK_GAMLA);
+  const markNya   = parseData(nyaJson,   CONTENTS_MARK_NYA);
 
   buildCards(tonGamla, tonNya, gradGamla, gradNya);
   buildChart(canvasId, tonGamla, tonNya);
+  buildMarketChart("marketChart", markGamla, markNya);
 }
 
 init("myChart");
+
+
 //=================================================korrelationChart===============================================================//
 
 // ============================================================

@@ -42,11 +42,8 @@
     </header>
 
     <!-- HERO -->
-    <section class="hero"></section>
-
-    <!--<p>breadcrumbs</p>-->
-
-    <section class="intro-container">
+    <section class="hero">
+  <section class="intro-container">
       <div class="intro">
         <h1>FÖRPACKNINGSÅTERVINNING I <span class="focus">SVERIGE</span></h1>
         <p>
@@ -94,6 +91,11 @@
     </section>
 
 
+    </section>
+
+    
+
+
 <!--Sektion 1-->
 <section>
   <div class="divider" id="data-sektion-1">
@@ -107,7 +109,7 @@
 
       <div class="sek1-intro">
         <h2>Förpackningsåtervinning i Sverige</h2>
-        <p>Källa: Naturvårdsverket via SCB (2020–2024)</p>
+        <p>Data källa: Naturvårdsverket via SCB (2020–2024)</p>
       </div>
 
       <div class="text-block">
@@ -121,7 +123,7 @@
        <p>Forskning visar att skillnader i återvinningsgrad ofta beror på en kombination av tekniska begränsningar i återvinningsprocesser och systemnivåfaktorer såsom ekonomiska styrmedel och insamlingsinfrastruktur. Särskilt plastförpackningar påverkas av dessa faktorer, eftersom mer komplexa materialflöden generellt är svårare att återföra till effektiva kretslopp (Letters in Spatial and Resource Sciences, 2017). Detta illustrerar att en hög tillförd mängd inte automatiskt leder till hög materialåtervinning, utan att systemets utformning är avgörande. </p>
 
       </div>
-
+        <div class="stat-cards"></div>
     </div>
 
     <!-- Höger kolumn – graf -->
@@ -130,7 +132,12 @@
       <div class="graph-container">
         <canvas id="myChart"></canvas>
       </div>
-      <div class="stat-cards"></div>
+      
+       <div class="graph-container">
+        <canvas id="marketChart"></canvas>
+      </div>
+
+
     </div>
   </div>
 </section>
@@ -163,8 +170,12 @@
         <span>data-sektion-4</span>
       </div>
 
-      <div class="test"><canvas id="korrelation"></canvas></div>
-    </section>
+      <div class="chart-section">
+        <div class="graph-container">
+          <canvas id="korrelation"></canvas>
+        </div>
+      </div>
+  </section>
 
    
    

@@ -84,16 +84,17 @@ html {
 /*============================================================================================================================*/
 
 .hero {
-  height: 150px;
+  height: 900px;
   background: url(images/skog.jpg) center/cover no-repeat;
   background-position: top center;
   display: flex;
-  padding-left: 3.75rem;
+  justify-content: center;    /* ← centrerar horisontellt */
+  align-items: center;         /* ← centrerar vertikalt */
   color: rgba(var(--color-white));
   position: relative;
-  align-items: flex-end;
   box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
 }
+
 
 .hero-text {
   position: relative;
@@ -102,10 +103,6 @@ html {
   margin-bottom: 5rem;
 }
 
-.hero h1 {
-  font-size: 4.5rem;
-  margin-bottom: 10px;
-}
 
 /* SECTIONS */
 .section {
@@ -114,6 +111,59 @@ html {
   padding: 60px;
   align-items: center;
 }
+
+
+.intro-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 5rem 8rem;
+  background: rgba(var(--color-white), 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  margin: 0 4rem;             
+}
+
+/*=================================== NAVIGERIGSKORT - FÖR ATT FLYTTA SIG PÅ SIDAN ==========================================*/
+
+
+
+.stats-grid-nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+}
+
+.card-btn {
+  display: block;
+  text-decoration: none;
+  padding: 2.5rem;
+  border-radius: 20px;
+
+  background: rgba(var(--color-white));
+  backdrop-filter: blur(3px);
+
+  box-shadow: 0 8px 20px rgba(var(--color-secondary), 0.1);
+
+  transition: transform 0.3s ease;
+}
+
+.card-btn:hover {
+  transform: translateY(-5px);
+  backdrop-filter: blur(8px);
+  color: rgba(var(--color-secondary));
+}
+
+.card-btn h2 {
+  font-size: 2rem;
+  color: rgba(var(--color-secondary));
+  margin-bottom: 1rem;
+}
+
+.card-btn p {
+  color: rgba(var(--color-secondary), 0.8);
+}
+
 
 /*============================================================================================================================*/
 
@@ -147,7 +197,7 @@ html {
 /* BODY */
 
 body {
-  background: rgba(var(--color-background));
+  background: rgba(var(--color-primary), 0.1);
 }
 
 /*============================================================================================================================*/
@@ -187,44 +237,6 @@ a.focus:hover {
   text-decoration: underline;
 }
 
-/*=================================== NAVIGERIGSKORT - FÖR ATT FLYTTA SIG PÅ SIDAN ==========================================*/
-
-
-.stats-grid-nav {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2rem;
-}
-
-.card-btn {
-  display: block;
-  text-decoration: none;
-  padding: 2.5rem;
-  border-radius: 20px;
-
-  background: rgba(var(--color-primary), 0.1);
-  backdrop-filter: blur(3px);
-
-  box-shadow: 0 8px 20px rgba(var(--color-secondary), 0.1);
-
-  transition: transform 0.3s ease;
-}
-
-.card-btn:hover {
-  transform: translateY(-5px);
-  backdrop-filter: blur(8px);
-  color: rgba(var(--color-secondary));
-}
-
-.card-btn h2 {
-  font-size: 2rem;
-  color: rgba(var(--color-secondary));
-  margin-bottom: 1rem;
-}
-
-.card-btn p {
-  color: rgba(var(--color-secondary), 0.8);
-}
 
 /*================================================= ALLA SEKTIONER ====================================================*/
 
@@ -233,13 +245,14 @@ a.focus:hover {
 /* ====== SEKTION 1 ====== */
 
 .chart-section {
-  max-width: 2300px;
-  margin: 0 auto;
+  
+  margin: 0 7rem;
   padding: 5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
   background: rgba(var(--color-white), 0.6);
+  border-radius: 20px;
 }
 
 /* Vänster kolumn */
@@ -314,6 +327,7 @@ a.focus:hover {
   color: rgba(var(--color-primary));
 }
 
+
 /* Info-card */
 .info-card {
   padding: 2rem;
@@ -330,7 +344,13 @@ a.focus:hover {
 .graph-container {
   position: relative;
   width: 100%;
-  height: 450px;  /* ← justera efter smak */
+  height: 500px;  /* ← justera efter smak */
+}
+
+.graph-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 /*============================================================================================================================*/
 
