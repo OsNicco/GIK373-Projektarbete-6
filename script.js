@@ -460,12 +460,273 @@ init("myChart");
 
 
 //=================================================korrelationChart===============================================================//
-
 // ============================================================
 // KORRELATIONSGRAF – Återvinning vs Disponibel inkomst
-// Återvinning: URL_GAMLA (TAB5564 2020–2023) + URL_NYA (TAB6768 2024)
-// Ekonomi:     TAB1492 – disponibel inkomst, snitt 18–64 år
+// TAB4568 (2012–2019) + TAB5564 (2020–2023) + TAB6768 (2024)
+// TAB1492 – disponibel inkomst 18+ år
 // ============================================================
+
+const URL_GAMMAL =
+  "https://statistikdatabasen.scb.se/api/v2/tables/TAB4568/data?" +
+  "lang=sv" +
+  "&valueCodes[Forpackning]=10,20,30,40,50,60,70" +
+  "&valueCodes[ContentsCode]=000000XV" +
+  "&valueCodes[Tid]=2012,2013,2014,2015,2016,2017,2018,2019";
+
+const URL_INKOMST =
+  "https://statistikdatabasen.scb.se/api/v2/tables/TAB1492/data?" +
+  "lang=sv" +
+  "&valueCodes[Region]=00" +
+  "&valueCodes[Hushallstyp]=E90" +
+  "&valueCodes[Alder]=18%2B" +
+  "&valueCodes[ContentsCode]=000006SW" +
+  "&valueCodes[Tid]=2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024" +
+  "&codelist[Region]=vs_RegionRiket99";
+
+const ALLA_UTOKADE_AR = [
+  "2012","2013","2014","2015","2016","2017","2018","2019",
+  "2020","2021","2022","2023","2024"
+];
+
+// ============================================================
+// PARSEA TAB4568 (äldre format – en ContentsCode i taget)
+// ============================================================
+function parseGammalData(json) {
+  const dims   = json.dimension;
+  const values = json.value;
+
+  const forpackKoder = Object.keys(dims["Forpackning"].category.index);
+  const tider        = Object.keys(dims["Tid"].category.index);
+  const nTid         = tider.length;
+
+  // Summera alla förpackningar per år
+  const totaltPerAr = {};
+  tider.forEach(ar => totaltPerAr[ar] = 0);
+
+  forpackKoder.forEach((kod, fi) => {
+    tider.forEach((ar, ti) => {
+      const idx = fi * nTid + ti;
+      const v   = values[idx];
+      if (v != null) totaltPerAr[ar] += Number(v);
+    });
+  });
+
+  return totaltPerAr;
+}
+
+// ============================================================
+// PARSEA INKOMST FRÅN TAB1492
+// ============================================================
+function parseInkomst(json) {
+  const dims   = json.dimension;
+  const values = json.value;
+
+  const tidKey = Object.keys(dims).find(k =>
+    k.toLowerCase().includes("tid") || k.toLowerCase().includes("time")
+  );
+
+  if (!tidKey) {
+    console.error("Hittade inte tid-dimensionen:", Object.keys(dims));
+    return {};
+  }
+
+  const tider  = Object.keys(dims[tidKey].category.index);
+  const result = {};
+  tider.forEach((ar, i) => {
+    result[ar] = values[i] != null ? Number(values[i]) : null;
+  });
+  return result;
+}
+
+// ============================================================
+// LINJÄR REGRESSION
+// ============================================================
+function linearRegression(points) {
+  const n   = points.length;
+  const sx  = points.reduce((a, p) => a + p.x, 0);
+  const sy  = points.reduce((a, p) => a + p.y, 0);
+  const sx2 = points.reduce((a, p) => a + p.x * p.x, 0);
+  const sxy = points.reduce((a, p) => a + p.x * p.y, 0);
+
+  const slope     = (n * sxy - sx * sy) / (n * sx2 - sx * sx);
+  const intercept = (sy - slope * sx) / n;
+
+  const yMean = sy / n;
+  const ssTot = points.reduce((a, p) => a + (p.y - yMean) ** 2, 0);
+  const ssRes = points.reduce((a, p) => a + (p.y - (slope * p.x + intercept)) ** 2, 0);
+  const r2    = 1 - ssRes / ssTot;
+
+  return { slope, intercept, r2 };
+}
+
+// ============================================================
+// BYGG GRAF
+// ============================================================
+async function buildKorrelationChart(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  try {
+    const [gammalJson, gamlaJson, nyaJson, inkomstJson] = await Promise.all([
+      fetchSCB(URL_GAMMAL),
+      fetchSCB(URL_GAMLA),
+      fetchSCB(URL_NYA),
+      fetchSCB(URL_INKOMST),
+    ]);
+
+    // Återvinning ton per år
+    const gammalTon = parseGammalData(gammalJson);
+
+    const tonGamla = parseData(gamlaJson, CONTENTS_TON_GAMLA); // 2020–2023
+    const tonNya   = parseData(nyaJson,   CONTENTS_TON_NYA);   // 2024
+
+    // Summera 2020–2024 med din befintliga data
+    const nyTon = {};
+    ["2020","2021","2022","2023"].forEach(ar => {
+      nyTon[ar] = KATEGORIER.reduce((acc, { kod }) => {
+        return acc + (tonGamla[kod]?.[ar] ?? 0);
+      }, 0);
+    });
+    nyTon["2024"] = KATEGORIER.reduce((acc, { kod }) => {
+      return acc + (tonNya[kod]?.["2024"] ?? 0);
+    }, 0);
+
+    // Inkomst
+    const inkomst = parseInkomst(inkomstJson);
+
+    // Bygg punkter för alla år
+    const punkter = ALLA_UTOKADE_AR
+      .filter(ar => {
+        const ton = ar <= "2019" ? gammalTon[ar] : nyTon[ar];
+        return ton > 0 && inkomst[ar] != null;
+      })
+      .map(ar => ({
+        x:  inkomst[ar],
+        y:  Math.round(ar <= "2019" ? gammalTon[ar] : nyTon[ar]),
+        ar,
+      }));
+
+    if (punkter.length === 0) {
+      canvas.parentElement.innerHTML =
+        '<p class="chart-error">Ingen data tillgänglig.</p>';
+      return;
+    }
+
+    // Regression
+    const reg = linearRegression(punkter);
+    const xMin = Math.min(...punkter.map(p => p.x));
+    const xMax = Math.max(...punkter.map(p => p.x));
+    const regressionLine = [
+      { x: xMin, y: reg.slope * xMin + reg.intercept },
+      { x: xMax, y: reg.slope * xMax + reg.intercept },
+    ];
+
+    // Färgskala – mörkare ju senare år
+    const färgSkala = {
+      "2012": "#d4f0e6", "2013": "#b7e0d3", "2014": "#96cebc",
+      "2015": "#7fc7b0", "2016": "#5db89a", "2017": "#3aa486",
+      "2018": "#1f8c6e", "2019": "#0b6f58", "2020": "#096350",
+      "2021": "#077347", "2022": "#056040", "2023": "#034d33",
+      "2024": "#007353",
+    };
+
+    new Chart(canvas.getContext("2d"), {
+      type: "scatter",
+      data: {
+        datasets: [
+          {
+            label: "År (2012–2024)",
+            data: punkter,
+            backgroundColor: punkter.map(p => färgSkala[p.ar] ?? "#007353"),
+            pointRadius: 10,
+            pointHoverRadius: 13,
+          },
+          {
+            label: `Regressionslinje (r² = ${reg.r2.toFixed(2)})`,
+            data: regressionLine,
+            type: "line",
+            borderColor: "rgba(19, 17, 56, 0.5)",
+            borderDash: [6, 4],
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom" },
+          title: {
+            display: true,
+            text: "Korrelation: Disponibel inkomst (18+) vs Återvinning (ton), 2012–2024",
+          },
+          tooltip: {
+            callbacks: {
+              label(ctx) {
+                const p = ctx.raw;
+                if (!p.ar) return "";
+                return [
+                  `År: ${p.ar}`,
+                  `Inkomst: ${Math.round(p.x).toLocaleString("sv-SE")} kr`,
+                  `Återvinning: ${p.y.toLocaleString("sv-SE")} ton`,
+                ];
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Disponibel inkomst (kr/år, 18+ år)",
+            },
+            ticks: {
+              callback: v => v.toLocaleString("sv-SE") + " kr",
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Totalt återvunnet (ton)",
+            },
+            ticks: {
+              callback: v => v.toLocaleString("sv-SE"),
+            },
+          },
+        },
+      },
+      plugins: [
+        {
+          // Årstal ovanför varje punkt
+          afterDatasetsDraw(chart) {
+            const ctx2    = chart.ctx;
+            const dataset = chart.data.datasets[0];
+            const meta    = chart.getDatasetMeta(0);
+            ctx2.save();
+            ctx2.font      = "bold 11px Poppins, sans-serif";
+            ctx2.fillStyle = "rgba(19,17,56,0.8)";
+            ctx2.textAlign = "center";
+            meta.data.forEach((point, i) => {
+              const p = dataset.data[i];
+              if (p.ar) ctx2.fillText(p.ar, point.x, point.y - 14);
+            });
+            ctx2.restore();
+          },
+        },
+      ],
+    });
+
+  } catch (err) {
+    console.error("Korrelationsfel:", err);
+    canvas.parentElement.innerHTML =
+      '<p class="chart-error">Kunde inte ladda korrelationsdata.</p>';
+  }
+}
+
+buildKorrelationChart("korrelation");
+
 
 //================================================================================================================================//
 
