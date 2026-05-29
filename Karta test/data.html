@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Green Clean Data</title>
+    <link rel="stylesheet" href="data.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--Charts-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+    <!--======-->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <!-- NAV -->
+    <header class="header">
+      <div>
+        <a href="index.html">
+          <img src="images/logotyp.png" alt="Logotyp" class="logo" />
+        </a>
+      </div>
+      <nav>
+        <a href="index.html" class="hem">HEM</a>
+        <a href="data.html" class="data">DATA</a>
+        <a href="omoss.html" class="oss">OM OSS</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero"></section>
+
+    <!--<p>breadcrumbs</p>-->
+
+    <section class="intro-container">
+      <div class="intro">
+        <h1>FÖRPACKNINGSÅTERVINNING I <span class="focus">SVERIGE</span></h1>
+        <p>
+          Vägen mot en hållbar framtid går genom smartare användning av våra
+          resurser.
+          <a
+            href="https://globalamalen.se/om-globala-malen/mal-12-hallbar-konsumtion-och-produktion/"
+            class="focus"
+            target="_blank"
+          >
+            Globala målet 12
+          </a>
+          handlar om hållbar konsumtion och produktion, med fokus på minskat
+          avfall och ökad cirkularitet. Visualiseringarna visar hur material och
+          resurser cirkulerar i Sverige och Europa.
+        </p>
+      </div>
+
+      <div class="stats-grid-nav">
+        <a class="card-btn" href="#data-sektion-1">
+          <h2><i class="bi bi-bar-chart-line"></i></h2>
+          <p>Till sektion 1</p>
+        </a>
+
+        <a class="card-btn" href="#data-sektion-2">
+          <h2><i class="bi bi-bar-chart-steps"></i></h2>
+          <p>Till sektion 2</p>
+        </a>
+
+        <a class="card-btn" href="#data-sektion-3">
+          <h2><i class="bi bi-layout-wtf"></i></h2>
+          <p>Till sektion 3</p>
+        </a>
+
+        <a class="card-btn" href="#data-sektion-4">
+          <h2><i class="bi bi-graph-up"></i></h2>
+          <p>Till sektion 4</p>
+        </a>
+
+        <a class="card-btn" href="#data-sektion-5">
+          <h2><i class="bi bi-globe-europe-africa"></i></h2>
+          <p>Till sektion 5</p>
+        </a>
+      </div>
+    </section>
+
+    <!--Sektion 1-->
+
+    <section>
+      <div class="divider" id="data-sektion-1">
+        <span>data-sektion-1</span>
+      </div>
+
+      <div class="chart-section">
+        <div class="s1-grid">
+          <h2>Förpackningsåtervinning i Sverige</h2>
+          <p>Källa: Naturvårdsverket via SCB (2012-2024)</p>
+          <h2>
+            Tillförd mängd och materialåtervinning per förpackningsslag
+            (Sverige)
+          </h2>
+          <p>
+            Linjediagrammen visar både den totala mängden förpackningar som
+            sätts på marknaden och hur stor andel som återvinns för respektive
+            materialslag i Sverige. Tillsammans ger de en tydligare bild av hur
+            materialflödena fungerar genom hela systemet från konsumtion till
+            återvinning. Resultaten visar att material som papper och glas har
+            mycket höga återvinningsgrader i relation till den tillförda
+            mängden, vilket indikerar ett effektivt insamlings- och
+            återvinningssystem för dessa material. Plastförpackningar däremot
+            uppvisar en större obalans mellan tillförd mängd och faktisk
+            materialåtervinning, vilket innebär att en betydande del av
+            plastflödet inte återförs till kretsloppet. Forskning visar att
+            skillnader i återvinningsgrad ofta beror på en kombination av
+            tekniska begränsningar i återvinningsprocesser och
+            systemnivåfaktorer såsom ekonomiska styrmedel och
+            insamlingsinfrastruktur. Särskilt plastförpackningar påverkas av
+            dessa faktorer, eftersom mer komplexa materialflöden generellt är
+            svårare att återföra till effektiva kretslopp (Letters in Spatial
+            and Resource Sciences, 2017). Detta illustrerar att en hög tillförd
+            mängd inte automatiskt leder till hög materialåtervinning, utan att
+            systemets utformning är avgörande.
+          </p>
+        </div>
+
+        <div class="s2-grid">
+          <div class="chart-controls">
+            <button class="chart-btn active" onclick="setView('ton', event)">
+              Mängd (ton)
+            </button>
+            <button class="chart-btn" onclick="setView('procent', event)">
+              Återvinningsgrad (%)
+            </button>
+            <button class="chart-btn" onclick="setView('bada', event)">
+              Båda
+            </button>
+          </div>
+          <div id="chart-main"></div>
+          <!--GRAFER FÖR SEKTION 1. BÖR FIXAS LITE KNASIGA-->
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="divider" id="data-sektion-2">
+        <span>data-sektion-2</span>
+      </div>
+
+      <div class="test"></div>
+    </section>
+
+    <section>
+      <div class="divider" id="data-sektion-3">
+        <span>data-sektion-3</span>
+      </div>
+      <div class="test">
+        <canvas id="scb"></canvas>
+      </div>
+    </section>
+
+    <section>
+      <div class="divider" id="data-sektion-4">
+        <span>data-sektion-4</span>
+      </div>
+
+      <div class="test"><canvas id="korrelation"></canvas></div>
+    </section>
+
+    <!--Sektion 5-->
+
+    <section>
+      <div class="divider" id="data-sektion-5">
+        <span>data-sektion-5</span>
+      </div>
+
+      <div class="s5-grid">
+        <div class="plot1-section">
+          <h1>
+            Plaståtervinning i Europa: skillnader mellan länder och befolkning
+          </h1>
+          <br />
+          <p>
+            Grafen visar plaståtervinningsgrad och befolkningsstorlek i Europa
+            2023. Den illustrerar tydliga skillnader mellan länder, där
+            återvinningsgraden inte verkar följa befolkningsstorleken. Både små
+            och stora länder finns på olika nivåer i återvinningen. Detta pekar
+            på att det inte enbart är hur mycket plast som används eller samlas
+            in som avgör resultaten, utan hur systemen för återvinning fungerar.
+            <br />
+            <br />
+            Ny forskning från IVL Svenska Miljöinstitutet, TERRA och Svensk
+            Plaståtervinning lyfter just detta perspektiv och kan därmed
+            förändra EU:s syn på plaståtervinning, från fokus på kvantitet till
+            kvalitet. Studien visar att dagens sätt att mäta framgång ofta
+            bygger på hur stor andel plast som återvinns, men att detta inte
+            säger allt om faktisk miljönytta. <br />
+            <br />Forskarna jämförde olika sätt att hantera
+            plastförpackningsavfall, bland annat förbränning, downcycling och
+            högkvalitativ återvinning med avancerad sortering. Resultaten visade
+            att högkvalitativ återvinning ger betydligt större klimatnytta än
+            återvinning där sorteringen är enklare och kvaliteten lägre. Därmed
+            blir slutsatsen att det inte bara är mängden återvunnen plast som
+            spelar roll, utan även hur väl materialet kan återanvändas i nya
+            produkter. (Ekvall et al., 2025)
+          </p>
+          <br />
+
+          <div id="plot" class="test"></div>
+        </div>
+
+        <div class="plot2-section">
+          <h1>Utveckling av förpackningsåtervinning i Europa</h1>
+          <div class="plot2-layout">
+            <p> <br>
+              Kartan visar hur återvinningsgraden för förpackningar i Europa har
+              förändrats över tid från 1997 till 2023, där vissa länder uppvisar en tydlig ökning.
+              Forskning visar att införandet av nationella system för
+              producentansvar har varit en central drivkraft bakom ökade
+              insamlings- och återvinningsnivåer, särskilt för
+              förpackningsavfall, genom att tydliggöra ansvarsfördelning och
+              skapa strukturerade insamlingssystem (Letters in Spatial and
+              Resource Sciences, 2017). <br />
+              <br />
+              Utvecklingen ligger i linje med Agenda 2030 mål 12 om hållbar
+              konsumtion och produktion, som syftar till att säkerställa
+              hållbara konsumtions- och produktionsmönster globalt (Globala
+              målen, u.å.).
+            </p>
+            <div id="plot2" class="test"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--Side-bar-->
+
+    <div class="side-bar">
+      <a class="side-bar-btn" href="#top">
+        <h2><i class="bi bi-chevron-double-up"></i></h2>
+        <p>Topp</p>
+      </a>
+      <a class="side-bar-btn" href="#data-sektion-1">
+        <h2><i class="bi bi-bar-chart-line"></i></h2>
+        <p>Till sektion 1</p>
+      </a>
+      <a class="side-bar-btn" href="#data-sektion-2">
+        <h2><i class="bi bi-bar-chart-steps"></i></h2>
+        <p>Till sektion 2</p>
+      </a>
+      <a class="side-bar-btn" href="#data-sektion-3">
+        <h2><i class="bi bi-layout-wtf"></i></h2>
+        <p>Till sektion 3</p>
+      </a>
+      <a class="side-bar-btn" href="#data-sektion-4">
+        <h2><i class="bi bi-graph-up"></i></h2>
+        <p>Till sektion 4</p>
+      </a>
+      <a class="side-bar-btn" href="#data-sektion-5">
+        <h2><i class="bi bi-globe-europe-africa"></i></h2>
+        <p>Till sektion 5</p>
+      </a>
+    </div>
+
+    <!--Bottom-bar-->
+    <div class="bottom-bar">
+      <div class="bottom-navbar">
+        <a href="index.html">HEM</a>
+        <a href="data.html">DATA</a>
+        <a href="omoss.html">OM OSS</a>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© PROJEKTARBETE 2026</p>
+      <p>Ebba Vestermark, Maik Karlsson, Nicolas Pallard</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
