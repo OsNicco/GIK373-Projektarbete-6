@@ -118,7 +118,7 @@ html {
   z-index: 2;
   text-align: center;
   padding: 5rem 8rem;
-  background: rgba(var(--color-white), 0.1);
+  background: rgba(var(--color-white), 0.3);
   backdrop-filter: blur(8px);
   border-radius: 20px;
   margin: 0 4rem;             
@@ -139,7 +139,7 @@ html {
   text-decoration: none;
   padding: 2.5rem;
   border-radius: 20px;
-
+  color: rgba(var(--color-secondary));
   background: rgba(var(--color-white), 0.5);
   backdrop-filter: blur(3px);
 
@@ -153,17 +153,9 @@ html {
   backdrop-filter: blur(8px);
   color: rgba(var(--color-primary));
   background: rgba(var(--color-white));
+  color: rgba(var(--color-primary));
 }
 
-.card-btn h2 {
-  font-size: 2rem;
-  color: rgba(var(--color-secondary));
-  margin-bottom: 1rem;
-}
-
-.card-btn p {
-  color: rgba(var(--color-secondary), 0.8);
-}
 
 
 /*============================================================================================================================*/
