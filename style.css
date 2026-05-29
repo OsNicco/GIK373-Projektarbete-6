@@ -225,13 +225,12 @@
 .card-text-right h3 { 
   font-size: 1.25rem; 
   font-weight: 700; 
-  color: rgba(var(--color-primary)); letter-spacing: 0.05em; 
   text-align: center;
 }
 
 .card-text-right p {
    font-size: 1rem; 
-   color: rgba(var(--color-primary)); 
+   color: rgba(var(--color-white), 0.9) !important;
    line-height: 1.5; 
    max-width: 340px; 
   } 
@@ -555,11 +554,14 @@ footer {
     justify-content: center;
   }
 
-  .card-image {
+  .card-image .forest{
     display: flex;
     flex-direction: column !important;
     position: absolute;
   }
+
+
+
 
   .card-text-right {
     margin-left: 0;
