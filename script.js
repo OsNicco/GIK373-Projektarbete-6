@@ -7,7 +7,6 @@ const nav = document.querySelector("nav");
 
 window.addEventListener("scroll", () => {
   const navBottom = nav.getBoundingClientRect().bottom;
-
   if (navBottom < 0) {
     bottomBar.style.transform = "translateX(-50%) translateY(0)";
   } else {
@@ -24,7 +23,6 @@ const statsGridNav = document.querySelector(".stats-grid-nav");
 
 window.addEventListener("scroll", () => {
   const statsBottom = statsGridNav.getBoundingClientRect().bottom;
-
   if (statsBottom < 0) {
     sideBar.style.transform = "translateY(-50%) translateX(0)";
   } else {
@@ -73,16 +71,12 @@ if (track) {
 }
 
 
-
-
-
-
-
 // ============================================================================================================================= //
 
 // ============================================================
 // STAPELDIAGRAM – Återvinningsgrad 2024 (canvas id="scb")
 // ============================================================
+
 const FÖRPACKNINGAR = [
   { kod: "10", namn: "Glas",                       color: "#4e9af1" },
   { kod: "25", namn: "Plast (ink. PET-pant)",       color: "#e76f51" },
@@ -108,7 +102,6 @@ const goals = {
   45: 70, 55: 50, 65: 90, 70: 15,
 };
 
-// ← funktionen definieras här, ovanför if-blocket
 function buildPieCharts(filtered, values) {
   const labels = filtered.map((d) => {
     const names = {
@@ -126,6 +119,9 @@ function buildPieCharts(filtered, values) {
 
   const pie1 = document.getElementById("pieFordelning");
   if (pie1) {
+    const befintligPie1 = Chart.getChart(pie1);
+    if (befintligPie1) befintligPie1.destroy();
+
     new Chart(pie1, {
       type: "pie",
       data: {
@@ -150,9 +146,12 @@ function buildPieCharts(filtered, values) {
 
   const pie2 = document.getElementById("pieJamforelse");
   if (pie2) {
+    const befintligPie2 = Chart.getChart(pie2);
+    if (befintligPie2) befintligPie2.destroy();
+
     const goalValues = filtered.map((d) => goals[d.key[0]] || 0);
-    const overGoal  = values.filter((v, i) => v >= goalValues[i]).length;
-    const underGoal = values.length - overGoal;
+    const overGoal   = values.filter((v, i) => v >= goalValues[i]).length;
+    const underGoal  = values.length - overGoal;
 
     new Chart(pie2, {
       type: "pie",
@@ -203,6 +202,9 @@ if (scbCanvas) {
         return item ? item.color : "#000000";
       });
 
+      const befintligStapel = Chart.getChart(scbCanvas);
+      if (befintligStapel) befintligStapel.destroy();
+
       new Chart(scbCanvas, {
         type: "bar",
         data: {
@@ -245,11 +247,6 @@ if (scbCanvas) {
 }
 
 
-
-
-
-
-
 // ============================================================================================================================= //
 
 // ============================================================
@@ -258,26 +255,24 @@ if (scbCanvas) {
 const URL_GAMLA = "https://statistikdatabasen.scb.se/api/v2/tables/TAB5564/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=0000047A,00000479,00000478&valueCodes[Tid]=2020,2021,2022,2023";
 const URL_NYA   = "https://statistikdatabasen.scb.se/api/v2/tables/TAB6768/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=000008G6,000008G5,00000881&valueCodes[Tid]=2024";
 
-const CONTENTS_TON_GAMLA   = "0000047A"; // Återvunnen mängd (ton)
-const CONTENTS_TON_NYA     = "000008G6";
-const CONTENTS_GRAD_GAMLA  = "00000478"; // Återvinningsgrad (%)
-const CONTENTS_GRAD_NYA    = "00000881";
-const CONTENTS_MARK_GAMLA = "00000479"; // Mängd på marknaden (ton), gamla tabellen
-const CONTENTS_MARK_NYA   = "000008G5"; // Mängd på marknaden (ton), nya tabellen
+const CONTENTS_TON_GAMLA  = "0000047A";
+const CONTENTS_TON_NYA    = "000008G6";
+const CONTENTS_GRAD_GAMLA = "00000478";
+const CONTENTS_GRAD_NYA   = "00000881";
+const CONTENTS_MARK_GAMLA = "00000479";
+const CONTENTS_MARK_NYA   = "000008G5";
 
 const ALLA_AR = ["2020", "2021", "2022", "2023", "2024"];
 
 const KATEGORIER = [
-  { kod: "10", namn: "Glas",                         color: "#4e9af1" },
-  { kod: "25", namn: "Plast (ink. PET-pant)",         color: "#e76f51" },
-  { kod: "35", namn: "PET-flaskor m. pant",           color: "#f4a261" },
-  { kod: "40", namn: "Papper/papp/kartong",           color: "#2d6a4f" },
-  { kod: "45", namn: "Järnbaserad metall (stål)",     color: "#8b8b8b" },
-  { kod: "55", naam: "Aluminium (ink. pantburkar)",   color: "#c084fc" },
-  { kod: "65", namn: "Pantburkar aluminium",          color: "#e9c46a" },
+  { kod: "10", namn: "Glas",                       color: "#4e9af1" },
+  { kod: "25", namn: "Plast (ink. PET-pant)",       color: "#e76f51" },
+  { kod: "35", namn: "PET-flaskor m. pant",         color: "#f4a261" },
+  { kod: "40", namn: "Papper/papp/kartong",         color: "#2d6a4f" },
+  { kod: "45", namn: "Järnbaserad metall (stål)",   color: "#8b8b8b" },
+  { kod: "55", namn: "Aluminium (ink. pantburkar)", color: "#c084fc" },
+  { kod: "65", namn: "Pantburkar aluminium",        color: "#e9c46a" },
 ];
-// fixa stavfel
-KATEGORIER[5].namn = "Aluminium (ink. pantburkar)";
 
 // ============================================================
 // FETCH & PARSE
@@ -315,44 +310,22 @@ function parseData(json, contentsCode) {
   return result;
 }
 
-async function init(canvasId) {
-  const [gamlaJson, nyaJson] = await Promise.all([
-    fetchSCB(URL_GAMLA),
-    fetchSCB(URL_NYA),
-  ]);
-
-  const tonGamla  = parseData(gamlaJson, CONTENTS_TON_GAMLA);
-  const tonNya    = parseData(nyaJson,   CONTENTS_TON_NYA);
-  const gradGamla = parseData(gamlaJson, CONTENTS_GRAD_GAMLA);
-  const gradNya   = parseData(nyaJson,   CONTENTS_GRAD_NYA);
-
-  // ← nytt
-  const markGamla = parseData(gamlaJson, CONTENTS_MARK_GAMLA);
-  const markNya   = parseData(nyaJson,   CONTENTS_MARK_NYA);
-
-  buildCards(tonGamla, tonNya, gradGamla, gradNya);
-  buildChart(canvasId, tonGamla, tonNya);
-  buildMarketChart("marketChart", markGamla, markNya); // ← nytt
-}
 // ============================================================
-// KORTEN — top återvunnet, procent, trend
+// KORTEN
 // ============================================================
 function buildCards(tonGamla, tonNya, gradGamla, gradNya) {
 
-  // Totalt återvunnet 2024 (alla kategorier summerade)
   const totalt2024 = KATEGORIER.reduce((sum, { kod }) => {
     const v = tonNya[kod]?.["2024"];
     return sum + (v ?? 0);
   }, 0);
 
-  // Kategori med högst återvinningsgrad 2024
   let toppKat = null, toppGrad = -Infinity;
   KATEGORIER.forEach(({ kod, namn }) => {
     const g = gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"];
     if (g !== null && g > toppGrad) { toppGrad = g; toppKat = namn; }
   });
 
-  // Kategori med störst absolut ökning 2020→2024
   let bästaKat = null, bästaÖkning = -Infinity;
   KATEGORIER.forEach(({ kod, namn }) => {
     const start = tonGamla[kod]?.["2020"];
@@ -363,7 +336,6 @@ function buildCards(tonGamla, tonNya, gradGamla, gradNya) {
     }
   });
 
-  // Snitt återvinningsgrad 2024 (alla kategorier)
   const grader = KATEGORIER
     .map(({ kod }) => gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"])
     .filter(v => v !== null);
@@ -412,10 +384,15 @@ function buildCards(tonGamla, tonNya, gradGamla, gradNya) {
 }
 
 // ============================================================
-// GRAF
+// GRAFER – sektion 1
 // ============================================================
 function buildChart(canvasId, gamla, nya) {
   const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const befintlig = Chart.getChart(canvas);
+  if (befintlig) befintlig.destroy();
+
   const datasets = KATEGORIER.map(({ kod, namn, color }) => ({
     label: namn,
     data: ALLA_AR.map(ar =>
@@ -460,6 +437,11 @@ function buildChart(canvasId, gamla, nya) {
 
 function buildMarketChart(canvasId, gamla, nya) {
   const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const befintlig = Chart.getChart(canvas);
+  if (befintlig) befintlig.destroy();
+
   const datasets = KATEGORIER.map(({ kod, namn, color }) => ({
     label: namn,
     data: ALLA_AR.map(ar =>
@@ -502,9 +484,8 @@ function buildMarketChart(canvasId, gamla, nya) {
   });
 }
 
-
 // ============================================================
-// INIT
+// INIT – sektion 1
 // ============================================================
 async function init(canvasId) {
   const [gamlaJson, nyaJson] = await Promise.all([
@@ -527,11 +508,10 @@ async function init(canvasId) {
 init("myChart");
 
 
-//=================================================korrelationChart===============================================================//
+// ============================================================================================================================= //
+
 // ============================================================
-// KORRELATIONSGRAF – Återvinning vs Disponibel inkomst
-// TAB4568 (2012–2019) + TAB5564 (2020–2023) + TAB6768 (2024)
-// TAB1492 – disponibel inkomst 18+ år
+// KORRELATIONSGRAF
 // ============================================================
 
 const URL_GAMMAL =
@@ -556,9 +536,6 @@ const ALLA_UTOKADE_AR = [
   "2020","2021","2022","2023","2024"
 ];
 
-// ============================================================
-// PARSEA TAB4568 (äldre format – en ContentsCode i taget)
-// ============================================================
 function parseGammalData(json) {
   const dims   = json.dimension;
   const values = json.value;
@@ -567,7 +544,6 @@ function parseGammalData(json) {
   const tider        = Object.keys(dims["Tid"].category.index);
   const nTid         = tider.length;
 
-  // Summera alla förpackningar per år
   const totaltPerAr = {};
   tider.forEach(ar => totaltPerAr[ar] = 0);
 
@@ -582,9 +558,6 @@ function parseGammalData(json) {
   return totaltPerAr;
 }
 
-// ============================================================
-// PARSEA INKOMST FRÅN TAB1492
-// ============================================================
 function parseInkomst(json) {
   const dims   = json.dimension;
   const values = json.value;
@@ -606,9 +579,6 @@ function parseInkomst(json) {
   return result;
 }
 
-// ============================================================
-// LINJÄR REGRESSION
-// ============================================================
 function linearRegression(points) {
   const n   = points.length;
   const sx  = points.reduce((a, p) => a + p.x, 0);
@@ -627,9 +597,6 @@ function linearRegression(points) {
   return { slope, intercept, r2 };
 }
 
-// ============================================================
-// BYGG GRAF
-// ============================================================
 async function buildKorrelationChart(canvasId) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -642,13 +609,10 @@ async function buildKorrelationChart(canvasId) {
       fetchSCB(URL_INKOMST),
     ]);
 
-    // Återvinning ton per år
     const gammalTon = parseGammalData(gammalJson);
+    const tonGamla  = parseData(gamlaJson, CONTENTS_TON_GAMLA);
+    const tonNya    = parseData(nyaJson,   CONTENTS_TON_NYA);
 
-    const tonGamla = parseData(gamlaJson, CONTENTS_TON_GAMLA); // 2020–2023
-    const tonNya   = parseData(nyaJson,   CONTENTS_TON_NYA);   // 2024
-
-    // Summera 2020–2024 med din befintliga data
     const nyTon = {};
     ["2020","2021","2022","2023"].forEach(ar => {
       nyTon[ar] = KATEGORIER.reduce((acc, { kod }) => {
@@ -659,10 +623,8 @@ async function buildKorrelationChart(canvasId) {
       return acc + (tonNya[kod]?.["2024"] ?? 0);
     }, 0);
 
-    // Inkomst
     const inkomst = parseInkomst(inkomstJson);
 
-    // Bygg punkter för alla år
     const punkter = ALLA_UTOKADE_AR
       .filter(ar => {
         const ton = ar <= "2019" ? gammalTon[ar] : nyTon[ar];
@@ -680,7 +642,6 @@ async function buildKorrelationChart(canvasId) {
       return;
     }
 
-    // Regression
     const reg = linearRegression(punkter);
     const xMin = Math.min(...punkter.map(p => p.x));
     const xMax = Math.max(...punkter.map(p => p.x));
@@ -689,7 +650,6 @@ async function buildKorrelationChart(canvasId) {
       { x: xMax, y: reg.slope * xMax + reg.intercept },
     ];
 
-    // Färgskala – mörkare ju senare år
     const färgSkala = {
       "2012": "#d4f0e6", "2013": "#b7e0d3", "2014": "#96cebc",
       "2015": "#7fc7b0", "2016": "#5db89a", "2017": "#3aa486",
@@ -697,6 +657,9 @@ async function buildKorrelationChart(canvasId) {
       "2021": "#077347", "2022": "#056040", "2023": "#034d33",
       "2024": "#007353",
     };
+
+    const befintligKorr = Chart.getChart(canvas);
+    if (befintligKorr) befintligKorr.destroy();
 
     new Chart(canvas.getContext("2d"), {
       type: "scatter",
@@ -746,28 +709,17 @@ async function buildKorrelationChart(canvasId) {
         },
         scales: {
           x: {
-            title: {
-              display: true,
-              text: "Disponibel inkomst (kr/år, 18+ år)",
-            },
-            ticks: {
-              callback: v => v.toLocaleString("sv-SE") + " kr",
-            },
+            title: { display: true, text: "Disponibel inkomst (kr/år, 18+ år)" },
+            ticks: { callback: v => v.toLocaleString("sv-SE") + " kr" },
           },
           y: {
-            title: {
-              display: true,
-              text: "Totalt återvunnet (ton)",
-            },
-            ticks: {
-              callback: v => v.toLocaleString("sv-SE"),
-            },
+            title: { display: true, text: "Totalt återvunnet (ton)" },
+            ticks: { callback: v => v.toLocaleString("sv-SE") },
           },
         },
       },
       plugins: [
         {
-          // Årstal ovanför varje punkt
           afterDatasetsDraw(chart) {
             const ctx2    = chart.ctx;
             const dataset = chart.data.datasets[0];
@@ -796,46 +748,34 @@ async function buildKorrelationChart(canvasId) {
 buildKorrelationChart("korrelation");
 
 
-//================================================================================================================================//
+// ============================================================================================================================= //
 
-// =========================
+// ============================================================
 // FETCH EUROSTAT
-// =========================
+// ============================================================
 
 async function fetchEurostat(dataset) {
   const url = `https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/${dataset}`;
-
   const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error("API error: " + res.status);
-  }
-
+  if (!res.ok) throw new Error("API error: " + res.status);
   return await res.json();
 }
 
-// =========================
-// JSON-stat PARSER (KORREKT)
-// =========================
-
 function parseEurostatJSONStat(json) {
-  const geo = json.dimension.geo.category.index;
+  const geo  = json.dimension.geo.category.index;
   const time = json.dimension.time.category.index;
 
-  const countries = Object.keys(geo);
-  const years = Object.keys(time);
-
-  const values = json.value;
+  const countries  = Object.keys(geo);
+  const years      = Object.keys(time);
+  const values     = json.value;
   const valueArray = Array.isArray(values) ? values : Object.values(values);
 
   const result = {};
-
   countries.forEach((c) => {
     result[c] = Array(years.length).fill(null);
   });
 
   let i = 0;
-
   for (const c of countries) {
     for (let t = 0; t < years.length; t++) {
       result[c][t] = valueArray[i] ?? null;
@@ -846,59 +786,28 @@ function parseEurostatJSONStat(json) {
   return { result, countries, years };
 }
 
-// =========================
-// ISO3 mapping
-// =========================
-
 const iso3 = {
-  BE: "BEL",
-  LV: "LVA",
-  SK: "SVK",
-  CZ: "CZE",
-  DE: "DEU",
-  SI: "SVN",
-  NL: "NLD",
-  IT: "ITA",
-  PL: "POL",
-  ES: "ESP",
-  LT: "LTU",
-  EE: "EST",
-  PT: "PRT",
-  LU: "LUX",
-  MT: "MLT",
-  EL: "GRC",
-  IE: "IRL",
-  FI: "FIN",
-  SE: "SWE",
-  HR: "HRV",
-  DK: "DNK",
-  AT: "AUT",
-  FR: "FRA",
-  HU: "HUN",
-  NO: "NOR",
+  BE: "BEL", LV: "LVA", SK: "SVK", CZ: "CZE", DE: "DEU",
+  SI: "SVN", NL: "NLD", IT: "ITA", PL: "POL", ES: "ESP",
+  LT: "LTU", EE: "EST", PT: "PRT", LU: "LUX", MT: "MLT",
+  EL: "GRC", IE: "IRL", FI: "FIN", SE: "SWE", HR: "HRV",
+  DK: "DNK", AT: "AUT", FR: "FRA", HU: "HUN", NO: "NOR",
 };
-
-// =========================
-// MAIN
-// =========================
 
 async function loadData() {
   try {
-    const plasticRaw = await fetchEurostat("env_waspacr");
-
+    const plasticRaw    = await fetchEurostat("env_waspacr");
     const plasticParsed = parseEurostatJSONStat(plasticRaw);
 
     const countries = plasticParsed.countries;
-
-    const years = plasticParsed.years;
-
-    const rows = [];
+    const years     = plasticParsed.years;
+    const rows      = [];
 
     for (const c of countries) {
       for (let i = 0; i < years.length; i++) {
         rows.push({
-          country: iso3[c] || c,
-          year: years[i],
+          country:   iso3[c] || c,
+          year:      years[i],
           recycling: plasticParsed.result[c][i],
         });
       }
@@ -909,137 +818,69 @@ async function loadData() {
     }
 
     const initialYear = years[0];
-    const initial = getYearData(initialYear);
+    const initial     = getYearData(initialYear);
 
     const customGreens = [
-      [0, "#e6f4ef"],
+      [0,   "#e6f4ef"],
       [0.2, "#b7e0d3"],
       [0.4, "#7fc7b0"],
       [0.6, "#3aa486"],
-
       [0.8, "#0b6f58"],
-
-      [1, "#007353"],
+      [1,   "#007353"],
     ];
 
     const trace = {
-      type: "choropleth",
-
+      type:         "choropleth",
       locationmode: "ISO-3",
-
-      locations: initial.map((r) => r.country),
-
-      z: initial.map((r) => r.recycling),
-
-      colorscale: customGreens,
-
+      locations:    initial.map((r) => r.country),
+      z:            initial.map((r) => r.recycling),
+      colorscale:   customGreens,
       zmin: 0,
       zmax: 100,
-
-      colorbar: {
-        title: "Återvinning %",
-      },
+      colorbar: { title: "Återvinning %" },
     };
 
     const frames = years.map((y) => {
       const d = getYearData(y);
-
       return {
         name: y,
-
-        data: [
-          {
-            locations: d.map((r) => r.country),
-
-            z: d.map((r) => r.recycling),
-          },
-        ],
+        data: [{ locations: d.map((r) => r.country), z: d.map((r) => r.recycling) }],
       };
     });
 
     const layout = {
-  margin: { t: 40, l: 0, r: 0, b: 0 },
-  autosize: true,
-  paper_bgcolor: "rgba(0,0,0,0)",
-  plot_bgcolor:  "rgba(0,0,0,0)",
-  geo: {
-    scope: "europe",
-    bgcolor: "rgba(0,0,0,0)",  // ← bakgrund inuti kartan
-  },
-
-      sliders: [
-        {
-          steps: years.map((y) => ({
-            label: y,
-
+      margin:        { t: 40, l: 0, r: 0, b: 0 },
+      autosize:      true,
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor:  "rgba(0,0,0,0)",
+      geo: { scope: "europe", bgcolor: "rgba(0,0,0,0)" },
+      sliders: [{
+        steps: years.map((y) => ({
+          label:  y,
+          method: "animate",
+          args:   [[y], { mode: "immediate", frame: { duration: 1000 }, transition: { duration: 700 } }],
+        })),
+      }],
+      updatemenus: [{
+        type: "buttons",
+        buttons: [
+          {
+            label:  "Play",
             method: "animate",
-
-            args: [
-              [y],
-              {
-                mode: "immediate",
-
-                frame: {
-                  duration: 1000,
-                },
-
-                transition: {
-                  duration: 700,
-                },
-              },
-            ],
-          })),
-        },
-      ],
-
-      updatemenus: [
-        {
-          type: "buttons",
-
-          buttons: [
-            {
-              label: "Play",
-
-              method: "animate",
-
-              args: [
-                null,
-                {
-                  fromcurrent: true,
-
-                  frame: {
-                    duration: 800,
-                  },
-
-                  transition: {
-                    duration: 700,
-                  },
-                },
-              ],
-            },
-
-            {
-              label: "Pause",
-
-              method: "animate",
-
-              args: [
-                [null],
-                {
-                  mode: "immediate",
-                },
-              ],
-            },
-          ],
-        },
-      ],
+            args:   [null, { fromcurrent: true, frame: { duration: 800 }, transition: { duration: 700 } }],
+          },
+          {
+            label:  "Pause",
+            method: "animate",
+            args:   [[null], { mode: "immediate" }],
+          },
+        ],
+      }],
     };
 
-    await Plotly.newPlot("plot2", [trace], layout, {
-      responsive: true,
-    });
-
+    await Plotly.newPlot("plot2", [trace], layout, { responsive: true });
     Plotly.addFrames("plot2", frames);
+
   } catch (err) {
     console.error("Error loading data:", err);
   }
@@ -1047,45 +888,27 @@ async function loadData() {
 
 loadData();
 
+// ============================================================
+// PLOT 1 – Plaståtervinning + befolkning Europa 2023
+// ============================================================
+
 const plasticRecycling2023 = {
   dimension: {
     Geo: {
       category: {
         index: {
-          Belgien: 0,
-          Lettland: 1,
-          Slovakien: 2,
-          Tjeckien: 3,
-          Tyskland: 4,
-          Slovenien: 5,
-          Nederländerna: 6,
-          Italien: 7,
-          Polen: 8,
-          Spanien: 9,
-          Litauen: 10,
-          Estland: 11,
-          Portugal: 12,
-          Luxemburg: 13,
-          Malta: 14,
-          Grekland: 15,
-          Irland: 16,
-          Finland: 17,
-          Sverige: 18,
-          Kroatien: 19,
-          Danmark: 20,
-          Österrike: 21,
-          Frankrike: 22,
-          Ungern: 23,
-          Norge: 24,
+          Belgien: 0, Lettland: 1, Slovakien: 2, Tjeckien: 3, Tyskland: 4,
+          Slovenien: 5, Nederländerna: 6, Italien: 7, Polen: 8, Spanien: 9,
+          Litauen: 10, Estland: 11, Portugal: 12, Luxemburg: 13, Malta: 14,
+          Grekland: 15, Irland: 16, Finland: 17, Sverige: 18, Kroatien: 19,
+          Danmark: 20, Österrike: 21, Frankrike: 22, Ungern: 23, Norge: 24,
         },
       },
     },
   },
-
   value: [
     59.5, 59.2, 54.1, 52.4, 52.2, 51.5, 49.1, 49.0, 46.3, 46.2, 42.9, 42.4,
-    39.5, 38.8, 35.6, 32.7, 29.6, 29.3, 28.6, 28.2, 27.8, 26.9, 25.7, 23.0,
-    30.2,
+    39.5, 38.8, 35.6, 32.7, 29.6, 29.3, 28.6, 28.2, 27.8, 26.9, 25.7, 23.0, 30.2,
   ],
 };
 
@@ -1093,145 +916,80 @@ const population2023 = {
   value: [
     11742696, 1883008, 5428792, 10827529, 84358845, 2116972, 17811291, 58997201,
     36753736, 48085361, 2857279, 1365884, 10467366, 660809, 542051, 10413982,
-    5060004, 5563970, 10521556, 3871833, 5932654, 9104772, 68042591, 9599744,
-    5488984,
+    5060004, 5563970, 10521556, 3871833, 5932654, 9104772, 68042591, 9599744, 5488984,
   ],
 };
 
-// ENDAST NAMNBYTE HÄR
 const iso3Names = {
-  Belgien: "BEL",
-  Lettland: "LVA",
-  Slovakien: "SVK",
-  Tjeckien: "CZE",
-  Tyskland: "DEU",
-  Slovenien: "SVN",
-  Nederländerna: "NLD",
-  Italien: "ITA",
-  Polen: "POL",
-  Spanien: "ESP",
-  Litauen: "LTU",
-  Estland: "EST",
-  Portugal: "PRT",
-  Luxemburg: "LUX",
-  Malta: "MLT",
-  Grekland: "GRC",
-  Irland: "IRL",
-  Finland: "FIN",
-  Sverige: "SWE",
-  Kroatien: "HRV",
-  Danmark: "DNK",
-  Österrike: "AUT",
-  Frankrike: "FRA",
-  Ungern: "HUN",
-  Norge: "NOR",
+  Belgien: "BEL", Lettland: "LVA", Slovakien: "SVK", Tjeckien: "CZE", Tyskland: "DEU",
+  Slovenien: "SVN", Nederländerna: "NLD", Italien: "ITA", Polen: "POL", Spanien: "ESP",
+  Litauen: "LTU", Estland: "EST", Portugal: "PRT", Luxemburg: "LUX", Malta: "MLT",
+  Grekland: "GRC", Irland: "IRL", Finland: "FIN", Sverige: "SWE", Kroatien: "HRV",
+  Danmark: "DNK", Österrike: "AUT", Frankrike: "FRA", Ungern: "HUN", Norge: "NOR",
 };
 
 const coords = {
-  BEL: [50.5, 4.5],
-  LVA: [56.9, 24.6],
-  SVK: [48.7, 19.7],
-  CZE: [49.8, 15.5],
-  DEU: [51.1, 10.4],
-  SVN: [46.1, 14.8],
-  NLD: [52.1, 5.3],
-  ITA: [42.8, 12.5],
-  POL: [52.1, 19.4],
-  ESP: [40.4, -3.7],
-  LTU: [55.2, 23.9],
-  EST: [58.6, 25.0],
-  PRT: [39.4, -8.2],
-  LUX: [49.8, 6.1],
-  MLT: [35.9, 14.4],
-  GRC: [39.1, 22.9],
-  IRL: [53.3, -8.2],
-  FIN: [64.5, 26.0],
-  SWE: [62, 15],
-  HRV: [45.1, 15.2],
-  DNK: [56, 9.5],
-  AUT: [47.5, 14.6],
-  FRA: [46.2, 2.2],
-  HUN: [47.1, 19.5],
+  BEL: [50.5, 4.5],  LVA: [56.9, 24.6], SVK: [48.7, 19.7], CZE: [49.8, 15.5],
+  DEU: [51.1, 10.4], SVN: [46.1, 14.8], NLD: [52.1, 5.3],  ITA: [42.8, 12.5],
+  POL: [52.1, 19.4], ESP: [40.4, -3.7], LTU: [55.2, 23.9], EST: [58.6, 25.0],
+  PRT: [39.4, -8.2], LUX: [49.8, 6.1],  MLT: [35.9, 14.4], GRC: [39.1, 22.9],
+  IRL: [53.3, -8.2], FIN: [64.5, 26.0], SWE: [62, 15],     HRV: [45.1, 15.2],
+  DNK: [56, 9.5],    AUT: [47.5, 14.6], FRA: [46.2, 2.2],  HUN: [47.1, 19.5],
   NOR: [60.5, 8.5],
 };
 
-const countries = Object.keys(
-  plasticRecycling2023.dimension.Geo.category.index,
-);
-
-const locations = countries.map((c) => iso3Names[c]);
-
-const values = plasticRecycling2023.value;
-
-const pops = population2023.value;
-
-const lat = locations.map((code) => coords[code][0]);
-
-const lon = locations.map((code) => coords[code][1]);
+const countries  = Object.keys(plasticRecycling2023.dimension.Geo.category.index);
+const locations  = countries.map((c) => iso3Names[c]);
+const values     = plasticRecycling2023.value;
+const pops       = population2023.value;
+const lat        = locations.map((code) => coords[code][0]);
+const lon        = locations.map((code) => coords[code][1]);
 
 const customBlues = [
-  [0, "#ececf7"], // mycket ljus blå/lila
+  [0,   "#ececf7"],
   [0.2, "#c7c7e6"],
   [0.4, "#8f8fc7"],
   [0.6, "#565699"],
   [0.8, "#2c2c63"],
-  [1, "#131138"], // din huvudfärg
+  [1,   "#131138"],
 ];
 
 const choropleth = {
-  type: "choropleth",
-
-  locationmode: "ISO-3",
-
+  type:          "choropleth",
+  locationmode:  "ISO-3",
   locations,
-
-  z: values,
-
-  text: countries,
-
-  colorscale: customBlues,
+  z:             values,
+  text:          countries,
+  colorscale:    customBlues,
   hovertemplate: "%{z}%<extra></extra>",
-
-  colorbar: {
-    title: "Återvinningsgrad (%)",
-  },
+  colorbar:      { title: "Återvinningsgrad (%)" },
 };
 
 const bubbles = {
   type: "scattergeo",
-
   lat,
   lon,
-
   text: countries.map(
-    (c, i) =>
-      `${c}<br>Återvinning: ${values[i]}%<br>Population: ${pops[i].toLocaleString()}`,
+    (c, i) => `${c}<br>Återvinning: ${values[i]}%<br>Population: ${pops[i].toLocaleString()}`
   ),
-
-  mode: "markers",
+  mode:          "markers",
   hovertemplate: "%{text}<extra></extra>",
-
   marker: {
-    size: pops.map((p) => Math.sqrt(p) / 300),
-
+    size:  pops.map((p) => Math.sqrt(p) / 300),
     color: "rgba(0,0,255,0.4)",
-
-    line: {
-      width: 1,
-    },
+    line:  { width: 1 },
   },
 };
 
-// ENDAST NAMNBYTE HÄR
 const layout2 = {
-  title: "Europa: Plaståtervinning (färg) + Population (bubblor) 2023",
-  autosize: true,
+  title:         "Europa: Plaståtervinning (färg) + Population (bubblor) 2023",
+  autosize:      true,
   paper_bgcolor: "rgba(0,0,0,0)",
   plot_bgcolor:  "rgba(0,0,0,0)",
   geo: {
-    scope: "europe",
+    scope:      "europe",
     projection: { type: "natural earth" },
-    bgcolor: "rgba(0,0,0,0)",  // ← bakgrund inuti kartan
+    bgcolor:    "rgba(0,0,0,0)",
   },
 };
 
