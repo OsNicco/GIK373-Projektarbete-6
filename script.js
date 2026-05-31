@@ -83,7 +83,6 @@ if (track) {
 // ============================================================
 // STAPELDIAGRAM – Återvinningsgrad 2024 (canvas id="scb")
 // ============================================================
-
 const FÖRPACKNINGAR = [
   { kod: "10", namn: "Glas",                       color: "#4e9af1" },
   { kod: "25", namn: "Plast (ink. PET-pant)",       color: "#e76f51" },
@@ -99,10 +98,7 @@ const urlSCB = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/MI/MI0307/MI0307
 
 const querySCB = {
   query: [
-    {
-      code: "ContentsCode",
-      selection: { filter: "item", values: ["00000881"] },
-    },
+    { code: "ContentsCode", selection: { filter: "item", values: ["00000881"] } },
   ],
   response: { format: "JSON" },
 };
@@ -111,6 +107,78 @@ const goals = {
   10: 90, 25: 50, 35: 90, 40: 85,
   45: 70, 55: 50, 65: 90, 70: 15,
 };
+
+// ← funktionen definieras här, ovanför if-blocket
+function buildPieCharts(filtered, values) {
+  const labels = filtered.map((d) => {
+    const names = {
+      10: "Glas", 25: "Plast inkl. PET", 35: "PET-flaskor",
+      40: "Papper/kartong", 45: "Järn/stål", 55: "Aluminium",
+      65: "Pantburkar", 70: "Trä",
+    };
+    return names[d.key[0]] || d.key[0];
+  });
+
+  const färger = filtered.map((d) => {
+    const item = FÖRPACKNINGAR.find((f) => f.kod === d.key[0]);
+    return item ? item.color : "#000000";
+  });
+
+  const pie1 = document.getElementById("pieFordelning");
+  if (pie1) {
+    new Chart(pie1, {
+      type: "pie",
+      data: {
+        labels,
+        datasets: [{ data: values, backgroundColor: färger }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom", labels: { font: { size: 10 } } },
+          title: { display: true, text: "Fördelning återvunnen mängd 2024" },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.label}: ${ctx.raw.toFixed(1)} %`,
+            },
+          },
+        },
+      },
+    });
+  }
+
+  const pie2 = document.getElementById("pieJamforelse");
+  if (pie2) {
+    const goalValues = filtered.map((d) => goals[d.key[0]] || 0);
+    const overGoal  = values.filter((v, i) => v >= goalValues[i]).length;
+    const underGoal = values.length - overGoal;
+
+    new Chart(pie2, {
+      type: "pie",
+      data: {
+        labels: ["Når återvinningsmålet", "Når ej målet"],
+        datasets: [{
+          data: [overGoal, underGoal],
+          backgroundColor: ["#007353", "rgba(19,17,56,0.2)"],
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom", labels: { font: { size: 10 } } },
+          title: { display: true, text: "Når målet 2024" },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.label}: ${ctx.raw} material`,
+            },
+          },
+        },
+      },
+    });
+  }
+}
 
 const scbCanvas = document.getElementById("scb");
 if (scbCanvas) {
@@ -154,6 +222,7 @@ if (scbCanvas) {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             legend: { display: true },
             tooltip: {
@@ -169,12 +238,11 @@ if (scbCanvas) {
           },
         },
       });
+
+      buildPieCharts(filtered, values);
     })
     .catch((err) => console.error("SCB-fel:", err));
 }
-
-
-
 
 
 
