@@ -326,16 +326,6 @@ function buildCards(tonGamla, tonNya, gradGamla, gradNya) {
     if (g !== null && g > toppGrad) { toppGrad = g; toppKat = namn; }
   });
 
-  let bästaKat = null, bästaÖkning = -Infinity;
-  KATEGORIER.forEach(({ kod, namn }) => {
-    const start = tonGamla[kod]?.["2020"];
-    const slut  = tonNya[kod]?.["2024"] ?? tonGamla[kod]?.["2023"];
-    if (start && slut) {
-      const ökning = slut - start;
-      if (ökning > bästaÖkning) { bästaÖkning = ökning; bästaKat = namn; }
-    }
-  });
-
   const grader = KATEGORIER
     .map(({ kod }) => gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"])
     .filter(v => v !== null);
@@ -356,12 +346,7 @@ function buildCards(tonGamla, tonNya, gradGamla, gradNya) {
       värde: Math.round(totalt2024).toLocaleString("sv-SE") + " ton",
       sub:   "alla förpackningsslag",
     },
-    {
-      ikon:  "bi-graph-up-arrow",
-      label: "Störst ökning 2020–2024",
-      värde: bästaKat ?? "–",
-      sub:   bästaÖkning > 0 ? `+${Math.round(bästaÖkning).toLocaleString("sv-SE")} ton` : "",
-    },
+  
     {
       ikon:  "bi-percent",
       label: "Snitt återvinningsgrad",
