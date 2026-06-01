@@ -34,80 +34,97 @@ window.addEventListener("scroll", () => {
 // CAROUSEL (bara på index-sidan)
 // ============================================================
 
-const track = document.querySelector('.track');
+const track = document.querySelector(".track");
 if (track) {
-  const tiles = document.querySelectorAll('.tile');
-  const right = document.querySelector('.right');
-  const left  = document.querySelector('.left');
+  const tiles = document.querySelectorAll(".tile");
+  const right = document.querySelector(".right");
+  const left = document.querySelector(".left");
   const tileWidth = tiles[0].offsetWidth + 16;
   let isAnimating = false;
 
-  right.addEventListener('click', () => {
+  right.addEventListener("click", () => {
     if (isAnimating) return;
     isAnimating = true;
-    track.style.transition = 'transform 0.4s ease';
+    track.style.transition = "transform 0.4s ease";
     track.style.transform = `translateX(-${tileWidth}px)`;
-    track.addEventListener('transitionend', () => {
-      track.appendChild(track.firstElementChild);
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0)';
-      isAnimating = false;
-    }, { once: true });
+    track.addEventListener(
+      "transitionend",
+      () => {
+        track.appendChild(track.firstElementChild);
+        track.style.transition = "none";
+        track.style.transform = "translateX(0)";
+        isAnimating = false;
+      },
+      { once: true },
+    );
   });
 
-  left.addEventListener('click', () => {
+  left.addEventListener("click", () => {
     if (isAnimating) return;
     isAnimating = true;
     track.insertBefore(track.lastElementChild, track.firstElementChild);
-    track.style.transition = 'none';
+    track.style.transition = "none";
     track.style.transform = `translateX(-${tileWidth}px)`;
     track.offsetHeight;
-    track.style.transition = 'transform 0.4s ease';
-    track.style.transform = 'translateX(0)';
-    track.addEventListener('transitionend', () => {
-      isAnimating = false;
-    }, { once: true });
+    track.style.transition = "transform 0.4s ease";
+    track.style.transform = "translateX(0)";
+    track.addEventListener(
+      "transitionend",
+      () => {
+        isAnimating = false;
+      },
+      { once: true },
+    );
   });
 }
-
-
-// ============================================================================================================================= //
 
 // ============================================================
 // STAPELDIAGRAM – Återvinningsgrad 2024 (canvas id="scb")
 // ============================================================
 
 const FÖRPACKNINGAR = [
-  { kod: "10", namn: "Glas",                       color: "#4e9af1" },
-  { kod: "25", namn: "Plast (ink. PET-pant)",       color: "#e76f51" },
-  { kod: "35", namn: "PET-flaskor m. pant",         color: "#f4a261" },
-  { kod: "40", namn: "Papper/papp/kartong",         color: "#2d6a4f" },
-  { kod: "45", namn: "Järnbaserad metall (stål)",   color: "#8b8b8b" },
+  { kod: "10", namn: "Glas", color: "#4e9af1" },
+  { kod: "25", namn: "Plast (ink. PET-pant)", color: "#e76f51" },
+  { kod: "35", namn: "PET-flaskor m. pant", color: "#f4a261" },
+  { kod: "40", namn: "Papper/papp/kartong", color: "#2d6a4f" },
+  { kod: "45", namn: "Järnbaserad metall (stål)", color: "#5e61a1" },
   { kod: "55", namn: "Aluminium (ink. pantburkar)", color: "#c084fc" },
-  { kod: "65", namn: "Pantburkar aluminium",        color: "#e9c46a" },
-  { kod: "70", namn: "Trä",                         color: "#a0785a" },
+  { kod: "65", namn: "Pantburkar aluminium", color: "#e9c46a" },
 ];
 
-const urlSCB = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/MI/MI0307/MI0307T2NN";
+const urlSCB =
+  "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/MI/MI0307/MI0307T2NN";
 
 const querySCB = {
   query: [
-    { code: "ContentsCode", selection: { filter: "item", values: ["00000881"] } },
+    {
+      code: "ContentsCode",
+      selection: { filter: "item", values: ["00000881"] },
+    },
   ],
   response: { format: "JSON" },
 };
 
 const goals = {
-  10: 90, 25: 50, 35: 90, 40: 85,
-  45: 70, 55: 50, 65: 90, 70: 15,
+  10: 90,
+  25: 50,
+  35: 90,
+  40: 85,
+  45: 70,
+  55: 50,
+  65: 90,
 };
 
 function buildPieCharts(filtered, values) {
   const labels = filtered.map((d) => {
     const names = {
-      10: "Glas", 25: "Plast inkl. PET", 35: "PET-flaskor",
-      40: "Papper/kartong", 45: "Järn/stål", 55: "Aluminium",
-      65: "Pantburkar", 70: "Trä",
+      10: "Glas",
+      25: "Plast inkl. PET",
+      35: "PET-flaskor",
+      40: "Papper/kartong",
+      45: "Järn/stål",
+      55: "Aluminium",
+      65: "Pantburkar",
     };
     return names[d.key[0]] || d.key[0];
   });
@@ -150,24 +167,26 @@ function buildPieCharts(filtered, values) {
     if (befintligPie2) befintligPie2.destroy();
 
     const goalValues = filtered.map((d) => goals[d.key[0]] || 0);
-    const overGoal   = values.filter((v, i) => v >= goalValues[i]).length;
-    const underGoal  = values.length - overGoal;
+    const overGoal = values.filter((v, i) => v >= goalValues[i]).length;
+    const underGoal = values.length - overGoal;
 
     new Chart(pie2, {
       type: "pie",
       data: {
-        labels: ["Når återvinningsmålet", "Når ej målet"],
-        datasets: [{
-          data: [overGoal, underGoal],
-          backgroundColor: ["#007353", "rgba(19,17,56,0.2)"],
-        }],
+        labels: ["Uppnått återvinningsmålet", "Uppnått ej målet"],
+        datasets: [
+          {
+            data: [overGoal, underGoal],
+            backgroundColor: ["#131138", "rgba(198, 196, 255, 0.4)"],
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
           legend: { position: "bottom", labels: { font: { size: 10 } } },
-          title: { display: true, text: "Når målet 2024" },
+          title: { display: true, text: "Uppnått målet 2024" },
           tooltip: {
             callbacks: {
               label: (ctx) => `${ctx.label}: ${ctx.raw} material`,
@@ -184,20 +203,27 @@ if (scbCanvas) {
   fetch(urlSCB, { method: "POST", body: JSON.stringify(querySCB) })
     .then((r) => r.json())
     .then((data) => {
-      const filtered = data.data.filter((d) => d.key[0] !== "99");
+      const filtered = data.data.filter(
+        (d) => d.key[0] !== "99" && d.key[0] !== "70",
+      );
 
       const labels = filtered.map((d) => {
         const names = {
-          10: "Glas", 25: "Plast inkl. PET", 35: "PET-flaskor",
-          40: "Papper/kartong", 45: "Järn/stål", 55: "Aluminium",
-          65: "Pantburkar", 70: "Trä",
+          10: "Glas",
+          25: "Plast inkl. PET",
+          35: "PET-flaskor",
+          40: "Papper/kartong",
+          45: "Järn/stål",
+          55: "Aluminium",
+          65: "Pantburkar",
+          70: "Trä",
         };
         return names[d.key[0]] || d.key[0];
       });
 
-      const values     = filtered.map((d) => parseFloat(d.values[0]));
+      const values = filtered.map((d) => parseFloat(d.values[0]));
       const goalValues = filtered.map((d) => goals[d.key[0]] || 0);
-      const färger     = filtered.map((d) => {
+      const färger = filtered.map((d) => {
         const item = FÖRPACKNINGAR.find((f) => f.kod === d.key[0]);
         return item ? item.color : "#000000";
       });
@@ -246,32 +272,33 @@ if (scbCanvas) {
     .catch((err) => console.error("SCB-fel:", err));
 }
 
-
 // ============================================================================================================================= //
 
 // ============================================================
 // SCB-URLS
 // ============================================================
-const URL_GAMLA = "https://statistikdatabasen.scb.se/api/v2/tables/TAB5564/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=0000047A,00000479,00000478&valueCodes[Tid]=2020,2021,2022,2023";
-const URL_NYA   = "https://statistikdatabasen.scb.se/api/v2/tables/TAB6768/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=000008G6,000008G5,00000881&valueCodes[Tid]=2024";
+const URL_GAMLA =
+  "https://statistikdatabasen.scb.se/api/v2/tables/TAB5564/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=0000047A,00000479,00000478&valueCodes[Tid]=2020,2021,2022,2023";
+const URL_NYA =
+  "https://statistikdatabasen.scb.se/api/v2/tables/TAB6768/data?lang=sv&valueCodes[Forpackning]=10,25,35,40,45,55,65,70&valueCodes[ContentsCode]=000008G6,000008G5,00000881&valueCodes[Tid]=2024";
 
-const CONTENTS_TON_GAMLA  = "0000047A";
-const CONTENTS_TON_NYA    = "000008G6";
+const CONTENTS_TON_GAMLA = "0000047A";
+const CONTENTS_TON_NYA = "000008G6";
 const CONTENTS_GRAD_GAMLA = "00000478";
-const CONTENTS_GRAD_NYA   = "00000881";
+const CONTENTS_GRAD_NYA = "00000881";
 const CONTENTS_MARK_GAMLA = "00000479";
-const CONTENTS_MARK_NYA   = "000008G5";
+const CONTENTS_MARK_NYA = "000008G5";
 
 const ALLA_AR = ["2020", "2021", "2022", "2023", "2024"];
 
 const KATEGORIER = [
-  { kod: "10", namn: "Glas",                       color: "#4e9af1" },
-  { kod: "25", namn: "Plast (ink. PET-pant)",       color: "#e76f51" },
-  { kod: "35", namn: "PET-flaskor m. pant",         color: "#f4a261" },
-  { kod: "40", namn: "Papper/papp/kartong",         color: "#2d6a4f" },
-  { kod: "45", namn: "Järnbaserad metall (stål)",   color: "#8b8b8b" },
+  { kod: "10", namn: "Glas", color: "#4e9af1" },
+  { kod: "25", namn: "Plast (ink. PET-pant)", color: "#e76f51" },
+  { kod: "35", namn: "PET-flaskor m. pant", color: "#f4a261" },
+  { kod: "40", namn: "Papper/papp/kartong", color: "#2d6a4f" },
+  { kod: "45", namn: "Järnbaserad metall (stål)", color: "#5e61a1" },
   { kod: "55", namn: "Aluminium (ink. pantburkar)", color: "#c084fc" },
-  { kod: "65", namn: "Pantburkar aluminium",        color: "#e9c46a" },
+  { kod: "65", namn: "Pantburkar aluminium", color: "#e9c46a" },
 ];
 
 // ============================================================
@@ -288,16 +315,16 @@ function toNumber(val) {
 }
 
 function parseData(json, contentsCode) {
-  const dims   = json.dimension;
+  const dims = json.dimension;
   const values = json.value;
 
   const forpackningKoder = Object.keys(dims["Forpackning"].category.index);
-  const contentsKoder    = Object.keys(dims["ContentsCode"].category.index);
-  const tider            = Object.keys(dims["Tid"].category.index);
+  const contentsKoder = Object.keys(dims["ContentsCode"].category.index);
+  const tider = Object.keys(dims["Tid"].category.index);
 
   const nContents = contentsKoder.length;
-  const nTid      = tider.length;
-  const ciIdx     = contentsKoder.indexOf(contentsCode);
+  const nTid = tider.length;
+  const ciIdx = contentsKoder.indexOf(contentsCode);
 
   const result = {};
   forpackningKoder.forEach((kod, fi) => {
@@ -314,58 +341,65 @@ function parseData(json, contentsCode) {
 // KORTEN
 // ============================================================
 function buildCards(tonGamla, tonNya, gradGamla, gradNya) {
-
   const totalt2024 = KATEGORIER.reduce((sum, { kod }) => {
     const v = tonNya[kod]?.["2024"];
     return sum + (v ?? 0);
   }, 0);
 
-  let toppKat = null, toppGrad = -Infinity;
+  let toppKat = null,
+    toppGrad = -Infinity;
   KATEGORIER.forEach(({ kod, namn }) => {
     const g = gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"];
-    if (g !== null && g > toppGrad) { toppGrad = g; toppKat = namn; }
+    if (g !== null && g > toppGrad) {
+      toppGrad = g;
+      toppKat = namn;
+    }
   });
 
-  const grader = KATEGORIER
-    .map(({ kod }) => gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"])
-    .filter(v => v !== null);
+  const grader = KATEGORIER.map(
+    ({ kod }) => gradNya[kod]?.["2024"] ?? gradGamla[kod]?.["2023"],
+  ).filter((v) => v !== null);
   const snittGrad = grader.length
     ? (grader.reduce((a, b) => a + b, 0) / grader.length).toFixed(1)
     : "–";
 
   const kortData = [
     {
-      ikon:  "bi-trophy",
+      ikon: "bi-trophy",
       label: "Högst återvinningsgrad",
       värde: toppKat ?? "–",
-      sub:   toppGrad > 0 ? `${toppGrad.toFixed(1)} %` : "",
+      sub: toppGrad > 0 ? `${toppGrad.toFixed(1)} %` : "",
     },
     {
-      ikon:  "bi-recycle",
+      ikon: "bi-recycle",
       label: "Totalt återvunnet 2024",
       värde: Math.round(totalt2024).toLocaleString("sv-SE") + " ton",
-      sub:   "alla förpackningsslag",
+      sub: "alla förpackningsslag",
     },
-  
+
     {
-      ikon:  "bi-percent",
+      ikon: "bi-percent",
       label: "Snitt återvinningsgrad",
       värde: snittGrad + " %",
-      sub:   "genomsnitt alla material",
+      sub: "genomsnitt alla material",
     },
   ];
 
   const kortContainer = document.querySelector(".stat-cards");
   if (!kortContainer) return;
 
-  kortContainer.innerHTML = kortData.map(({ ikon, label, värde, sub }) => `
+  kortContainer.innerHTML = kortData
+    .map(
+      ({ ikon, label, värde, sub }) => `
     <div class="card">
       <i class="bi ${ikon} card-icon"></i>
       <p class="card-label">${label}</p>
       <p class="card-value">${värde}</p>
       ${sub ? `<p class="card-sub">${sub}</p>` : ""}
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 // ============================================================
@@ -380,8 +414,8 @@ function buildChart(canvasId, gamla, nya) {
 
   const datasets = KATEGORIER.map(({ kod, namn, color }) => ({
     label: namn,
-    data: ALLA_AR.map(ar =>
-      ar === "2024" ? (nya[kod]?.[ar] ?? null) : (gamla[kod]?.[ar] ?? null)
+    data: ALLA_AR.map((ar) =>
+      ar === "2024" ? (nya[kod]?.[ar] ?? null) : (gamla[kod]?.[ar] ?? null),
     ),
     borderColor: color,
     backgroundColor: color + "22",
@@ -409,8 +443,13 @@ function buildChart(canvasId, gamla, nya) {
           title: { display: true, text: "Ton" },
           ticks: {
             callback(value) {
-              const steg = [10000, 20000, 30000, 50000, 100000, 200000, 300000, 500000, 700000];
-              return steg.includes(value) ? value.toLocaleString("sv-SE") : null;
+              const steg = [
+                10000, 20000, 30000, 50000, 100000, 200000, 300000, 500000,
+                700000,
+              ];
+              return steg.includes(value)
+                ? value.toLocaleString("sv-SE")
+                : null;
             },
           },
         },
@@ -429,8 +468,8 @@ function buildMarketChart(canvasId, gamla, nya) {
 
   const datasets = KATEGORIER.map(({ kod, namn, color }) => ({
     label: namn,
-    data: ALLA_AR.map(ar =>
-      ar === "2024" ? (nya[kod]?.[ar] ?? null) : (gamla[kod]?.[ar] ?? null)
+    data: ALLA_AR.map((ar) =>
+      ar === "2024" ? (nya[kod]?.[ar] ?? null) : (gamla[kod]?.[ar] ?? null),
     ),
     borderColor: color,
     backgroundColor: color + "22",
@@ -458,8 +497,12 @@ function buildMarketChart(canvasId, gamla, nya) {
           title: { display: true, text: "Ton" },
           ticks: {
             callback(value) {
-              const steg = [10000, 20000, 50000, 100000, 200000, 500000, 1000000];
-              return steg.includes(value) ? value.toLocaleString("sv-SE") : null;
+              const steg = [
+                10000, 20000, 50000, 100000, 200000, 500000, 1000000,
+              ];
+              return steg.includes(value)
+                ? value.toLocaleString("sv-SE")
+                : null;
             },
           },
         },
@@ -478,12 +521,12 @@ async function init(canvasId) {
     fetchSCB(URL_NYA),
   ]);
 
-  const tonGamla  = parseData(gamlaJson, CONTENTS_TON_GAMLA);
-  const tonNya    = parseData(nyaJson,   CONTENTS_TON_NYA);
+  const tonGamla = parseData(gamlaJson, CONTENTS_TON_GAMLA);
+  const tonNya = parseData(nyaJson, CONTENTS_TON_NYA);
   const gradGamla = parseData(gamlaJson, CONTENTS_GRAD_GAMLA);
-  const gradNya   = parseData(nyaJson,   CONTENTS_GRAD_NYA);
+  const gradNya = parseData(nyaJson, CONTENTS_GRAD_NYA);
   const markGamla = parseData(gamlaJson, CONTENTS_MARK_GAMLA);
-  const markNya   = parseData(nyaJson,   CONTENTS_MARK_NYA);
+  const markNya = parseData(nyaJson, CONTENTS_MARK_NYA);
 
   buildCards(tonGamla, tonNya, gradGamla, gradNya);
   buildChart(canvasId, tonGamla, tonNya);
@@ -491,7 +534,6 @@ async function init(canvasId) {
 }
 
 init("myChart");
-
 
 // ============================================================================================================================= //
 
@@ -517,25 +559,36 @@ const URL_INKOMST =
   "&codelist[Region]=vs_RegionRiket99";
 
 const ALLA_UTOKADE_AR = [
-  "2012","2013","2014","2015","2016","2017","2018","2019",
-  "2020","2021","2022","2023","2024"
+  "2012",
+  "2013",
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024",
 ];
 
 function parseGammalData(json) {
-  const dims   = json.dimension;
+  const dims = json.dimension;
   const values = json.value;
 
   const forpackKoder = Object.keys(dims["Forpackning"].category.index);
-  const tider        = Object.keys(dims["Tid"].category.index);
-  const nTid         = tider.length;
+  const tider = Object.keys(dims["Tid"].category.index);
+  const nTid = tider.length;
 
   const totaltPerAr = {};
-  tider.forEach(ar => totaltPerAr[ar] = 0);
+  tider.forEach((ar) => (totaltPerAr[ar] = 0));
 
   forpackKoder.forEach((kod, fi) => {
     tider.forEach((ar, ti) => {
       const idx = fi * nTid + ti;
-      const v   = values[idx];
+      const v = values[idx];
       if (v != null) totaltPerAr[ar] += Number(v);
     });
   });
@@ -544,11 +597,11 @@ function parseGammalData(json) {
 }
 
 function parseInkomst(json) {
-  const dims   = json.dimension;
+  const dims = json.dimension;
   const values = json.value;
 
-  const tidKey = Object.keys(dims).find(k =>
-    k.toLowerCase().includes("tid") || k.toLowerCase().includes("time")
+  const tidKey = Object.keys(dims).find(
+    (k) => k.toLowerCase().includes("tid") || k.toLowerCase().includes("time"),
   );
 
   if (!tidKey) {
@@ -556,7 +609,7 @@ function parseInkomst(json) {
     return {};
   }
 
-  const tider  = Object.keys(dims[tidKey].category.index);
+  const tider = Object.keys(dims[tidKey].category.index);
   const result = {};
   tider.forEach((ar, i) => {
     result[ar] = values[i] != null ? Number(values[i]) : null;
@@ -565,19 +618,22 @@ function parseInkomst(json) {
 }
 
 function linearRegression(points) {
-  const n   = points.length;
-  const sx  = points.reduce((a, p) => a + p.x, 0);
-  const sy  = points.reduce((a, p) => a + p.y, 0);
+  const n = points.length;
+  const sx = points.reduce((a, p) => a + p.x, 0);
+  const sy = points.reduce((a, p) => a + p.y, 0);
   const sx2 = points.reduce((a, p) => a + p.x * p.x, 0);
   const sxy = points.reduce((a, p) => a + p.x * p.y, 0);
 
-  const slope     = (n * sxy - sx * sy) / (n * sx2 - sx * sx);
+  const slope = (n * sxy - sx * sy) / (n * sx2 - sx * sx);
   const intercept = (sy - slope * sx) / n;
 
   const yMean = sy / n;
   const ssTot = points.reduce((a, p) => a + (p.y - yMean) ** 2, 0);
-  const ssRes = points.reduce((a, p) => a + (p.y - (slope * p.x + intercept)) ** 2, 0);
-  const r2    = 1 - ssRes / ssTot;
+  const ssRes = points.reduce(
+    (a, p) => a + (p.y - (slope * p.x + intercept)) ** 2,
+    0,
+  );
+  const r2 = 1 - ssRes / ssTot;
 
   return { slope, intercept, r2 };
 }
@@ -595,11 +651,11 @@ async function buildKorrelationChart(canvasId) {
     ]);
 
     const gammalTon = parseGammalData(gammalJson);
-    const tonGamla  = parseData(gamlaJson, CONTENTS_TON_GAMLA);
-    const tonNya    = parseData(nyaJson,   CONTENTS_TON_NYA);
+    const tonGamla = parseData(gamlaJson, CONTENTS_TON_GAMLA);
+    const tonNya = parseData(nyaJson, CONTENTS_TON_NYA);
 
     const nyTon = {};
-    ["2020","2021","2022","2023"].forEach(ar => {
+    ["2020", "2021", "2022", "2023"].forEach((ar) => {
       nyTon[ar] = KATEGORIER.reduce((acc, { kod }) => {
         return acc + (tonGamla[kod]?.[ar] ?? 0);
       }, 0);
@@ -610,16 +666,14 @@ async function buildKorrelationChart(canvasId) {
 
     const inkomst = parseInkomst(inkomstJson);
 
-    const punkter = ALLA_UTOKADE_AR
-      .filter(ar => {
-        const ton = ar <= "2019" ? gammalTon[ar] : nyTon[ar];
-        return ton > 0 && inkomst[ar] != null;
-      })
-      .map(ar => ({
-        x:  inkomst[ar],
-        y:  Math.round(ar <= "2019" ? gammalTon[ar] : nyTon[ar]),
-        ar,
-      }));
+    const punkter = ALLA_UTOKADE_AR.filter((ar) => {
+      const ton = ar <= "2019" ? gammalTon[ar] : nyTon[ar];
+      return ton > 0 && inkomst[ar] != null;
+    }).map((ar) => ({
+      x: inkomst[ar],
+      y: Math.round(ar <= "2019" ? gammalTon[ar] : nyTon[ar]),
+      ar,
+    }));
 
     if (punkter.length === 0) {
       canvas.parentElement.innerHTML =
@@ -628,20 +682,28 @@ async function buildKorrelationChart(canvasId) {
     }
 
     const reg = linearRegression(punkter);
-    const xMin = Math.min(...punkter.map(p => p.x));
-    const xMax = Math.max(...punkter.map(p => p.x));
+    const xMin = Math.min(...punkter.map((p) => p.x));
+    const xMax = Math.max(...punkter.map((p) => p.x));
     const regressionLine = [
       { x: xMin, y: reg.slope * xMin + reg.intercept },
       { x: xMax, y: reg.slope * xMax + reg.intercept },
     ];
 
     const färgSkala = {
-      "2012": "#d4f0e6", "2013": "#b7e0d3", "2014": "#96cebc",
-      "2015": "#7fc7b0", "2016": "#5db89a", "2017": "#3aa486",
-      "2018": "#1f8c6e", "2019": "#0b6f58", "2020": "#096350",
-      "2021": "#077347", "2022": "#056040", "2023": "#034d33",
-      "2024": "#007353",
-    };
+  2012: "#d7d7f5",
+  2013: "#c2c2ee",
+  2014: "#adade7",
+  2015: "#9898e0",
+  2016: "#8383d9",
+  2017: "#6e6ed2",
+  2018: "#5959cb",
+  2019: "#4444c4",
+  2020: "#3030ad",
+  2021: "#25258a",
+  2022: "#1d1d69",
+  2023: "#17174f",
+  2024: "#131138",
+};
 
     const befintligKorr = Chart.getChart(canvas);
     if (befintligKorr) befintligKorr.destroy();
@@ -653,7 +715,7 @@ async function buildKorrelationChart(canvasId) {
           {
             label: "År (2012–2024)",
             data: punkter,
-            backgroundColor: punkter.map(p => färgSkala[p.ar] ?? "#007353"),
+            backgroundColor: punkter.map((p) => färgSkala[p.ar] ?? "#007353"),
             pointRadius: 10,
             pointHoverRadius: 13,
           },
@@ -694,23 +756,26 @@ async function buildKorrelationChart(canvasId) {
         },
         scales: {
           x: {
-            title: { display: true, text: "Disponibel inkomst (kr/år, 18+ år)" },
-            ticks: { callback: v => v.toLocaleString("sv-SE") + " kr" },
+            title: {
+              display: true,
+              text: "Disponibel inkomst (kr/år, 18+ år)",
+            },
+            ticks: { callback: (v) => v.toLocaleString("sv-SE") + " kr" },
           },
           y: {
             title: { display: true, text: "Totalt återvunnet (ton)" },
-            ticks: { callback: v => v.toLocaleString("sv-SE") },
+            ticks: { callback: (v) => v.toLocaleString("sv-SE") },
           },
         },
       },
       plugins: [
         {
           afterDatasetsDraw(chart) {
-            const ctx2    = chart.ctx;
+            const ctx2 = chart.ctx;
             const dataset = chart.data.datasets[0];
-            const meta    = chart.getDatasetMeta(0);
+            const meta = chart.getDatasetMeta(0);
             ctx2.save();
-            ctx2.font      = "bold 11px Poppins, sans-serif";
+            ctx2.font = "bold 11px Poppins, sans-serif";
             ctx2.fillStyle = "rgba(19,17,56,0.8)";
             ctx2.textAlign = "center";
             meta.data.forEach((point, i) => {
@@ -722,7 +787,6 @@ async function buildKorrelationChart(canvasId) {
         },
       ],
     });
-
   } catch (err) {
     console.error("Korrelationsfel:", err);
     canvas.parentElement.innerHTML =
@@ -731,7 +795,6 @@ async function buildKorrelationChart(canvasId) {
 }
 
 buildKorrelationChart("korrelation");
-
 
 // ============================================================================================================================= //
 
@@ -747,12 +810,12 @@ async function fetchEurostat(dataset) {
 }
 
 function parseEurostatJSONStat(json) {
-  const geo  = json.dimension.geo.category.index;
+  const geo = json.dimension.geo.category.index;
   const time = json.dimension.time.category.index;
 
-  const countries  = Object.keys(geo);
-  const years      = Object.keys(time);
-  const values     = json.value;
+  const countries = Object.keys(geo);
+  const years = Object.keys(time);
+  const values = json.value;
   const valueArray = Array.isArray(values) ? values : Object.values(values);
 
   const result = {};
@@ -772,27 +835,47 @@ function parseEurostatJSONStat(json) {
 }
 
 const iso3 = {
-  BE: "BEL", LV: "LVA", SK: "SVK", CZ: "CZE", DE: "DEU",
-  SI: "SVN", NL: "NLD", IT: "ITA", PL: "POL", ES: "ESP",
-  LT: "LTU", EE: "EST", PT: "PRT", LU: "LUX", MT: "MLT",
-  EL: "GRC", IE: "IRL", FI: "FIN", SE: "SWE", HR: "HRV",
-  DK: "DNK", AT: "AUT", FR: "FRA", HU: "HUN", NO: "NOR",
+  BE: "BEL",
+  LV: "LVA",
+  SK: "SVK",
+  CZ: "CZE",
+  DE: "DEU",
+  SI: "SVN",
+  NL: "NLD",
+  IT: "ITA",
+  PL: "POL",
+  ES: "ESP",
+  LT: "LTU",
+  EE: "EST",
+  PT: "PRT",
+  LU: "LUX",
+  MT: "MLT",
+  EL: "GRC",
+  IE: "IRL",
+  FI: "FIN",
+  SE: "SWE",
+  HR: "HRV",
+  DK: "DNK",
+  AT: "AUT",
+  FR: "FRA",
+  HU: "HUN",
+  NO: "NOR",
 };
 
 async function loadData() {
   try {
-    const plasticRaw    = await fetchEurostat("env_waspacr");
+    const plasticRaw = await fetchEurostat("env_waspacr");
     const plasticParsed = parseEurostatJSONStat(plasticRaw);
 
     const countries = plasticParsed.countries;
-    const years     = plasticParsed.years;
-    const rows      = [];
+    const years = plasticParsed.years;
+    const rows = [];
 
     for (const c of countries) {
       for (let i = 0; i < years.length; i++) {
         rows.push({
-          country:   iso3[c] || c,
-          year:      years[i],
+          country: iso3[c] || c,
+          year: years[i],
           recycling: plasticParsed.result[c][i],
         });
       }
@@ -803,23 +886,23 @@ async function loadData() {
     }
 
     const initialYear = years[0];
-    const initial     = getYearData(initialYear);
+    const initial = getYearData(initialYear);
 
     const customGreens = [
-      [0,   "#e6f4ef"],
+      [0, "#e6f4ef"],
       [0.2, "#b7e0d3"],
       [0.4, "#7fc7b0"],
       [0.6, "#3aa486"],
       [0.8, "#0b6f58"],
-      [1,   "#007353"],
+      [1, "#007353"],
     ];
 
     const trace = {
-      type:         "choropleth",
+      type: "choropleth",
       locationmode: "ISO-3",
-      locations:    initial.map((r) => r.country),
-      z:            initial.map((r) => r.recycling),
-      colorscale:   customGreens,
+      locations: initial.map((r) => r.country),
+      z: initial.map((r) => r.recycling),
+      colorscale: customGreens,
       zmin: 0,
       zmax: 100,
       colorbar: { title: "Återvinning %" },
@@ -829,42 +912,61 @@ async function loadData() {
       const d = getYearData(y);
       return {
         name: y,
-        data: [{ locations: d.map((r) => r.country), z: d.map((r) => r.recycling) }],
+        data: [
+          { locations: d.map((r) => r.country), z: d.map((r) => r.recycling) },
+        ],
       };
     });
 
     const layout = {
-      autosize:      true,
+      autosize: true,
       paper_bgcolor: "rgba(0,0,0,0)",
-      plot_bgcolor:  "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(0,0,0,0)",
       geo: { scope: "europe", bgcolor: "rgba(0,0,0,0)" },
-      sliders: [{
-        steps: years.map((y) => ({
-          label:  y,
-          method: "animate",
-          args:   [[y], { mode: "immediate", frame: { duration: 1000 }, transition: { duration: 700 } }],
-        })),
-      }],
-      updatemenus: [{
-        type: "buttons",
-        buttons: [
-          {
-            label:  "Play",
+      sliders: [
+        {
+          steps: years.map((y) => ({
+            label: y,
             method: "animate",
-            args:   [null, { fromcurrent: true, frame: { duration: 800 }, transition: { duration: 700 } }],
-          },
-          {
-            label:  "Pause",
-            method: "animate",
-            args:   [[null], { mode: "immediate" }],
-          },
-        ],
-      }],
+            args: [
+              [y],
+              {
+                mode: "immediate",
+                frame: { duration: 1000 },
+                transition: { duration: 700 },
+              },
+            ],
+          })),
+        },
+      ],
+      updatemenus: [
+        {
+          type: "buttons",
+          buttons: [
+            {
+              label: "Play",
+              method: "animate",
+              args: [
+                null,
+                {
+                  fromcurrent: true,
+                  frame: { duration: 800 },
+                  transition: { duration: 700 },
+                },
+              ],
+            },
+            {
+              label: "Pause",
+              method: "animate",
+              args: [[null], { mode: "immediate" }],
+            },
+          ],
+        },
+      ],
     };
 
     await Plotly.newPlot("plot2", [trace], layout, { responsive: true });
     Plotly.addFrames("plot2", frames);
-
   } catch (err) {
     console.error("Error loading data:", err);
   }
@@ -881,18 +983,39 @@ const plasticRecycling2023 = {
     Geo: {
       category: {
         index: {
-          Belgien: 0, Lettland: 1, Slovakien: 2, Tjeckien: 3, Tyskland: 4,
-          Slovenien: 5, Nederländerna: 6, Italien: 7, Polen: 8, Spanien: 9,
-          Litauen: 10, Estland: 11, Portugal: 12, Luxemburg: 13, Malta: 14,
-          Grekland: 15, Irland: 16, Finland: 17, Sverige: 18, Kroatien: 19,
-          Danmark: 20, Österrike: 21, Frankrike: 22, Ungern: 23, Norge: 24,
+          Belgien: 0,
+          Lettland: 1,
+          Slovakien: 2,
+          Tjeckien: 3,
+          Tyskland: 4,
+          Slovenien: 5,
+          Nederländerna: 6,
+          Italien: 7,
+          Polen: 8,
+          Spanien: 9,
+          Litauen: 10,
+          Estland: 11,
+          Portugal: 12,
+          Luxemburg: 13,
+          Malta: 14,
+          Grekland: 15,
+          Irland: 16,
+          Finland: 17,
+          Sverige: 18,
+          Kroatien: 19,
+          Danmark: 20,
+          Österrike: 21,
+          Frankrike: 22,
+          Ungern: 23,
+          Norge: 24,
         },
       },
     },
   },
   value: [
     59.5, 59.2, 54.1, 52.4, 52.2, 51.5, 49.1, 49.0, 46.3, 46.2, 42.9, 42.4,
-    39.5, 38.8, 35.6, 32.7, 29.6, 29.3, 28.6, 28.2, 27.8, 26.9, 25.7, 23.0, 30.2,
+    39.5, 38.8, 35.6, 32.7, 29.6, 29.3, 28.6, 28.2, 27.8, 26.9, 25.7, 23.0,
+    30.2,
   ],
 };
 
@@ -900,53 +1023,94 @@ const population2023 = {
   value: [
     11742696, 1883008, 5428792, 10827529, 84358845, 2116972, 17811291, 58997201,
     36753736, 48085361, 2857279, 1365884, 10467366, 660809, 542051, 10413982,
-    5060004, 5563970, 10521556, 3871833, 5932654, 9104772, 68042591, 9599744, 5488984,
+    5060004, 5563970, 10521556, 3871833, 5932654, 9104772, 68042591, 9599744,
+    5488984,
   ],
 };
 
 const iso3Names = {
-  Belgien: "BEL", Lettland: "LVA", Slovakien: "SVK", Tjeckien: "CZE", Tyskland: "DEU",
-  Slovenien: "SVN", Nederländerna: "NLD", Italien: "ITA", Polen: "POL", Spanien: "ESP",
-  Litauen: "LTU", Estland: "EST", Portugal: "PRT", Luxemburg: "LUX", Malta: "MLT",
-  Grekland: "GRC", Irland: "IRL", Finland: "FIN", Sverige: "SWE", Kroatien: "HRV",
-  Danmark: "DNK", Österrike: "AUT", Frankrike: "FRA", Ungern: "HUN", Norge: "NOR",
+  Belgien: "BEL",
+  Lettland: "LVA",
+  Slovakien: "SVK",
+  Tjeckien: "CZE",
+  Tyskland: "DEU",
+  Slovenien: "SVN",
+  Nederländerna: "NLD",
+  Italien: "ITA",
+  Polen: "POL",
+  Spanien: "ESP",
+  Litauen: "LTU",
+  Estland: "EST",
+  Portugal: "PRT",
+  Luxemburg: "LUX",
+  Malta: "MLT",
+  Grekland: "GRC",
+  Irland: "IRL",
+  Finland: "FIN",
+  Sverige: "SWE",
+  Kroatien: "HRV",
+  Danmark: "DNK",
+  Österrike: "AUT",
+  Frankrike: "FRA",
+  Ungern: "HUN",
+  Norge: "NOR",
 };
 
 const coords = {
-  BEL: [50.5, 4.5],  LVA: [56.9, 24.6], SVK: [48.7, 19.7], CZE: [49.8, 15.5],
-  DEU: [51.1, 10.4], SVN: [46.1, 14.8], NLD: [52.1, 5.3],  ITA: [42.8, 12.5],
-  POL: [52.1, 19.4], ESP: [40.4, -3.7], LTU: [55.2, 23.9], EST: [58.6, 25.0],
-  PRT: [39.4, -8.2], LUX: [49.8, 6.1],  MLT: [35.9, 14.4], GRC: [39.1, 22.9],
-  IRL: [53.3, -8.2], FIN: [64.5, 26.0], SWE: [62, 15],     HRV: [45.1, 15.2],
-  DNK: [56, 9.5],    AUT: [47.5, 14.6], FRA: [46.2, 2.2],  HUN: [47.1, 19.5],
+  BEL: [50.5, 4.5],
+  LVA: [56.9, 24.6],
+  SVK: [48.7, 19.7],
+  CZE: [49.8, 15.5],
+  DEU: [51.1, 10.4],
+  SVN: [46.1, 14.8],
+  NLD: [52.1, 5.3],
+  ITA: [42.8, 12.5],
+  POL: [52.1, 19.4],
+  ESP: [40.4, -3.7],
+  LTU: [55.2, 23.9],
+  EST: [58.6, 25.0],
+  PRT: [39.4, -8.2],
+  LUX: [49.8, 6.1],
+  MLT: [35.9, 14.4],
+  GRC: [39.1, 22.9],
+  IRL: [53.3, -8.2],
+  FIN: [64.5, 26.0],
+  SWE: [62, 15],
+  HRV: [45.1, 15.2],
+  DNK: [56, 9.5],
+  AUT: [47.5, 14.6],
+  FRA: [46.2, 2.2],
+  HUN: [47.1, 19.5],
   NOR: [60.5, 8.5],
 };
 
-const countries  = Object.keys(plasticRecycling2023.dimension.Geo.category.index);
-const locations  = countries.map((c) => iso3Names[c]);
-const values     = plasticRecycling2023.value;
-const pops       = population2023.value;
-const lat        = locations.map((code) => coords[code][0]);
-const lon        = locations.map((code) => coords[code][1]);
+const countries = Object.keys(
+  plasticRecycling2023.dimension.Geo.category.index,
+);
+const locations = countries.map((c) => iso3Names[c]);
+const values = plasticRecycling2023.value;
+const pops = population2023.value;
+const lat = locations.map((code) => coords[code][0]);
+const lon = locations.map((code) => coords[code][1]);
 
 const customBlues = [
-  [0,   "#ececf7"],
+  [0, "#ececf7"],
   [0.2, "#c7c7e6"],
   [0.4, "#8f8fc7"],
   [0.6, "#565699"],
   [0.8, "#2c2c63"],
-  [1,   "#131138"],
+  [1, "#131138"],
 ];
 
 const choropleth = {
-  type:          "choropleth",
-  locationmode:  "ISO-3",
+  type: "choropleth",
+  locationmode: "ISO-3",
   locations,
-  z:             values,
-  text:          countries,
-  colorscale:    customBlues,
+  z: values,
+  text: countries,
+  colorscale: customBlues,
   hovertemplate: "%{z}%<extra></extra>",
-  colorbar:      { title: "Återvinningsgrad (%)" },
+  colorbar: { title: "Återvinningsgrad (%)" },
 };
 
 const bubbles = {
@@ -954,25 +1118,26 @@ const bubbles = {
   lat,
   lon,
   text: countries.map(
-    (c, i) => `${c}<br>Återvinning: ${values[i]}%<br>Population: ${pops[i].toLocaleString()}`
+    (c, i) =>
+      `${c}<br>Återvinning: ${values[i]}%<br>Population: ${pops[i].toLocaleString()}`,
   ),
-  mode:          "markers",
+  mode: "markers",
   hovertemplate: "%{text}<extra></extra>",
   marker: {
-    size:  pops.map((p) => Math.sqrt(p) / 300),
+    size: pops.map((p) => Math.sqrt(p) / 300),
     color: "rgba(0,0,255,0.4)",
-    line:  { width: 1 },
+    line: { width: 1 },
   },
 };
 
 const layout2 = {
-  autosize:      true,
+  autosize: true,
   paper_bgcolor: "rgba(0,0,0,0)",
-  plot_bgcolor:  "rgba(0,0,0,0)",
+  plot_bgcolor: "rgba(0,0,0,0)",
   geo: {
-    scope:      "europe",
+    scope: "europe",
     projection: { type: "natural earth" },
-    bgcolor:    "rgba(0,0,0,0)",
+    bgcolor: "rgba(0,0,0,0)",
   },
 };
 
