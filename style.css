@@ -68,11 +68,6 @@
   margin-bottom: 5rem;
 }
 
-.hero h1 {
-  font-size: 4.5rem;
-  margin-bottom: 10px;
-}
-
 
 .hem {
   background: rgba(var(--color-white), 0.9);
@@ -84,7 +79,6 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-bottom: 3rem;
   padding-top: 6rem;
   padding-bottom: 3rem;
 }
@@ -92,17 +86,10 @@
 .section-title {
   font-size: 2.4rem;
   color: rgba(var(--color-secondary));
-  font-weight: 400;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
 }
 
-.carousel-wrapper{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:1rem;
-  width:100%;
-    
-}
 
 .tile:hover {
   transform: translateY(-10px);
@@ -141,8 +128,8 @@
 
 
 .arrow {
-  width: 75px;
-  height: 50px;
+  width: 70px;
+  height: 40px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -205,7 +192,7 @@
  }
 
   .card-image .card-text p {
-   color: rgba(var(--color-white), 0.9); 
+   color: rgba(var(--color-white)); 
   }
 
   .card-image .card-text h3 {
@@ -235,7 +222,6 @@
 
 .card-text-right p {
    font-size: 1rem; 
-   color: rgba(var(--color-white), 0.9) !important;
    line-height: 1.5; 
    max-width: 340px; 
   } 
@@ -289,10 +275,9 @@
 
 
 .card-bg-to {
-  background-color: #db0000;
   margin: 30px;
   border-radius: 16px;
-  background-image: url(images/graf2.png);
+  background-image: url(images/f.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -552,6 +537,7 @@ footer {
     flex-wrap: wrap;
     justify-content: center;
   }
+  
 
   .card-image {
     flex-direction: column !important;
@@ -564,6 +550,15 @@ footer {
     width: 100%;
   }
 
+
+  .card-bg-to {
+    background-image: url(images/ö.png);
+    background-size: contain;  
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+
   .hero p {
     font-size: 0.9rem;
   }
@@ -572,10 +567,6 @@ footer {
     flex-direction: column;
   }
 
-  .card-bg {
-    width: 100%;
-    height: auto;
-  }
 
   .card-text {
     padding: 2rem;
@@ -586,21 +577,21 @@ footer {
   }
 
   .card {
-  display: flex;
-  flex-direction: column-reverse; 
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-  min-height: 400px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-  position: relative;
+    display: flex;
+    flex-direction: column-reverse; 
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    min-height: 400px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    position: relative;
   }
 
   .card-bg {
-  width: auto;
-  min-height: 220px;
-  height: auto;
-  flex-shrink: 0;
-  position: relative;
+    width: auto;
+    min-height: 220px;
+    height: auto;
+    flex-shrink: 0;
+    position: relative;
   }
 
 
@@ -636,11 +627,6 @@ footer {
     text-align: center;
   }
 
-  .section-title {
-    font-size: 1.6rem;
-    color: rgba(var(--color-secondary));
-    font-weight: 400;
-  }
 
   .card-bg-topo {
     margin: 30px;
