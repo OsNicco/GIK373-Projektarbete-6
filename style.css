@@ -199,6 +199,11 @@
    max-width: 340px; 
   } 
 
+
+ .card-image {
+  background: url(images/skog.jpg) center 90% / cover no-repeat;
+ }
+
   .card-image .card-text p {
    color: rgba(var(--color-white), 0.9); 
   }
@@ -293,13 +298,7 @@
   background-position: center;
 }
 
-.forest {
-  background: url(images/skog.jpg) bottom/cover no-repeat;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
+
 
 /* BOTTOM BAR */
 .bottom-bar {
@@ -554,18 +553,14 @@ footer {
     justify-content: center;
   }
 
-  .card-image .forest{
-    display: flex;
+  .card-image {
     flex-direction: column !important;
-    position: absolute;
   }
-
-
-
 
   .card-text-right {
     margin-left: 0;
     padding: 2rem;
+    width: 100%;
   }
 
   .hero p {
@@ -649,8 +644,6 @@ footer {
   .card-bg-topo {
     margin: 30px;
   }
-  
-  
 }
 
 
