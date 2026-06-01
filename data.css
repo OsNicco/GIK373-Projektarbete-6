@@ -119,7 +119,7 @@ html {
 
 .stats-grid-nav {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
 }
 
@@ -495,21 +495,22 @@ a.focus:hover {
   justify-content: center;
   gap: 2rem;
   padding: 1rem;
-  background: rgba(var(--color-primary), 0.3);
+  background: rgba(var(--color-white), 0.4);
   backdrop-filter: blur(8px);
 
   border-radius: 20px;
 }
 
 .bottom-bar a {
-  color: rgba(var(--color-white));
+  color: rgba(var(--color-secondary));
   text-decoration: none;
   padding: 0.7rem;
 }
 
 .bottom-bar a:hover {
-  background: rgba(var(--color-white), 0.3);
+  background: rgba(var(--color-white));
   border-radius: 6px;
+  color: rgba(var(--color-primary));
 }
 
 /*============================================================================================================================*/
