@@ -285,6 +285,7 @@
   background: rgba(var(--color-primary), 0.3);
   backdrop-filter: blur(8px);
   border-radius: 20px;
+  z-index: 100;
 }
 
 .bottom-bar a {
