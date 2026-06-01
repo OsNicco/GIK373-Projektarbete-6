@@ -42,15 +42,7 @@ html {
 }
 
 .test {
-  display: flex;
-  text-decoration: none;
-  padding: 2.5rem;
-  border-radius: 20px;
-  width: 100rem;
-  height: 50rem;
-  justify-self: center;
-
-  background-color: var(--bg-color);
+  background-color: red;
  
 }
 
@@ -248,10 +240,6 @@ a.focus:hover {
 
 /*================================================= ALLA SEKTIONER ====================================================*/
 
-
-
-/* ====== SEKTION 1 ====== */
-
 .chart-section {
   
   margin: 0 7rem;
@@ -262,6 +250,11 @@ a.focus:hover {
   background: rgba(var(--color-white), 0.6);
   border-radius: 20px;
 }
+
+
+/* ====== SEKTION 1 ====== */
+
+
 
 /* Vänster kolumn */
 .s1-grid {
@@ -433,44 +426,6 @@ a.focus:hover {
 
 
 /*====================================================== SEKTION 5 ====================================================*/
-
-.s5-grid {
-  width: 80%;
-  margin: 0 auto;
-}
-
-
-
-.plot1-section{
-  margin-bottom:8rem;
-}
-
-
-.plot2-layout{
-  display:flex;
-  gap:3rem;
-  align-items:flex-center;   /* istället för center */
-
-  width:100%;
-  margin:0 auto;
-}
-
-.plot2-layout p{
-  flex:1.2;                 /* text får lite mer plats */
-  line-height:1.8;
-  margin:0;
-}
-
-.plot2-layout .test{
-  flex:1;
-
-  min-width:500px;
-  height:550px;
-
-  margin:0;
-}
-
-
 
 
 

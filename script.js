@@ -834,7 +834,6 @@ async function loadData() {
     });
 
     const layout = {
-      margin:        { t: 40, l: 0, r: 0, b: 0 },
       autosize:      true,
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor:  "rgba(0,0,0,0)",
@@ -967,7 +966,6 @@ const bubbles = {
 };
 
 const layout2 = {
-  title:         "Europa: Plaståtervinning (färg) + Population (bubblor) 2023",
   autosize:      true,
   paper_bgcolor: "rgba(0,0,0,0)",
   plot_bgcolor:  "rgba(0,0,0,0)",
