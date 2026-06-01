@@ -64,28 +64,28 @@
 
         <div class="stats-grid-nav">
           <a class="card-btn" href="#data-sektion-1">
-            <h2><i class="bi bi-bar-chart-line"></i></h2>
-            <p>Till sektion 1</p>
+            <h2><i class="bi bi-recycle"></i></h2>
+            <p>Återvinning</p>
           </a>
 
           <a class="card-btn" href="#data-sektion-2">
-            <h2><i class="bi bi-bar-chart-steps"></i></h2>
+            <h2><i class="bi bi-asterisk"></i></h2>
             <p>Till sektion 2</p>
           </a>
 
           <a class="card-btn" href="#data-sektion-3">
-            <h2><i class="bi bi-layout-wtf"></i></h2>
-            <p>Till sektion 3</p>
+            <h2><i class="bi bi-bar-chart-line"></i></h2>
+            <p>Målen</p>
           </a>
 
           <a class="card-btn" href="#data-sektion-4">
             <h2><i class="bi bi-graph-up"></i></h2>
-            <p>Till sektion 4</p>
+            <p>Regression</p>
           </a>
 
           <a class="card-btn" href="#data-sektion-5">
             <h2><i class="bi bi-globe-europe-africa"></i></h2>
-            <p>Till sektion 5</p>
+            <p>Europa</p>
           </a>
         </div>
       </section>
@@ -94,7 +94,7 @@
     <!--Sektion 1-->
     <section>
       <div class="divider" id="data-sektion-1">
-        <span>data-sektion-1</span>
+        <span>Återvinning</span>
       </div>
 
       <div class="chart-section">
@@ -160,52 +160,70 @@
       <div class="test"></div>
     </section>
 
+    <!--Sektion 3-->
 
-<!--Sektion 3-->
-
- <section>
-  <div class="divider" id="data-sektion-3">
-    <span>data-sektion-3</span>
-  </div>
-
-  <div class="chart-section">
-    <div class="s2-grid">
-      <div class="graph-container">
-        <canvas id="scb"></canvas>
+    <section>
+      <div class="divider" id="data-sektion-3">
+        <span>Målen</span>
       </div>
 
-      <div class="pie-row">
-        <div class="pie-wrap">
-          <canvas id="pieFordelning"></canvas>
+      <div class="chart-section">
+        <div class="s2-grid">
+          <div class="graph-container">
+            <canvas id="scb"></canvas>
+          </div>
+
+          <div class="pie-row">
+            <div class="pie-wrap">
+              <canvas id="pieFordelning"></canvas>
+            </div>
+            <div class="pie-wrap">
+              <canvas id="pieJamforelse"></canvas>
+            </div>
+          </div>
         </div>
-        <div class="pie-wrap">
-          <canvas id="pieJamforelse"></canvas>
+
+        <div class="s1-grid">
+          <div class="sek1-intro">
+            <h2>Materialåtervinning 2024</h2>
+            <p>Data källa: SCB TAB6768 (2024)</p>
+          </div>
+          <div class="text-block">
+            <p>
+              Stapeldiagrammet visar materialåtervinningsgraden för olika
+              förpackningsmaterial år 2024 i relation till de återvinningsmål
+              som anges i Sveriges förordning om producentansvar för
+              förpackningar. Resultaten visar tydliga skillnader mellan
+              materialslagen. Glas och papper/kartong uppvisar mycket höga
+              återvinningsgrader och överträffar de nationella målen, vilket
+              tyder på väl fungerande insamlings- och återvinningssystem för
+              dessa material. Samtidigt når flera andra materialslag, däribland
+              plast inklusive PET, PET-flaskor, järn/stål och pantburkar, inte
+              når upp till de fastställda målen, vilket indikerar kvarstående
+              utmaningar inom återvinning och resursåterföring för vissa
+              materialflöden.
+            </p>
+          </div>
+          <div class="info-card">
+            <p>
+              För varje förpackningsslag beräknas materialåtervinningsgraden
+              genom att jämföra mängden materialåtervunnet förpackningsavfall
+              med den totala mängd av samma materialslag som satts på marknaden
+              under samma år. Resultaten kan därmed användas för att identifiera
+              skillnader i återvinningsprestation mellan materialslag och belysa
+              vilka områden där ytterligare utveckling av insamlings- och
+              återvinningssystem kan behövas (Naturvårdsverket, 2024).
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="s1-grid">
-      <div class="sek1-intro">
-        <h2>Materialåtervinning 2024</h2>
-        <p>Data källa: SCB TAB6768 (2024)</p>
-      </div>
-      <div class="text-block">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-      </div>
-      <div class="info-card">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
+    </section>
 
     <!--Sektion 4-->
 
     <section>
       <div class="divider" id="data-sektion-4">
-        <span>data-sektion-4</span>
+        <span>Regression</span>
       </div>
       <div class="chart-section">
         <div class="s1-grid">
@@ -213,18 +231,37 @@
             <h2>Korrelation: Inkomst och återvinning</h2>
             <p>Data källa: SCB TAB1492 & TAB5564/TAB6768 (2020–2024)</p>
           </div>
+
+          <div class="info-card">
+            <i>
+              Disponibel inkomst är den summa pengar en person eller
+              ett hushåll har kvar efter att skatt har dragits, inklusive
+              eventuella bidrag och ersättningar. Den visar hur mycket pengar
+              som faktiskt finns tillgängliga för konsumtion och sparande
+              (Fortnox, u.å.).
+            </i>
+          </div>
           <div class="text-block">
             <p>
-              Grafen visar sambandet mellan disponibel inkomst för personer
-              18–64 år och den totala mängden förpackningar som
-              materialåtervinns i Sverige. Varje punkt representerar ett år.
+              Spridningsdiagrammet visar sambandet mellan disponibel inkomst för
+              personer i åldern 18–64 år och den totala mängden förpackningar
+              som materialåtervinns i Sverige under perioden 2012–2024. Varje
+              punkt i diagrammet motsvarar ett år. Resultatet visar en tydlig
+              positiv korrelation mellan variablerna (r² = 0,71), vilket
+              indikerar att högre disponibel inkomst samvarierar med en ökad
+              mängd återvunnet material.
             </p>
           </div>
-          <div class="info-card">
+
+          <div class="text-block">
             <p>
-              Ett positivt r²-värde nära 1 indikerar ett starkt samband — att
-              ökad köpkraft samvarierar med ökad återvinning. Notera att
-              korrelation inte är detsamma som kausalitet.
+              Resultaten visar en positiv korrelation mellan inkomst och
+              återvinning, men analysen kan inte fastställa något samband. Detta
+              eftersom sambandet delvis kan påverkas av gemensamma
+              tidsrelaterade förändringar. För att ytterligare undersöka
+              sambandet skulle en mer fördjupad analys kunna genomföras där
+              tidseffekter kontrolleras, exempelvis genom att analysera årliga
+              förändringar i stället för absoluta nivåer.
             </p>
           </div>
         </div>
@@ -232,96 +269,108 @@
           <div class="graph-container">
             <canvas id="korrelation"></canvas>
           </div>
+
+          <div class="info-card">
+            <p>
+              Ett r²-värde nära 1 tyder på ett relativt starkt linjärt samband
+              (Lantz, 2013), vilket i detta fall innebär att högre disponibel
+              inkomst tenderar att sammanfalla med högre återvinning.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-
-
+    <!--Sektion 5-->
 
     <!--Sektion 5-->
-<section>
-  <div class="divider" id="data-sektion-5">
-    <span>data-sektion-5</span>
-  </div>
-
-  <div class="chart-section">
-
-    <div class="s1-grid">
-      <div class="sek1-intro">
-        <h2>Utveckling av förpackningsåtervinning i Europa</h2>
-        <p>Data källa: Eurostat (1997–2023)</p>
-      </div>
-      <div class="text-block">
-        <p>
-          Kartan visar hur återvinningsgraden för förpackningar i Europa har
-          förändrats över tid från 1997 till 2023, där vissa länder uppvisar en tydlig ökning.
-          Forskning visar att införandet av nationella system för
-          producentansvar har varit en central drivkraft bakom ökade
-          insamlings- och återvinningsnivåer, särskilt för
-          förpackningsavfall, genom att tydliggöra ansvarsfördelning och
-          skapa strukturerade insamlingssystem (Letters in Spatial and
-          Resource Sciences, 2017).
-        </p>
-      </div>
-      <div class="info-card">
-        <p>
-          Utvecklingen ligger i linje med Agenda 2030 mål 12 om hållbar
-          konsumtion och produktion, som syftar till att säkerställa
-          hållbara konsumtions- och produktionsmönster globalt (Globala
-          målen, u.å.).
-        </p>
+    <section>
+      <div class="divider" id="data-sektion-5">
+        <span>Europa</span>
       </div>
 
-<div class="sek1-intro">
-        <h2>Plaståtervinning i Europa: skillnader mellan länder och befolkning</h2>
-        <p>Data källa: Eurostat / IVL Svenska Miljöinstitutet (2023)</p>
+      <div class="map-chart-section">
+        <!-- Karta 1 -->
+        <div class="s1-map">
+          <div class="s1-map-text">
+            <div class="sek1-intro">
+              <h2>Utveckling av förpackningsåtervinning i Europa</h2>
+              <p>Data källa: Eurostat (1997–2023)</p>
+            </div>
+            <div class="text-block">
+              <p>
+                Kartan visar hur återvinningsgraden för förpackningar i Europa
+                har förändrats över tid från 1997 till 2023, där vissa länder
+                uppvisar en tydlig ökning. Forskning visar att införandet av
+                nationella system för producentansvar har varit en central
+                drivkraft bakom ökade insamlings- och återvinningsnivåer,
+                särskilt för förpackningsavfall, genom att tydliggöra
+                ansvarsfördelning och skapa strukturerade insamlingssystem
+                (Letters in Spatial and Resource Sciences, 2017).
+              </p>
+            </div>
+            <div class="info-card">
+              <p>
+                Utvecklingen ligger i linje med Agenda 2030 mål 12 om hållbar
+                konsumtion och produktion, som syftar till att säkerställa
+                hållbara konsumtions- och produktionsmönster globalt (Globala
+                målen, u.å.).
+              </p>
+            </div>
+          </div>
+          <div class="map-container">
+            <div id="plot2"></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Karta 2 -->
+        <div class="s1-map">
+          <div class="s1-map-text">
+            <div class="sek1-intro">
+              <h2>
+                Plaståtervinning i Europa: skillnader mellan länder och
+                befolkning
+              </h2>
+              <p>Data källa: Eurostat / IVL Svenska Miljöinstitutet (2023)</p>
+            </div>
+            <div class="text-block">
+              <p>
+                Grafen visar plaståtervinningsgrad och befolkningsstorlek i
+                Europa 2023. Den illustrerar tydliga skillnader mellan länder,
+                där återvinningsgraden inte verkar följa befolkningsstorleken.
+                Både små och stora länder finns på olika nivåer i återvinningen.
+                Detta pekar på att det inte enbart är hur mycket plast som
+                används eller samlas in som avgör resultaten, utan hur systemen
+                för återvinning fungerar.
+              </p>
+            </div>
+          </div>
+          <div class="info-card">
+            <p>
+              Ny forskning från IVL Svenska Miljöinstitutet, TERRA och Svensk
+              Plaståtervinning lyfter just detta perspektiv och kan därmed
+              förändra EU:s syn på plaståtervinning, från fokus på kvantitet
+              till kvalitet. Studien visar att dagens sätt att mäta framgång
+              ofta bygger på hur stor andel plast som återvinns, men att detta
+              inte säger allt om faktisk miljönytta. <br />
+              <br />Forskarna jämförde olika sätt att hantera
+              plastförpackningsavfall, bland annat förbränning, downcycling och
+              högkvalitativ återvinning med avancerad sortering. Resultaten
+              visade att högkvalitativ återvinning ger betydligt större
+              klimatnytta än återvinning där sorteringen är enklare och
+              kvaliteten lägre. Därmed blir slutsatsen att det inte bara är
+              mängden återvunnen plast som spelar roll, utan även hur väl
+              materialet kan återanvändas i nya produkter. (Ekvall et al., 2025)
+            </p>
+          </div>
+        </div>
+        <div class="map-container">
+          <div id="plot"></div>
+        </div>
       </div>
-      <div class="text-block">
-        <p>
-          Grafen visar plaståtervinningsgrad och befolkningsstorlek i Europa
-          2023. Den illustrerar tydliga skillnader mellan länder, där
-          återvinningsgraden inte verkar följa befolkningsstorleken. Både små
-          och stora länder finns på olika nivåer i återvinningen. Detta pekar
-          på att det inte enbart är hur mycket plast som används eller samlas
-          in som avgör resultaten, utan hur systemen för återvinning fungerar.
-        </p>
-      </div>
-    </div>
-
-
-    <div class="s2-grid">
-      <div class="graph-container">
-        <div id="plot2"></div>
-      </div>
-      <div class="info-card">
-        <p>
-          Ny forskning från IVL Svenska Miljöinstitutet, TERRA och Svensk
-          Plaståtervinning lyfter just detta perspektiv och kan därmed
-          förändra EU:s syn på plaståtervinning, från fokus på kvantitet till
-          kvalitet. Studien visar att dagens sätt att mäta framgång ofta
-          bygger på hur stor andel plast som återvinns, men att detta inte
-          säger allt om faktisk miljönytta. <br />
-          <br />Forskarna jämförde olika sätt att hantera
-          plastförpackningsavfall, bland annat förbränning, downcycling och
-          högkvalitativ återvinning med avancerad sortering. Resultaten visade
-          att högkvalitativ återvinning ger betydligt större klimatnytta än
-          återvinning där sorteringen är enklare och kvaliteten lägre. Därmed
-          blir slutsatsen att det inte bara är mängden återvunnen plast som
-          spelar roll, utan även hur väl materialet kan återanvändas i nya
-          produkter. (Ekvall et al., 2025)
-        </p>
-      </div>
-    </div>
-
-        <div id="plot"></div>
-      </div>
-
-
-  
-</section>
-
-
+    </section>
     <!--Side-bar-->
 
     <div class="side-bar">
@@ -330,24 +379,24 @@
         <p>Topp</p>
       </a>
       <a class="side-bar-btn" href="#data-sektion-1">
-        <h2><i class="bi bi-bar-chart-line"></i></h2>
-        <p>Till sektion 1</p>
+        <h2><i class="bi bi-recycle"></i></h2>
+        <p>Återvinning</p>
       </a>
       <a class="side-bar-btn" href="#data-sektion-2">
-        <h2><i class="bi bi-bar-chart-steps"></i></h2>
+        <h2><i class="bi bi-asterisk"></i></h2>
         <p>Till sektion 2</p>
       </a>
       <a class="side-bar-btn" href="#data-sektion-3">
-        <h2><i class="bi bi-layout-wtf"></i></h2>
-        <p>Till sektion 3</p>
+        <h2><i class="bi bi-bar-chart-line"></i></h2>
+        <p>Målen</p>
       </a>
       <a class="side-bar-btn" href="#data-sektion-4">
         <h2><i class="bi bi-graph-up"></i></h2>
-        <p>Till sektion 4</p>
+        <p>Regression</p>
       </a>
       <a class="side-bar-btn" href="#data-sektion-5">
         <h2><i class="bi bi-globe-europe-africa"></i></h2>
-        <p>Till sektion 5</p>
+        <p>Europa</p>
       </a>
     </div>
 
