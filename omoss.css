@@ -13,7 +13,11 @@
   --color-black: 0, 0, 0;
 }
 
-.logo {
+.focus {
+  color: rgba(var(--color-primary));
+}
+
+.header .logo {
   width: 10rem;
   height: auto;
 }
@@ -23,7 +27,6 @@
   backdrop-filter: blur(8px);
   padding: 5px 10px;
   border-radius: 6px;
-  
 }
 
 /* HEADER */
@@ -52,26 +55,25 @@
     border-radius: 6px;    
 }
 
-
+body {
+  background: rgba(var(--color-primary), 0.1);
+}
 
 /* HERO BG BILD*/
+
+
 .hero {
-  height: 150px;
+  height: 900px;
   background: url(images/skog.jpg) center/cover no-repeat;
-  display: flex;
-  overflow: hidden;
   background-position: top center;
-  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
+  display: flex;
+  padding-left: 3.75rem;
+  color: rgba(var(--color-white));
+  position: relative;
+  align-items: flex-end;
+  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
 }
 
-
-
-
-
-.green-clean {
-  color: rgba(var(--color-primary),1);
-  font-weight: bold;
-}
 
 #sek1 h1 {
   width: 100%;
@@ -274,7 +276,7 @@ footer {
   }
 }
 
-/* DESKTOP >1440px */
+/* DESKTOP >1440px 
 @media (min-width: 1440px) {
 
   body {
@@ -311,4 +313,4 @@ footer {
     padding: 2rem;
     font-size: 1.1rem;
   }
-}
+} */
