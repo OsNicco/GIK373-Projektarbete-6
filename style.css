@@ -555,6 +555,7 @@ footer {
 
   .card-image {
     flex-direction: column !important;
+    background: url(images/mindreskog.png) right/cover no-repeat;
   }
 
   .card-text-right {
