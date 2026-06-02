@@ -5,6 +5,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+* {
+    outline: 1px solid red;
+}
+
 :root {
   --color-primary: 0, 115, 83;
   --color-secondary: 19, 17, 56;
@@ -535,6 +539,7 @@ footer {
   .side-bar {
     display: none;
     transform: none;
+    transform: translateX(-50%) translateY(50%);
   }
 
   /* HEADER */
@@ -569,6 +574,11 @@ footer {
   .intro-container {
     margin: 1.5rem 1rem;
     padding: 2.5rem 1.5rem;
+    max-width: 100%;
+  }
+
+  .intro h1 {
+    font-size: 2.2rem;
   }
 
   /* SECTIONS */
