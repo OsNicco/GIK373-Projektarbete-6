@@ -6,10 +6,6 @@
 }
 
 
-* {
-    outline: 1px solid red;
-}
-
 
 :root {
   --color-primary: 0, 115, 83;
@@ -115,7 +111,7 @@ html {
   z-index: 2;
   text-align: center;
   padding: 5rem 8rem;
-  background: rgba(var(--color-white), 0.3);
+  background: rgba(var(--color-white), 0.5);
   backdrop-filter: blur(8px);
   border-radius: 20px;
   margin: 0 4rem;
@@ -392,15 +388,6 @@ a.focus:hover {
   height: 260px;
 }
 
-.chart-error {
-  background: rgba(220, 50, 50, 0.05);
-  border: 1px solid rgba(220, 50, 50, 0.2);
-  border-radius: 12px;
-  padding: 1rem 1.4rem;
-  font-size: 0.85rem;
-  color: #c0392b;
-  margin: 1rem 0;
-}
 
 /*====================================================== SEKTION 5 ====================================================*/
 
@@ -431,6 +418,8 @@ a.focus:hover {
   width: 100%;
   
 }
+
+
 
 
 
@@ -539,6 +528,8 @@ footer {
 @media (max-width: 600px) {
 
 
+  
+
 * p {
   font-size: 0.9rem;
 }
@@ -546,7 +537,7 @@ footer {
   .side-bar {
     display: none;
     transform: none;
-    transform: translateX(-50%) translateY(50%);
+    
   }
 
   /* HEADER */
@@ -565,10 +556,14 @@ footer {
   }
 
   /* HERO */
+
+  .card-image {
+    background: url(images/mindreskog.png) right/cover no-repeat;
+  }
+
   .hero {
-    height: 550px;
-    padding: 0 1.5rem;
-    background-position: top center;
+    height: 500px;
+    padding: 2rem;
   }
 
   .hero-text {
