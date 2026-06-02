@@ -124,7 +124,7 @@ body {
 
 .arrow {
   width: 70px;
-  height: 40px;
+  height: 50px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -333,7 +333,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -383,7 +383,7 @@ body {
 
 .cards {
   padding: 3rem 2rem 4rem;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
