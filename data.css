@@ -5,9 +5,11 @@
   font-family: "Poppins", sans-serif;
 }
 
+
 * {
     outline: 1px solid red;
 }
+
 
 :root {
   --color-primary: 0, 115, 83;
@@ -206,7 +208,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 .intro p {
   max-width: 800px;
   line-height: 1.8;
-  color: rgba(var(--color-secondary), 0.8);
+  color: rgba(var(--color-secondary));
 
   margin: 0 auto;
   text-align: center;
@@ -536,6 +538,11 @@ footer {
 
 @media (max-width: 600px) {
 
+
+* p {
+  font-size: 0.9rem;
+}
+
   .side-bar {
     display: none;
     transform: none;
@@ -565,21 +572,23 @@ footer {
   }
 
   .hero-text {
-    max-width: 100%;
     margin-bottom: 2rem;
     text-align: center;
   }
 
   /* INTRO-CONTAINER */
   .intro-container {
-    margin: 1.5rem 1rem;
-    padding: 2.5rem 1.5rem;
+    margin: 1rem;
+    padding: 1.5rem;
     max-width: 100%;
+    
   }
 
   .intro h1 {
-    font-size: 2.2rem;
-  }
+  font-size: 2rem;
+  margin-bottom: 0.33rem;
+}
+
 
   /* SECTIONS */
   .section {
@@ -597,9 +606,8 @@ footer {
     padding: 0 1rem;
   }
 
-  .card-btn {
-    padding: 1.5rem;
-    border-radius: 16px;
+  .stats-grid-nav {
+    display: none;
   }
 
   /* STAT-KORT */
