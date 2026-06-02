@@ -73,7 +73,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   color: rgba(var(--color-white));
   position: relative;
   align-items: flex-end;
-  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
+  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
 }
 
 .chart-section {
@@ -84,14 +84,12 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   border-radius: 20px;
 }
 
-
 #sek1 h1 {
   width: 100%;
   max-width: 350px;
   margin-bottom: 1rem;
   font-size: 2.5rem;
   color: rgba(var(--color-secondary),1);
-
 }
 
 
@@ -99,12 +97,9 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 #sek1 {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: flex-start;
   gap: 2rem;
-  padding-top: 1rem;
   width: 100%;
-  
 }
 
 #sek1 p {
@@ -116,9 +111,10 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 .sektion1-img {
   background: rgba(var(--color-black), 0.15); 
   width: 100%;
-  max-width: 520px;
+  max-width: 500px;
   height: auto;
   border-radius: 10px;
+  margin-top: 1rem;
   order: 2;
 }
 
@@ -142,7 +138,7 @@ ul {
 .sektion2,
 .sektion3 {
   background-color: rgba(var(--color-primary),1);
-  box-shadow: 0 0 8px rgba(var(--color-black), 0.15);
+  box-shadow: 0 0 8px rgba(var(--color-secondary), 0.15);
   border-radius: 1rem;
   padding: 1rem;
   color: rgba(var(--color-white));
