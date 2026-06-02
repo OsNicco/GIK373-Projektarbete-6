@@ -6,10 +6,6 @@
 }
 
 
-* {
-    outline: 1px solid red;
-}
-
 
 :root {
   --color-primary: 0, 115, 83;
@@ -115,7 +111,7 @@ html {
   z-index: 2;
   text-align: center;
   padding: 5rem 8rem;
-  background: rgba(var(--color-white), 0.3);
+  background: rgba(var(--color-white), 0.5);
   backdrop-filter: blur(8px);
   border-radius: 20px;
   margin: 0 4rem;
