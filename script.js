@@ -920,6 +920,7 @@ async function loadData() {
 
     const layout = {
       autosize: true,
+      height: 600,  
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       geo: { scope: "europe", bgcolor: "rgba(0,0,0,0)" },
@@ -1132,6 +1133,7 @@ const bubbles = {
 
 const layout2 = {
   autosize: true,
+  height: 700,
   paper_bgcolor: "rgba(0,0,0,0)",
   plot_bgcolor: "rgba(0,0,0,0)",
   geo: {
