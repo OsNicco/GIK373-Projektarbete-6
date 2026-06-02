@@ -157,7 +157,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1.2rem;
   position: relative;
   z-index: 2;
   align-items: center;
@@ -252,23 +252,22 @@ body {
   background-repeat: no-repeat;
 }
 
-.card-bg-topo {
-  margin: 30px;
-  border-radius: 16px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #db0000;
-  background-image: url(images/Karta.png);
+.card-bg-to {
+  width: 40%;
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.card-bg-to {
-  margin: 30px;
-  border-radius: 16px;
-  background-image: url(images/f.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+.card-bg-topo {
+  width: 40%;
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* BOTTOM BAR */
