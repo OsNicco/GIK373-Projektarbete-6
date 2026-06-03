@@ -1,4 +1,4 @@
-/* Ebba versermark, Maik Karlsson, Nicolas Pallard */
+/* Ebba Vestermark, Maik Karlsson, Nicolas Pallard */
 
 // ============================================================
 // BOTTOM BAR
