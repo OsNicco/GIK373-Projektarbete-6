@@ -150,6 +150,11 @@ body {
   position: relative;
 }
 
+.card-bg i {
+  font-size: 6rem;
+  color: rgba(var(--color-primary));
+}
+
 .card-light {
   background: rgba(var(--color-white), 0.9);
 }
@@ -434,7 +439,6 @@ footer {
   .card-text {
     padding: 2rem;
   }
-
 
   .card {
   flex-direction: column-reverse;
