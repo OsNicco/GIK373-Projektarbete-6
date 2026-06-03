@@ -67,15 +67,14 @@ background-attachment: fixed;
 
 .hero {
   height: 150px;
-  background: url(images/skog.jpg) center no-repeat;
-  background-size: 100% auto;
+  background: url(images/skog.jpg) center/cover no-repeat;
   background-position: top center;
   display: flex;
   justify-content: center; 
   align-items: center; 
   color: rgba(var(--color-white));
   position: relative;
-  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
+  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
 }
 
 .chart-section {
@@ -262,7 +261,6 @@ footer {
 
   .hero {
     height: 90px;
-    padding: 2rem;
     
   }
 

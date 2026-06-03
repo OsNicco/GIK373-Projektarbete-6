@@ -64,7 +64,7 @@ body {
   color: rgba(var(--color-white));
   position: relative;
   align-items: flex-end;
-  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
+  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
 }
 
 .hero-text {
