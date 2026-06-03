@@ -869,8 +869,10 @@ function getPlotHeight(plotId) {
   if (window.innerWidth > 600) {
     return plotId === "plot" ? 700 : 600;
   }
-  return plotId === "plot" ? 350 : 300;
+  return plotId === "plot" ? 365 : 300;
 }
+
+
 
 
 async function loadData() {
