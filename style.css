@@ -399,7 +399,7 @@ body {
 
 .tile:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(var(--color-secondary), 0.3);
+  box-shadow: 0 10px 25px rgba(var(--color-secondary), 0.1);
 }
 
 /* FOOTER */
