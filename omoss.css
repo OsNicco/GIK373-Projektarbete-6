@@ -200,7 +200,7 @@ ul {
   justify-content: center;
   gap: 2rem;
   padding: 1rem;
-  background: rgba(var(--color-white), 0.4);
+  background: rgba(var(--color-white), 0.6);
   backdrop-filter: blur(8px);
 
   border-radius: 20px;

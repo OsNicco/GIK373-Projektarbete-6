@@ -445,8 +445,8 @@ a.focus:hover {
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
-  background: rgba(var(--color-white), 0.5);
-  backdrop-filter: blur(2px);
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(1px);
   border-radius: 20px;
 }
 
