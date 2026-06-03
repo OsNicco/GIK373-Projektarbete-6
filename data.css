@@ -111,8 +111,8 @@ html {
   z-index: 2;
   text-align: center;
   padding: 5rem 8rem;
-  background: rgba(var(--color-white), 0.5);
-  backdrop-filter: blur(8px);
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(6px);
   border-radius: 20px;
   margin: 0 4rem;
 }
@@ -238,6 +238,7 @@ a.focus:hover {
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  min-width: 0;
 }
 
 .intro h2 {
@@ -401,12 +402,15 @@ a.focus:hover {
   backdrop-filter: blur(2px);
   
   border-radius: 20px;
+
+
 }
 
 .s1-map {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
+  gap: 5rem;
 }
 
 .s1-map-text {
@@ -493,7 +497,7 @@ a.focus:hover {
   justify-content: center;
   gap: 2rem;
   padding: 1rem;
-  background: rgba(var(--color-white), 0.4);
+  background: rgba(var(--color-white), 0.6);
   backdrop-filter: blur(6px);
 
   border-radius: 20px;
@@ -646,9 +650,6 @@ footer {
   }
 
 
-.s1-map info-card {
-  margin-top: 1.5rem;
-}
 
 
 }
