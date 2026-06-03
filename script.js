@@ -809,10 +809,6 @@ async function fetchEurostat(dataset) {
   return await res.json();
 }
 
-function getPlotHeight() {
-  return window.innerWidth <= 600 ? 450 : 600;
-}
-
 
 function parseEurostatJSONStat(json) {
   const geo = json.dimension.geo.category.index;
@@ -925,7 +921,7 @@ async function loadData() {
 
     const layout = {
       autosize: true,
-      height: getPlotHeight(),
+      height: 600,  
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       geo: { scope: "europe", bgcolor: "rgba(0,0,0,0)" },
@@ -1138,7 +1134,7 @@ const bubbles = {
 
 const layout2 = {
   autosize: true,
-  height: getPlotHeight(),
+  height: 700,
   paper_bgcolor: "rgba(0,0,0,0)",
   plot_bgcolor: "rgba(0,0,0,0)",
   geo: {
