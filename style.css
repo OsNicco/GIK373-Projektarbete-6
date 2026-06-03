@@ -11,6 +11,8 @@ body {
   background-attachment: fixed;
 }
 
+
+
 :root {
   --color-primary: 0, 115, 83;
   --color-secondary: 19, 17, 56;
@@ -156,7 +158,8 @@ body {
 }
 
 .card-light {
-  background: rgba(var(--color-white), 0.9);
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(2px);
 }
 
 .card-text {
@@ -261,26 +264,29 @@ body {
 
 .card-bg-to {
   width: 40%;
-  backdrop-filter: blur(6px);
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(2px);
 }
 
 .card-bg-topo {
   width: 40%;
-  backdrop-filter: blur(6px);
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(2px);
 }
 
 .cards {
   padding: 2rem 2rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  
 }
 
 .card-title {
