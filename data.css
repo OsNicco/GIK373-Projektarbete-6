@@ -227,7 +227,7 @@ a.focus:hover {
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
   background: rgba(var(--color-white), 0.6);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px);
   border-radius: 20px;
 }
 
