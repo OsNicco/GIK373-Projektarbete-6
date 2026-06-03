@@ -123,8 +123,8 @@ body {
 }
 
 .arrow {
-  width: 50px;
-  height: 40px;
+  width: 3.125rem;
+  height: 2.5rem;
   padding: 0;
   display: flex;
   align-items: center;
@@ -303,8 +303,8 @@ body {
   gap: 2rem;
   padding: 1rem;
   background: rgba(var(--color-white), 0.4);
-  backdrop-filter: blur(8px);
-
+  backdrop-filter: blur(6px);
+  z-index: 100;
   border-radius: 20px;
 }
 
@@ -440,9 +440,6 @@ footer {
     padding: 2rem;
   }
 
-  .bottom-bar {
-    width: 90%;
-  }
 
   .card {
   flex-direction: column-reverse;
