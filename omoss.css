@@ -41,6 +41,7 @@
 }
 
 
+
 .header nav a {
   color: rgba(var(--color-secondary));
   font-size: 1.3rem;
@@ -66,14 +67,15 @@ background-attachment: fixed;
 
 .hero {
   height: 150px;
-  background: url(images/skog.jpg) center/cover no-repeat;
+  background: url(images/skog.jpg) center no-repeat;
+  background-size: 100% auto;
   background-position: top center;
   display: flex;
-  padding-left: 3.75rem;
+  justify-content: center; 
+  align-items: center; 
   color: rgba(var(--color-white));
   position: relative;
-  align-items: flex-end;
-  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
+  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
 }
 
 .chart-section {
@@ -233,6 +235,8 @@ footer {
 @media (max-width: 600px) {
 
 
+
+
   .header {
     flex-direction: row;
     justify-content: space-between;
@@ -258,6 +262,8 @@ footer {
 
   .hero {
     height: 90px;
+    padding: 2rem;
+    
   }
 
   .hero h1 {
