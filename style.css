@@ -278,7 +278,7 @@ body {
 }
 
 .cards {
-  padding: 3rem 2rem 4rem;
+  padding: 2rem 2rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -430,6 +430,7 @@ footer {
     background: url(images/mindreskog.png) right/cover no-repeat;
   }
 
+
   .card-text-right {
     margin-left: 0;
     padding: 2rem;
@@ -442,7 +443,9 @@ footer {
 
   .card {
   flex-direction: column-reverse;
-}
+  }
+
+
 
   .card-bg {
     width: auto;
@@ -450,6 +453,7 @@ footer {
     height: auto;
     flex-shrink: 0;
     position: relative;
+    margin: 0 !important;
   }
   
 
