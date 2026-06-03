@@ -210,11 +210,8 @@ background-attachment: fixed;
   text-align: center;
 }
 
-a.focus {
-  text-decoration: none;
-}
 
-a.focus:hover {
+a.focus{
   text-decoration: underline;
 }
 
