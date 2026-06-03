@@ -81,7 +81,16 @@ background-attachment: fixed;
   padding: 5rem;
   gap: 5rem;
   background: rgba(var(--color-white), 0.6);
+  backdrop-filter: blur(2px);
   border-radius: 20px;
+}
+
+#sek1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
 }
 
 #sek1 h1 {
@@ -90,16 +99,6 @@ background-attachment: fixed;
   margin-bottom: 1rem;
   font-size: 2.5rem;
   color: rgba(var(--color-secondary),1);
-}
-
-
-
-#sek1 {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 2rem;
-  width: 100%;
 }
 
 #sek1 p {
