@@ -123,7 +123,7 @@ body {
 }
 
 .arrow {
-  width: 70px;
+  width: 50px;
   height: 40px;
   padding: 0;
   display: flex;
@@ -157,7 +157,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1.2rem;
   position: relative;
   z-index: 2;
   align-items: center;
@@ -252,23 +252,43 @@ body {
   background-repeat: no-repeat;
 }
 
-.card-bg-topo {
-  margin: 30px;
-  border-radius: 16px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #db0000;
-  background-image: url(images/Karta.png);
+.card-bg-to {
+  width: 40%;
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.card-bg-to {
-  margin: 30px;
-  border-radius: 16px;
-  background-image: url(images/f.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+.card-bg-topo {
+  width: 40%;
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards {
+  padding: 3rem 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(var(--color-secondary));
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.card-sub {
+  text-align: center;
+  color: rgba(var(--color-secondary));
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
 }
 
 /* BOTTOM BAR */
@@ -334,7 +354,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -356,7 +376,7 @@ body {
   align-items: center;
   text-align: center;
   min-height: 140px;
-  min-width: calc(25% - 12px);
+  min-width: calc(20% - 12px);
   flex-shrink: 0;
   transition:
     transform 0.2s ease,
@@ -382,26 +402,7 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-.cards {
-  padding: 3rem 2rem 4rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
 
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: rgba(var(--color-secondary));
-  text-align: center;
-  margin-bottom: 0.4rem;
-}
-
-.card-sub {
-  text-align: center;
-  color: rgba(var(--color-secondary));
-  font-size: 0.85rem;
-  margin-bottom: 2rem;
-}
 
 /* FOOTER */
 footer {
