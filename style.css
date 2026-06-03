@@ -268,8 +268,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(var(--color-white), 0.6);
-  backdrop-filter: blur(2px);
+  
 }
 
 .card-bg-topo {
@@ -278,8 +277,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(var(--color-white), 0.6);
-  backdrop-filter: blur(2px);
+ 
 }
 
 .cards {
