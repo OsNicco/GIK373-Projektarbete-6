@@ -1,3 +1,5 @@
+/* Ebba versermark, Maik Karlsson, Nicolas Pallard */
+
 // ============================================================
 // BOTTOM BAR
 // ============================================================
@@ -690,20 +692,20 @@ async function buildKorrelationChart(canvasId) {
     ];
 
     const färgSkala = {
-  2012: "#d7d7f5",
-  2013: "#c2c2ee",
-  2014: "#adade7",
-  2015: "#9898e0",
-  2016: "#8383d9",
-  2017: "#6e6ed2",
-  2018: "#5959cb",
-  2019: "#4444c4",
-  2020: "#3030ad",
-  2021: "#25258a",
-  2022: "#1d1d69",
-  2023: "#17174f",
-  2024: "#131138",
-};
+      2012: "#d7d7f5",
+      2013: "#c2c2ee",
+      2014: "#adade7",
+      2015: "#9898e0",
+      2016: "#8383d9",
+      2017: "#6e6ed2",
+      2018: "#5959cb",
+      2019: "#4444c4",
+      2020: "#3030ad",
+      2021: "#25258a",
+      2022: "#1d1d69",
+      2023: "#17174f",
+      2024: "#131138",
+    };
 
     const befintligKorr = Chart.getChart(canvas);
     if (befintligKorr) befintligKorr.destroy();
@@ -809,8 +811,6 @@ async function fetchEurostat(dataset) {
   return await res.json();
 }
 
-
-
 function parseEurostatJSONStat(json) {
   const geo = json.dimension.geo.category.index;
   const time = json.dimension.time.category.index;
@@ -864,16 +864,12 @@ const iso3 = {
   NO: "NOR",
 };
 
-
 function getPlotHeight(plotId) {
   if (window.innerWidth > 600) {
     return plotId === "plot" ? 700 : 600;
   }
   return plotId === "plot" ? 365 : 300;
 }
-
-
-
 
 async function loadData() {
   try {
@@ -933,7 +929,7 @@ async function loadData() {
 
     const layout = {
       autosize: true,
-      height: getPlotHeight("plot"),  
+      height: getPlotHeight("plot"),
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       geo: { scope: "europe", bgcolor: "rgba(0,0,0,0)" },
@@ -1157,7 +1153,6 @@ const layout2 = {
 };
 
 Plotly.newPlot("plot", [choropleth, bubbles], layout2, { responsive: true });
-
 
 // ============================================================
 // RESIZE-LYSSNARE
