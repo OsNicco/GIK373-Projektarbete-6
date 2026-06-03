@@ -716,8 +716,8 @@ async function buildKorrelationChart(canvasId) {
             label: "År (2012–2024)",
             data: punkter,
             backgroundColor: punkter.map((p) => färgSkala[p.ar] ?? "#007353"),
-            pointRadius: 10,
-            pointHoverRadius: 13,
+            pointRadius: 8,
+            pointHoverRadius: 10,
           },
           {
             label: `Regressionslinje (r² = ${reg.r2.toFixed(2)})`,
