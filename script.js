@@ -810,6 +810,7 @@ async function fetchEurostat(dataset) {
 }
 
 
+
 function parseEurostatJSONStat(json) {
   const geo = json.dimension.geo.category.index;
   const time = json.dimension.time.category.index;
@@ -862,6 +863,15 @@ const iso3 = {
   HU: "HUN",
   NO: "NOR",
 };
+
+
+function getPlotHeight(plotId) {
+  if (window.innerWidth > 600) {
+    return plotId === "plot" ? 700 : 600;
+  }
+  return plotId === "plot" ? 350 : 300;
+}
+
 
 async function loadData() {
   try {
@@ -921,7 +931,7 @@ async function loadData() {
 
     const layout = {
       autosize: true,
-      height: 600,  
+      height: getPlotHeight("plot"),  
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       geo: { scope: "europe", bgcolor: "rgba(0,0,0,0)" },
@@ -1134,7 +1144,7 @@ const bubbles = {
 
 const layout2 = {
   autosize: true,
-  height: 700,
+  height: getPlotHeight("plot"),
   paper_bgcolor: "rgba(0,0,0,0)",
   plot_bgcolor: "rgba(0,0,0,0)",
   geo: {
@@ -1145,3 +1155,13 @@ const layout2 = {
 };
 
 Plotly.newPlot("plot", [choropleth, bubbles], layout2, { responsive: true });
+
+
+// ============================================================
+// RESIZE-LYSSNARE
+// ============================================================
+
+window.addEventListener("resize", () => {
+  Plotly.relayout("plot", { height: getPlotHeight("plot") });
+  Plotly.relayout("plot2", { height: getPlotHeight("plot2") });
+});
