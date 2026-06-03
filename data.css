@@ -88,7 +88,7 @@ html {
   align-items: center; 
   color: rgba(var(--color-white));
   position: relative;
-  box-shadow: 0 4px 12px rgba(var(--color-black), 0.15);
+  box-shadow: 0 4px 12px rgba(var(--color-secondary), 0.15);
 }
 
 .hero-text {
@@ -569,7 +569,7 @@ footer {
 
   .hero {
     height: 500px;
-    padding: 2rem;
+    
   }
 
   .hero-text {
@@ -579,7 +579,7 @@ footer {
 
   /* INTRO-CONTAINER */
   .intro-container {
-    margin: 1rem;
+    
     padding: 1.5rem;
     max-width: 100%;
     
